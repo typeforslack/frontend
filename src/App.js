@@ -1,14 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import * as Login from './components/loginSignup'
+import React from 'react'
+import './App.css'
+import RouterPage from './components/common/router'
 
 function App() {
   return (
     <div>
-      <Login.Signup />
+      <RouterPage />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
