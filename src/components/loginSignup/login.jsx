@@ -1,61 +1,50 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap'
-//import { samplecheck } from '../common/apiurls'
 import { navigate } from '@reach/router'
 
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: null,
-      password: null,
-      usernameErrMsg: null,
-      pwderrorMsg: null,
-    }
-
-    this.handleUsername = this.handleUsername.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-    this.submitForm = this.submitForm.bind(this)
-    this.navigateToSignup = this.navigateToSignup.bind(this)
+export default class Login extends Component {
+  state = {
+    username: '',
+    password: '',
+    errors: {
+      username: '',
+      password: '',
+    },
   }
 
-  handleUsername(event) {
-    event.preventDefault()
+  handleInput = (stateName) => (e) => {
+    e.preventDefault()
     this.setState({
-      username: event.target.value,
+      [stateName]: e.target.value.trim(),
     })
   }
 
-  handlePassword(event) {
-    event.preventDefault()
-    this.setState({
-      password: event.target.value,
-    })
-  }
-
-  submitForm(event) {
+  submitForm = (event) => {
     event.preventDefault()
 
-    console.log('check')
     var name = this.state.username
     var pwd = this.state.password
-    console.log(name)
-    console.log(pwd)
-    if (pwd == null && name == null) {
+
+    if (!pwd && !name) {
       this.setState({
-        usernameErrMsg: 'username not entered',
-        pwderrorMsg: 'password not entered',
+        errors: {
+          username: 'Username not entered',
+          password: 'Password not entered',
+        },
       })
-    } else if (pwd == null) {
+    } else if (!pwd) {
       this.setState({
-        pwderrorMsg: 'password not entered',
+        errors: {
+          password: 'Password not entered',
+        },
       })
-    } else if (name == null) {
+    } else if (!name) {
       this.setState({
-        usernameErrMsg: 'username not entered',
+        errors: {
+          username: 'Username not entered',
+        },
       })
     } else {
-      //write a post request here
       var obj = {
         name,
         pwd,
@@ -81,11 +70,11 @@ export default class Login extends React.Component {
               id="txtbox"
               type="text"
               placeholder="Enter username"
-              onChange={this.handleUsername}
+              onChange={this.handleInput('username')}
             />
             {
               <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.usernameErrMsg}
+                {this.state.errors.username}
               </h6>
             }
           </Form.Group>
@@ -97,11 +86,11 @@ export default class Login extends React.Component {
               id="txtbox"
               type="password"
               placeholder="Password"
-              onChange={this.handlePassword}
+              onChange={this.handleInput('password')}
             />
             {
               <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.pwderrorMsg}
+                {this.state.errors.password}
               </h6>
             }
           </Form.Group>

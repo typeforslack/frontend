@@ -1,77 +1,65 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
-//import { samplecheck } from '../common/apiurls'
 import { navigate } from '@reach/router'
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: null,
-      email: null,
-      password: null,
-      usernameErrMsg: null,
-      emailerrormsg: null,
-      pwderrorMsg: null,
+      username: '',
+      email: '',
+      password: '',
+      errors: {
+        username: '',
+        password: '',
+      },
     }
-
-    this.handleUsername = this.handleUsername.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-    this.submitForm = this.submitForm.bind(this)
-    this.handleEmail = this.handleEmail.bind(this)
   }
 
-  handleUsername(event) {
-    event.preventDefault()
+  handleInput = (stateName) => (e) => {
+    e.preventDefault()
     this.setState({
-      username: event.target.value,
+      [stateName]: e.target.value.trim(),
     })
   }
 
-  handlePassword(event) {
-    event.preventDefault()
-    this.setState({
-      password: event.target.value,
-    })
-  }
-
-  handleEmail(event) {
-    event.preventDefault()
-    this.setState({
-      email: event.target.value,
-    })
-  }
-
-  submitForm(event) {
+  submitForm = (event) => {
     event.preventDefault()
 
-    var name = this.state.username
-    var pwd = this.state.password
-    var email = this.state.email
-    if (pwd == null && name == null && email == null) {
+    const name = this.state.username
+    const pwd = this.state.password
+    const email = this.state.email
+
+    if (!pwd && !name && !email) {
       this.setState({
-        usernameErrMsg: 'username not entered',
-        pwderrorMsg: 'password not entered',
-        emailerrormsg: 'email not entered',
+        errors: {
+          username: 'Username not entered',
+          password: 'Password not entered',
+          email: 'Email not entered',
+        },
       })
-    } else if (pwd == null) {
+    } else if (!pwd) {
       this.setState({
-        pwderrorMsg: 'password not entered',
+        errors: {
+          password: 'Password not entered',
+        },
       })
-    } else if (name == null) {
+    } else if (!name) {
       this.setState({
-        usernameErrMsg: 'username not entered',
+        errors: {
+          username: 'Username not entered',
+        },
       })
-    } else if (email == null) {
+    } else if (!email) {
       this.setState({
-        emailerrormsg: 'email not entered',
+        errors: {
+          email: 'Email not entered',
+        },
       })
     } else {
-      //write a post request here
       var obj = {
         name,
         pwd,
-        email,
       }
 
       return navigate('/home')
@@ -90,11 +78,11 @@ export default class Login extends React.Component {
               id="txtbox"
               type="text"
               placeholder="Enter username"
-              onChange={this.handleUsername}
+              onChange={this.handleInput('username')}
             />
             {
               <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.usernameErrMsg}
+                {this.state.errors.username}
               </h6>
             }
           </Form.Group>
@@ -106,11 +94,11 @@ export default class Login extends React.Component {
               id="txtbox"
               type="text"
               placeholder="Enter email"
-              onChange={this.handleEmail}
+              onChange={this.handleInput('email')}
             />
             {
               <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.emailerrormsg}
+                {this.state.errors.email}
               </h6>
             }
           </Form.Group>
@@ -122,11 +110,11 @@ export default class Login extends React.Component {
               id="txtbox"
               type="password"
               placeholder="Password"
-              onChange={this.handlePassword}
+              onChange={this.handleInput('password')}
             />
             {
               <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.pwderrorMsg}
+                {this.state.errors.password}
               </h6>
             }
           </Form.Group>
