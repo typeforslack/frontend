@@ -4,7 +4,7 @@ import Login from '../loginSignup/login'
 import Signup from '../loginSignup/signup'
 import HomePage from '../homepage/index'
 
-export default class RouterPge extends React.Component {
+export default class RouterPage extends React.Component {
   render() {
     return (
       <Router>
