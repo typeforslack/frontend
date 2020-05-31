@@ -8,9 +8,9 @@ export default class RouterPage extends React.Component {
   render() {
     return (
       <Router>
-        <HomePage path="/" />
+        <HomePage path="/home" />
         <Signup path="/signup" />
-        <Login path="/login" />
+        <Login path="/" />
       </Router>
     )
   }

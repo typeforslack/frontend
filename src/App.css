@@ -37,7 +37,16 @@
   }
 }
 
-.modal {
+.login {
+  width: 20%;
+  position: absolute;
+  top: 30%;
+  left: 43%;
+  /* border: 1px solid; */
+  color: midnightblue;
+}
+
+.signup {
   width: 20%;
   position: absolute;
   top: 30%;
@@ -48,9 +57,9 @@
 
 #signupBtn {
   position: relative;
-  left: 30%;
+  left: 60%;
   /* top: 2%; */
-  bottom: 22px;
+  bottom: 32px;
   background-color: #0281ff;
   border: 1px solid #0281ff;
   border-radius: 4px;

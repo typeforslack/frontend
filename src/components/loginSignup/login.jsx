@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default class Login extends Component {
   state = {
@@ -46,11 +48,19 @@ export default class Login extends Component {
       })
     } else {
       var obj = {
-        name,
-        pwd,
+        username: name,
+        password: pwd,
       }
 
-      return navigate('/home')
+      login(obj)
+        .then(() => {
+          navigate('/home')
+        })
+        .catch(function (error) {
+          const errorstatus = error.response
+          alert('not signed up')
+          return errorstatus
+        })
     }
   }
 
@@ -60,9 +70,13 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="modal">
+      <div className="login">
+        <h6 style={{ color: 'red', fontSize: '16px' }}>
+          {this.state.errors.username}
+        </h6>
+
         <Form onSubmit={this.submitForm}>
-          <Form.Group controlId="formGroupEmail">
+          <Form.Group>
             <Form.Label>Username</Form.Label>
             <br></br>
             <br></br>
@@ -78,7 +92,7 @@ export default class Login extends Component {
               </h6>
             }
           </Form.Group>
-          <Form.Group controlId="formGroupPassword">
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <br></br>
             <br></br>

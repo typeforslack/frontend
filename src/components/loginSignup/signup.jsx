@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { navigate } from '@reach/router'
+import { signup } from '../../helpers/api'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -28,14 +29,14 @@ export default class Login extends React.Component {
 
     const name = this.state.username
     const pwd = this.state.password
-    const email = this.state.email
+    //const email = this.state.email
 
-    if (!pwd && !name && !email) {
+    if (!pwd && !name) {
       this.setState({
         errors: {
           username: 'Username not entered',
           password: 'Password not entered',
-          email: 'Email not entered',
+          // email: 'Email not entered',
         },
       })
     } else if (!pwd) {
@@ -50,27 +51,43 @@ export default class Login extends React.Component {
           username: 'Username not entered',
         },
       })
-    } else if (!email) {
-      this.setState({
-        errors: {
-          email: 'Email not entered',
-        },
-      })
-    } else {
+    }
+    // else if (!email) {
+    //   this.setState({
+    //     errors: {
+    //       email: 'Email not entered',
+    //     },
+    //   })
+    // }
+    else {
       var obj = {
-        name,
-        pwd,
+        username: name,
+        password: pwd,
       }
 
-      return navigate('/home')
+      signup(obj)
+        .then((res) => {
+          var result = res
+          console.log(result)
+          if (result.data.success == true) {
+            navigate('/home')
+          } else {
+            alert(result.data.error.username[0])
+          }
+        })
+        .catch(function (error) {
+          const errorstatus = error.response
+          alert('some error')
+          return errorstatus
+        })
     }
   }
 
   render() {
     return (
-      <div className="modal">
+      <div className="signup">
         <Form onSubmit={this.submitForm}>
-          <Form.Group controlId="formGroupname">
+          <Form.Group>
             <Form.Label>Username</Form.Label>
             <br></br>
             <br></br>
@@ -86,7 +103,7 @@ export default class Login extends React.Component {
               </h6>
             }
           </Form.Group>
-          <Form.Group controlId="formGroupEmail">
+          {/* <Form.Group >
             <Form.Label>Email</Form.Label>
             <br></br>
             <br></br>
@@ -101,8 +118,8 @@ export default class Login extends React.Component {
                 {this.state.errors.email}
               </h6>
             }
-          </Form.Group>
-          <Form.Group controlId="formGroupPassword">
+          </Form.Group> */}
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <br></br>
             <br></br>
