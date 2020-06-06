@@ -1,5 +1,6 @@
 import React from 'react'
 import { fetchPara } from '../../helpers/api'
+import TypingArena from '../common/arena'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 
@@ -48,19 +49,7 @@ export default class Practise extends React.Component {
           </div>
         )}
 
-        {paragraph && (
-          <div>
-            <div className="parafetch">{paragraph}</div>
-            <div>
-              <input
-                type="text"
-                className="userText"
-                name="usertext"
-                placeholder="type here"
-              />
-            </div>
-          </div>
-        )}
+        {paragraph && <TypingArena paragraph={paragraph} />}
       </div>
     )
   }
