@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getAuthToken } from './storage'
 const baseUrl = 'https://typeforslack.herokuapp.com'
 
 export async function login(obj) {
@@ -12,28 +13,25 @@ export function signup(obj) {
 }
 
 export function fetchPara() {
-  const getToken = localStorage.getItem('token')
   return axios.get(`${baseUrl}/para `, {
     headers: {
-      Authorization: `token ${getToken}`,
+      Authorization: `token ${getAuthToken()}`,
     },
   })
 }
 
 export function logout() {
-  const getToken = localStorage.getItem('token')
   return axios.get(`${baseUrl}/logout `, {
     headers: {
-      Authorization: `token ${getToken}`,
+      Authorization: `token ${getAuthToken()}`,
     },
   })
 }
 
 export function userlog() {
-  const getToken = localStorage.getItem('token')
   return axios.get(`${baseUrl}/userlog `, {
     headers: {
-      Authorization: `token ${getToken}`,
+      Authorization: `token ${getAuthToken()}`,
     },
   })
 }

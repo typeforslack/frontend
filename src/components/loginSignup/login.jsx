@@ -58,7 +58,6 @@ export default class Login extends Component {
         setAuthToken(token)
         navigate('/')
       } catch (e) {
-        alert('Error happened, please try again.')
         const { non_field_errors } = e.response.data
         this.setState({
           errors: {
