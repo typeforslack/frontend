@@ -10,12 +10,6 @@ export default class Practise extends React.Component {
     }
   }
 
-  //  fetchPara()
-  //   .then((res) => console.log(res))
-  //   .catch((error) => {
-  //     console.log(error.response)
-  //   })
-
   componentDidMount() {
     this.setState({
       showPara: false,
