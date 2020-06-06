@@ -82,37 +82,11 @@
   width: 57%;
 }
 
-.parafetch {
-  width: 30%;
-  top: 10%;
-  position: absolute;
-  left: 35%;
-  height: 30%;
-  background-color: #f9f7f7;
-  /* overflow-y: auto; */
-  font-family: cursive;
-  border: outset;
-}
-
 .userText {
   left: 35%;
   position: absolute;
   top: 50%;
   width: 30%;
-}
-
-.readybtn {
-  position: absolute;
-  left: 43%;
-  top: 40%;
-  width: 15%;
-  height: 5%;
-  border-radius: 20px !important;
-  background-color: lightskyblue !important;
-  border: none !important;
-  color: black !important;
-  font-family: monospace;
-  font-size: 20px !important;
 }
 
 .submitBtn {

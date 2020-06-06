@@ -1,37 +1,35 @@
 import React from 'react'
-import { fetchPara, userlog } from '../../helpers/api'
+import { fetchPara } from '../../helpers/api'
 import { Button } from 'react-bootstrap'
+import './practise.css'
+
 export default class Practise extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      showPara: false,
-      displaypara: '',
-    }
+  state = {
+    isReady: false,
+    isParaLoading: false,
+    paragraph: '',
   }
 
-  componentDidMount() {
-    this.setState({
-      showPara: false,
-    })
-  }
-
-  parafetch = (event) => {
+  parafetch = async (event) => {
     event.preventDefault()
     this.setState({
-      showPara: true,
+      isParaLoading: true,
     })
-    fetchPara()
-      .then((res) => {
-        console.log(res)
-        const paradetails = res.data.para
-        this.setState({
-          displaypara: paradetails,
-        })
+
+    try {
+      const response = await fetchPara()
+      const { para } = response.data
+      this.setState({
+        paragraph: para,
+        isReady: true,
       })
-      .catch((error) => {
-        console.log(error.response)
-      })
+    } catch (error) {
+      alert('Oops error happened')
+    }
+
+    this.setState({
+      isParaLoading: false,
+    })
   }
 
   submituserText = (event) => {
@@ -39,20 +37,20 @@ export default class Practise extends React.Component {
   }
 
   render() {
-    const { showPara, displaypara } = this.state
+    const { isReady, isParaLoading, paragraph } = this.state
     return (
       <div>
-        {showPara == false && (
+        {!isReady && (
           <div>
             <Button className="readybtn" onClick={this.parafetch}>
-              Ready
+              {isParaLoading ? 'Loading...' : 'Ready'}
             </Button>
           </div>
         )}
 
-        {showPara && (
+        {paragraph && (
           <div>
-            <div className="parafetch">{displaypara}</div>
+            <div className="parafetch">{paragraph}</div>
             <div>
               <input
                 type="text"
@@ -61,12 +59,6 @@ export default class Practise extends React.Component {
                 placeholder="type here"
               />
             </div>
-            <Button
-              type="submit"
-              className="submitBtn"
-              onClick={this.submituserText}>
-              Submit
-            </Button>
           </div>
         )}
       </div>
