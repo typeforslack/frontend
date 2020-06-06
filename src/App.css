@@ -102,3 +102,15 @@
   font-family: monospace;
   font-size: 20px !important;
 }
+
+.practise {
+  position: relative;
+  /* left: -1rem; */
+  right: 2%;
+}
+
+.profileDropdown {
+  left: 98rem;
+  position: absolute !important;
+  bottom: 9%;
+}
