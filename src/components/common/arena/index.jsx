@@ -69,13 +69,42 @@ export default class TypingArena extends React.Component {
 
     if (remaining_letters.length == 0) {
       const secs_taken = this.state.endTime - this.state.startTime
-      const basic_wpm =
-        (this.props.paragraph.split(' ').length * 60) / secs_taken
+
+      const real_words = this.props.paragraph.split(' ')
+      const basic_wpm = (real_words.length * 60) / secs_taken
+
+      const correct_words_arr = typed
+        .filter((obj) => {
+          return obj.letter === ' ' || obj.isCorrect
+        })
+        .map((obj) => obj.letter)
+        .join('')
+        .split(' ')
+
+      let correct_count = 0,
+        wrong_count = 0
+
+      real_words.forEach((word, i) => {
+        if (correct_words_arr[i] === word) {
+          correct_count++
+        } else {
+          wrong_count++
+        }
+      })
+
+      const correct_wpm = (correct_count * 60) / secs_taken
+      const accuracy = Math.round((correct_count / real_words.length) * 100)
 
       return (
         <div>
           <h1>Results</h1>
           <h2>Your WPM: {Math.round(basic_wpm)}</h2>
+          <h2>Correct WPM: {Math.round(correct_wpm)}</h2>
+          <h3>Time Taken: {Math.round(secs_taken)}</h3>
+          <h3>Total Words: {real_words.length}</h3>
+          <h3>Correct Words: {correct_count}</h3>
+          <h3>Wrong Words: {wrong_count}</h3>
+          <h3>Accuracy: {accuracy}</h3>
         </div>
       )
     }
