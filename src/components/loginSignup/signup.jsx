@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { navigate } from '@reach/router'
 import { signup } from '../../helpers/api'
+import { setAuthToken } from '../../helpers/storage'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -57,18 +58,16 @@ export default class Login extends React.Component {
         },
       })
     } else {
-      var obj = {
+      var postData = {
         username: name,
         email: email,
         password: pwd,
       }
 
       try {
-        const result = await signup(obj)
-        if (result.status == 200) {
-          console.log(result)
-          navigate('/')
-        }
+        const response = await signup(postData)
+        setAuthToken(response.data.token)
+        navigate('/')
       } catch (error) {
         console.log(error.response)
         const errorstatus = error.response

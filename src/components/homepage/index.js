@@ -1,27 +1,24 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-import { navigate } from '@reach/router'
+import { Navbar, Nav, NavDropdown, NavItem } from 'react-bootstrap'
+import { navigate, Link } from '@reach/router'
+import { getAuthToken, removeAuthToken } from '../../helpers/storage'
 
 export default class HomePage extends React.Component {
   logout = (event) => {
     event.preventDefault()
-    localStorage.setItem('token', null)
+    removeAuthToken()
     navigate('/login')
   }
 
-  // componentDidMount() {
-  //   if (localStorage.getItem("token") == null) {
-  //     navigate("/login")
-  //   }
-  // }
+  componentDidMount() {
+    if (!getAuthToken()) {
+      setTimeout(async () => {
+        await navigate('/login', { replace: false })
+      }, 10)
+    }
+  }
 
   render() {
-    const getlsval = localStorage.getItem('token')
-    console.log(getlsval)
-    if (getlsval == 'null') {
-      navigate('/login')
-    }
-
     return (
       <div>
         <Navbar bg="light" expand="lg">
@@ -40,9 +37,12 @@ export default class HomePage extends React.Component {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-
-            <Nav.Link href="/practise">Practise</Nav.Link>
-            <Nav.Link href="/challenge">Challenge</Nav.Link>
+            <NavItem>
+              <Link to="/practise">Practise</Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/challenge">Challenge</Link>
+            </NavItem>
           </Navbar.Collapse>
         </Navbar>
       </div>

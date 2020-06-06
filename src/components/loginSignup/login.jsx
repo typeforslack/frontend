@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
-//import 'bootstrap/dist/css/bootstrap.css'
+import { setAuthToken } from '../../helpers/storage'
 
 export default class Login extends Component {
   state = {
@@ -21,7 +21,7 @@ export default class Login extends Component {
     })
   }
 
-  submitForm = (event) => {
+  submitForm = async (event) => {
     event.preventDefault()
 
     var name = this.state.username
@@ -47,33 +47,29 @@ export default class Login extends Component {
         },
       })
     } else {
-      var obj = {
+      var postData = {
         username: name,
         password: pwd,
       }
 
-      login(obj)
-        .then((res) => {
-          console.log(res)
-          this.storeToken(res)
-          navigate('/')
+      try {
+        const response = await login(postData)
+        const token = response.data.token
+        setAuthToken(token)
+        navigate('/')
+      } catch (e) {
+        const { non_field_errors } = e.response.data
+        this.setState({
+          errors: {
+            password: non_field_errors[0],
+          },
         })
-        .catch((error) => {
-          const errorstatus = error.response
-          alert('not signed up')
-          return errorstatus
-        })
+      }
     }
   }
 
   navigateToSignup() {
     return navigate('/signup')
-  }
-
-  storeToken = (res) => {
-    const tokenStore = localStorage.setItem('token', res.data.token)
-
-    return tokenStore
   }
 
   render() {
