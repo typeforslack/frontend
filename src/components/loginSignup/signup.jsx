@@ -13,6 +13,7 @@ export default class Login extends React.Component {
       errors: {
         username: '',
         password: '',
+        email: '',
       },
     }
   }
@@ -24,19 +25,17 @@ export default class Login extends React.Component {
     })
   }
 
-  submitForm = (event) => {
+  submitForm = async (event) => {
     event.preventDefault()
 
-    const name = this.state.username
-    const pwd = this.state.password
-    //const email = this.state.email
+    const { username: name, password: pwd, email } = this.state
 
     if (!pwd && !name) {
       this.setState({
         errors: {
           username: 'Username not entered',
           password: 'Password not entered',
-          // email: 'Email not entered',
+          email: 'Email not entered',
         },
       })
     } else if (!pwd) {
@@ -51,35 +50,57 @@ export default class Login extends React.Component {
           username: 'Username not entered',
         },
       })
-    }
-    // else if (!email) {
-    //   this.setState({
-    //     errors: {
-    //       email: 'Email not entered',
-    //     },
-    //   })
-    // }
-    else {
+    } else if (!email) {
+      this.setState({
+        errors: {
+          email: 'Email not entered',
+        },
+      })
+    } else {
       var obj = {
         username: name,
+        email: email,
         password: pwd,
       }
 
-      signup(obj)
-        .then((res) => {
-          var result = res
+      try {
+        const result = await signup(obj)
+        if (result.status == 200) {
           console.log(result)
-          if (result.data.success == true) {
-            navigate('/home')
+          navigate('/')
+        }
+      } catch (error) {
+        console.log(error.response)
+        const errorstatus = error.response
+        const errorKeys = Object.keys(errorstatus.data.error)
+        const errorvalues = Object.values(errorstatus.data.error)
+        if (errorKeys.length == 1) {
+          if (errorKeys[0] == 'username') {
+            console.log('check1')
+            this.setState({
+              errors: {
+                username: errorvalues[0],
+              },
+            })
           } else {
-            alert(result.data.error.username[0])
+            console.log('check2')
+            this.setState({
+              errors: {
+                email: errorvalues[0],
+              },
+            })
           }
-        })
-        .catch(function (error) {
-          const errorstatus = error.response
-          alert('some error')
-          return errorstatus
-        })
+        } else if (errorKeys.length == 2) {
+          console.log('check3')
+          this.setState({
+            errors: {
+              username: errorvalues[0],
+              email: errorvalues[1],
+            },
+          })
+        }
+        return errorstatus
+      }
     }
   }
 
@@ -90,7 +111,7 @@ export default class Login extends React.Component {
           <Form.Group>
             <Form.Label>Username</Form.Label>
             <br></br>
-            <br></br>
+
             <Form.Control
               id="txtbox"
               type="text"
@@ -103,10 +124,10 @@ export default class Login extends React.Component {
               </h6>
             }
           </Form.Group>
-          {/* <Form.Group >
+          <Form.Group>
             <Form.Label>Email</Form.Label>
             <br></br>
-            <br></br>
+
             <Form.Control
               id="txtbox"
               type="text"
@@ -118,11 +139,11 @@ export default class Login extends React.Component {
                 {this.state.errors.email}
               </h6>
             }
-          </Form.Group> */}
+          </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <br></br>
-            <br></br>
+
             <Form.Control
               id="txtbox"
               type="password"

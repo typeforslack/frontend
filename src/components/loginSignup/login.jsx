@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
-import 'bootstrap/dist/css/bootstrap.css'
+//import 'bootstrap/dist/css/bootstrap.css'
 
 export default class Login extends Component {
   state = {
@@ -53,10 +53,12 @@ export default class Login extends Component {
       }
 
       login(obj)
-        .then(() => {
-          navigate('/home')
+        .then((res) => {
+          console.log(res)
+          this.storeToken(res)
+          navigate('/')
         })
-        .catch(function (error) {
+        .catch((error) => {
           const errorstatus = error.response
           alert('not signed up')
           return errorstatus
@@ -68,18 +70,20 @@ export default class Login extends Component {
     return navigate('/signup')
   }
 
+  storeToken = (res) => {
+    const tokenStore = localStorage.setItem('token', res.data.token)
+
+    return tokenStore
+  }
+
   render() {
     return (
       <div className="login">
-        <h6 style={{ color: 'red', fontSize: '16px' }}>
-          {this.state.errors.username}
-        </h6>
-
         <Form onSubmit={this.submitForm}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
             <br></br>
-            <br></br>
+
             <Form.Control
               id="txtbox"
               type="text"
@@ -95,7 +99,7 @@ export default class Login extends Component {
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <br></br>
-            <br></br>
+
             <Form.Control
               id="txtbox"
               type="password"
