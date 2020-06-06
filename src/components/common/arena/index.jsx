@@ -6,12 +6,20 @@ export default class TypingArena extends React.Component {
     this.state = {
       remaining_letters: this.props.paragraph.split(''),
       typed: [],
+      startTime: null,
+      endTime: null,
     }
   }
 
   compare(userTypedLetter) {
     const newRemaining = [...this.state.remaining_letters]
     const currentLetter = newRemaining.shift()
+
+    if (newRemaining.length === 0) {
+      this.setState({
+        endTime: new Date().getTime() / 1000,
+      })
+    }
 
     const typedObj = {
       letter: currentLetter,
@@ -39,6 +47,12 @@ export default class TypingArena extends React.Component {
   handleKeyDown = (e) => {
     console.log(e.key, e.which)
 
+    if (!this.state.startTime) {
+      this.setState({
+        startTime: new Date().getTime() / 1000,
+      })
+    }
+
     if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
       return
     }
@@ -51,18 +65,30 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { paragraph } = this.state
+    const { remaining_letters, typed } = this.state
+
+    if (remaining_letters.length == 0) {
+      const secs_taken = this.state.endTime - this.state.startTime
+      const basic_wpm =
+        (this.props.paragraph.split(' ').length * 60) / secs_taken
+
+      return (
+        <div>
+          <h1>Results</h1>
+          <h2>Your WPM: {Math.round(basic_wpm)}</h2>
+        </div>
+      )
+    }
+
     return (
       <div>
         <div className="parafetch">
-          {this.state.typed.map((typed) => (
+          {typed.map((typed) => (
             <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
               {typed.letter}
             </span>
           ))}
-          <span className="remaining">
-            {this.state.remaining_letters.join('')}
-          </span>
+          <span className="remaining">{remaining_letters.join('')}</span>
         </div>
         <div>
           <input
