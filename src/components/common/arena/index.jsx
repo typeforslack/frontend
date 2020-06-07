@@ -1,27 +1,25 @@
 import React from 'react'
+import Result from './result'
 import './arena.css'
+
 export default class TypingArena extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      remaining_letters: this.props.paragraph,
+      // more verbal, splitting the para into array of characters
+      remaining_letters: [...this.props.paragraph],
       typed: [],
       startTime: null,
       endTime: null,
+      result: false,
     }
   }
 
   compare(userTypedLetter) {
-    //no need to split remaining_letters becaus the code below itself splits and changes it to array
+    // to copy the state array to prevent mutation
     const newRemaining = [...this.state.remaining_letters]
 
     const currentLetter = newRemaining.shift()
-
-    if (newRemaining.length === 0) {
-      this.setState({
-        endTime: new Date().getTime() / 1000,
-      })
-    }
 
     const typedObj = {
       letter: currentLetter,
@@ -33,9 +31,17 @@ export default class TypingArena extends React.Component {
       typed: newTyped,
       remaining_letters: newRemaining,
     })
+
+    if (newRemaining.length === 0) {
+      this.setState({
+        endTime: new Date().getTime() / 1000,
+        result: true,
+      })
+    }
   }
 
   revert() {
+    // to copy state array to prevent mutation
     const newTyped = [...this.state.typed]
     const currentLetter = newTyped.pop().letter
 
@@ -47,14 +53,12 @@ export default class TypingArena extends React.Component {
   }
 
   handleKeyDown = (e) => {
-    console.log(e.key, e.which)
-
     if (!this.state.startTime) {
       this.setState({
         startTime: new Date().getTime() / 1000,
       })
     }
-
+    // TODO: Find and add other unnecessary symbols too
     if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
       return
     }
@@ -66,50 +70,9 @@ export default class TypingArena extends React.Component {
     }
   }
 
-  wordCalculation = (typed) => {
-    const secs_taken = this.state.endTime - this.state.startTime
-
-    const real_words = this.props.paragraph.split(' ')
-    const basic_wpm = (real_words.length * 60) / secs_taken
-
-    const correct_words_arr = typed
-      .filter((obj) => {
-        return obj.letter === ' ' || obj.isCorrect
-      })
-      .map((obj) => obj.letter)
-      .join('')
-      .split(' ')
-
-    let correct_count = 0,
-      wrong_count = 0
-
-    real_words.forEach((word, i) => {
-      if (correct_words_arr[i] === word) {
-        correct_count++
-      } else {
-        wrong_count++
-      }
-    })
-
-    const correct_wpm = (correct_count * 60) / secs_taken
-    const accuracy = Math.round((correct_count / real_words.length) * 100)
-
-    return (
-      <div>
-        <h1>Results</h1>
-        <h2>Your WPM: {Math.round(basic_wpm)}</h2>
-        <h2>Correct WPM: {Math.round(correct_wpm)}</h2>
-        <h3>Time Taken: {Math.round(secs_taken)}</h3>
-        <h3>Total Words: {real_words.length}</h3>
-        <h3>Correct Words: {correct_count}</h3>
-        <h3>Wrong Words: {wrong_count}</h3>
-        <h3>Accuracy: {accuracy}</h3>
-      </div>
-    )
-  }
-
   render() {
-    const { remaining_letters, typed } = this.state
+    const { remaining_letters, typed, startTime, endTime, result } = this.state
+
     return (
       <div>
         <div className="parafetch">
@@ -122,16 +85,21 @@ export default class TypingArena extends React.Component {
         </div>
         <div>
           <input
-            type="text"
             className="userText"
-            name="usertext"
             placeholder="type here"
             onKeyDown={this.handleKeyDown}
           />
         </div>
-        <div className="results">
-          {remaining_letters == 0 && this.wordCalculation(typed)}
-        </div>
+        {result && (
+          <div className="results">
+            <Result
+              paragraph={this.props.paragraph}
+              typed={typed}
+              startTime={startTime}
+              endTime={endTime}
+            />
+          </div>
+        )}
       </div>
     )
   }
