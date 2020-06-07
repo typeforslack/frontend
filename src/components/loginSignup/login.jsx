@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
+import Loader from '../common/loader'
 
 export default class Login extends Component {
   state = {
@@ -12,6 +13,7 @@ export default class Login extends Component {
       username: '',
       password: '',
     },
+    loader: false,
   }
 
   handleInput = (stateName) => (e) => {
@@ -23,7 +25,9 @@ export default class Login extends Component {
 
   submitForm = async (event) => {
     event.preventDefault()
-
+    this.setState({
+      loader: true,
+    })
     var name = this.state.username
     var pwd = this.state.password
 
@@ -56,12 +60,16 @@ export default class Login extends Component {
         const response = await login(postData)
         const token = response.data.token
         setAuthToken(token)
+        this.setState({
+          loader: false,
+        })
         navigate('/')
       } catch (e) {
         const { non_field_errors } = e.response.data
         this.setState({
           errors: {
             password: non_field_errors[0],
+            loader: false,
           },
         })
       }
@@ -73,49 +81,61 @@ export default class Login extends Component {
   }
 
   render() {
+    const { loader } = this.state
     return (
-      <div className="login">
-        <Form onSubmit={this.submitForm}>
-          <Form.Group>
-            <Form.Label>Username</Form.Label>
-            <br></br>
+      <div>
+        {loader ? (
+          <div>
+            <Loader />
+          </div>
+        ) : (
+          <div className="login">
+            <Form onSubmit={this.submitForm}>
+              <Form.Group>
+                <Form.Label>Username</Form.Label>
+                <br></br>
 
-            <Form.Control
-              id="txtbox"
-              type="text"
-              placeholder="Enter username"
-              onChange={this.handleInput('username')}
-            />
-            {
-              <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.errors.username}
-              </h6>
-            }
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <br></br>
+                <Form.Control
+                  id="txtbox"
+                  type="text"
+                  placeholder="Enter username"
+                  onChange={this.handleInput('username')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.username}
+                  </h6>
+                }
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <br></br>
 
-            <Form.Control
-              id="txtbox"
-              type="password"
-              placeholder="Password"
-              onChange={this.handleInput('password')}
-            />
-            {
-              <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.errors.password}
-              </h6>
-            }
-          </Form.Group>
-          <Button id="submtBtn" type="submit">
-            Submit
-          </Button>
-        </Form>
+                <Form.Control
+                  id="txtbox"
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handleInput('password')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.password}
+                  </h6>
+                }
+              </Form.Group>
+              <Button id="submtBtn" type="submit">
+                Submit
+              </Button>
+            </Form>
 
-        <Button id="signupBtn" type="submit" onClick={this.navigateToSignup}>
-          Signup
-        </Button>
+            <Button
+              id="signupBtn"
+              type="submit"
+              onClick={this.navigateToSignup}>
+              Signup
+            </Button>
+          </div>
+        )}
       </div>
     )
   }
