@@ -9,6 +9,7 @@ export default class Practise extends React.Component {
     isReady: false,
     isParaLoading: false,
     paragraph: '',
+    paraID: null,
   }
 
   parafetch = async (event) => {
@@ -20,9 +21,10 @@ export default class Practise extends React.Component {
     try {
       const response = await fetchPara()
       console.log(response)
-      const { para } = response.data
+      const { para, id } = response.data
       this.setState({
         paragraph: para,
+        paraID: id,
         isReady: true,
       })
     } catch (error) {
@@ -34,12 +36,8 @@ export default class Practise extends React.Component {
     })
   }
 
-  submituserText = (event) => {
-    console.log('will be submitted')
-  }
-
   render() {
-    const { isReady, isParaLoading, paragraph } = this.state
+    const { isReady, isParaLoading, paragraph, paraID } = this.state
     return (
       <div>
         {!isReady && (
@@ -50,7 +48,7 @@ export default class Practise extends React.Component {
           </div>
         )}
 
-        {paragraph && <TypingArena paragraph={paragraph} />}
+        {paragraph && <TypingArena paragraph={paragraph} paraID={paraID} />}
       </div>
     )
   }
