@@ -1,10 +1,10 @@
 import React from 'react'
-
+import './arena.css'
 export default class TypingArena extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      remaining_letters: this.props.paragraph.split(''),
+      remaining_letters: this.props.paragraph,
       typed: [],
       startTime: null,
       endTime: null,
@@ -12,7 +12,9 @@ export default class TypingArena extends React.Component {
   }
 
   compare(userTypedLetter) {
+    //no need to split remaining_letters becaus the code below itself splits and changes it to array
     const newRemaining = [...this.state.remaining_letters]
+
     const currentLetter = newRemaining.shift()
 
     if (newRemaining.length === 0) {
@@ -64,51 +66,50 @@ export default class TypingArena extends React.Component {
     }
   }
 
+  wordCalculation = (typed) => {
+    const secs_taken = this.state.endTime - this.state.startTime
+
+    const real_words = this.props.paragraph.split(' ')
+    const basic_wpm = (real_words.length * 60) / secs_taken
+
+    const correct_words_arr = typed
+      .filter((obj) => {
+        return obj.letter === ' ' || obj.isCorrect
+      })
+      .map((obj) => obj.letter)
+      .join('')
+      .split(' ')
+
+    let correct_count = 0,
+      wrong_count = 0
+
+    real_words.forEach((word, i) => {
+      if (correct_words_arr[i] === word) {
+        correct_count++
+      } else {
+        wrong_count++
+      }
+    })
+
+    const correct_wpm = (correct_count * 60) / secs_taken
+    const accuracy = Math.round((correct_count / real_words.length) * 100)
+
+    return (
+      <div>
+        <h1>Results</h1>
+        <h2>Your WPM: {Math.round(basic_wpm)}</h2>
+        <h2>Correct WPM: {Math.round(correct_wpm)}</h2>
+        <h3>Time Taken: {Math.round(secs_taken)}</h3>
+        <h3>Total Words: {real_words.length}</h3>
+        <h3>Correct Words: {correct_count}</h3>
+        <h3>Wrong Words: {wrong_count}</h3>
+        <h3>Accuracy: {accuracy}</h3>
+      </div>
+    )
+  }
+
   render() {
     const { remaining_letters, typed } = this.state
-
-    if (remaining_letters.length == 0) {
-      const secs_taken = this.state.endTime - this.state.startTime
-
-      const real_words = this.props.paragraph.split(' ')
-      const basic_wpm = (real_words.length * 60) / secs_taken
-
-      const correct_words_arr = typed
-        .filter((obj) => {
-          return obj.letter === ' ' || obj.isCorrect
-        })
-        .map((obj) => obj.letter)
-        .join('')
-        .split(' ')
-
-      let correct_count = 0,
-        wrong_count = 0
-
-      real_words.forEach((word, i) => {
-        if (correct_words_arr[i] === word) {
-          correct_count++
-        } else {
-          wrong_count++
-        }
-      })
-
-      const correct_wpm = (correct_count * 60) / secs_taken
-      const accuracy = Math.round((correct_count / real_words.length) * 100)
-
-      return (
-        <div>
-          <h1>Results</h1>
-          <h2>Your WPM: {Math.round(basic_wpm)}</h2>
-          <h2>Correct WPM: {Math.round(correct_wpm)}</h2>
-          <h3>Time Taken: {Math.round(secs_taken)}</h3>
-          <h3>Total Words: {real_words.length}</h3>
-          <h3>Correct Words: {correct_count}</h3>
-          <h3>Wrong Words: {wrong_count}</h3>
-          <h3>Accuracy: {accuracy}</h3>
-        </div>
-      )
-    }
-
     return (
       <div>
         <div className="parafetch">
@@ -117,7 +118,7 @@ export default class TypingArena extends React.Component {
               {typed.letter}
             </span>
           ))}
-          <span className="remaining">{remaining_letters.join('')}</span>
+          <span className="remaining">{remaining_letters}</span>
         </div>
         <div>
           <input
@@ -127,6 +128,9 @@ export default class TypingArena extends React.Component {
             placeholder="type here"
             onKeyDown={this.handleKeyDown}
           />
+        </div>
+        <div className="results">
+          {remaining_letters == 0 && this.wordCalculation(typed)}
         </div>
       </div>
     )

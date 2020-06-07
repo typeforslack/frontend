@@ -19,6 +19,7 @@ export default class Practise extends React.Component {
 
     try {
       const response = await fetchPara()
+      console.log(response)
       const { para } = response.data
       this.setState({
         paragraph: para,
