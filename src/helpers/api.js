@@ -3,12 +3,10 @@ import { getAuthToken } from './storage'
 const baseUrl = 'https://typeforslack.herokuapp.com'
 
 export async function login(obj) {
-  console.log(obj)
   return await axios.post(`${baseUrl}/api-token-auth/ `, obj)
 }
 
 export function signup(obj) {
-  console.log(obj)
   return axios.post(`${baseUrl}/register `, obj)
 }
 
@@ -28,8 +26,16 @@ export function logout() {
   })
 }
 
-export function userlog() {
+export function getUserlog() {
   return axios.get(`${baseUrl}/userlog `, {
+    headers: {
+      Authorization: `token ${getAuthToken()}`,
+    },
+  })
+}
+
+export function postUserlog(data) {
+  return axios.post(`${baseUrl}/userlog`, data, {
     headers: {
       Authorization: `token ${getAuthToken()}`,
     },

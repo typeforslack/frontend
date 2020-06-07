@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavDropdown, NavItem } from 'react-bootstrap'
 import { navigate, Link } from '@reach/router'
 import { getAuthToken, removeAuthToken } from '../../helpers/storage'
+import { getUserlog } from '../../helpers/api'
 
 export default class HomePage extends React.Component {
   logout = (event) => {
@@ -11,6 +12,7 @@ export default class HomePage extends React.Component {
   }
 
   componentDidMount() {
+    // Authentication hack
     if (!getAuthToken()) {
       setTimeout(async () => {
         await navigate('/login', { replace: false })
@@ -26,7 +28,10 @@ export default class HomePage extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <NavDropdown title="Profile" id="basic-nav-dropdown">
+              <NavDropdown
+                title="Profile"
+                id="basic-nav-dropdown"
+                className="profileDropdown">
                 <NavDropdown.Item href="/setting">
                   Profile Settings
                 </NavDropdown.Item>
@@ -37,12 +42,12 @@ export default class HomePage extends React.Component {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <NavItem>
+            <Nav.Item className="practise">
               <Link to="/practise">Practise</Link>
-            </NavItem>
-            <NavItem>
+            </Nav.Item>
+            <Nav.Item>
               <Link to="/challenge">Challenge</Link>
-            </NavItem>
+            </Nav.Item>
           </Navbar.Collapse>
         </Navbar>
       </div>
