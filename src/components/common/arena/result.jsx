@@ -1,24 +1,16 @@
 import React from 'react'
-import { evaluateTyping } from '../../../helpers/calculations'
 
-export default function Result({ paragraph, typed, startTime, endTime }) {
-  const result = evaluateTyping({
-    paragraph,
-    typed_letters: typed,
-    startTime,
-    endTime,
-  })
-
+export default function Result(props) {
   return (
     <div className="typing-result">
       <h3>Results</h3>
-      <p>Your WPM: {result.basic_wpm}</p>
-      <p>Correct WPM: {result.correct_wpm}</p>
-      <p>Time Taken: {result.secs_taken}s</p>
-      <p>Total Words: {result.total_words}</p>
-      <p>Correct Words: {result.correct_count}</p>
-      <p>Wrong Words: {result.wrong_count}</p>
-      <p>Accuracy: {result.accuracy}%</p>
+      <p>Your WPM: {props.basic_wpm}</p>
+      <p>Correct WPM: {props.correct_wpm}</p>
+      <p>Time Taken: {props.secs_taken}s</p>
+      <p>Total Words: {props.total_words}</p>
+      <p>Correct Words: {props.correct_count}</p>
+      <p>Wrong Words: {props.wrong_count}</p>
+      <p>Accuracy: {props.accuracy}%</p>
     </div>
   )
 }

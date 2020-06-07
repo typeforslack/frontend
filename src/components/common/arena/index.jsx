@@ -1,5 +1,7 @@
 import React from 'react'
 import Result from './result'
+import { evaluateTyping } from '../../../helpers/calculations'
+import { postUserlog } from '../../../helpers/api'
 import './arena.css'
 
 export default class TypingArena extends React.Component {
@@ -10,8 +12,7 @@ export default class TypingArena extends React.Component {
       remaining_letters: [...this.props.paragraph],
       typed: [],
       startTime: null,
-      endTime: null,
-      result: false,
+      result: null,
     }
   }
 
@@ -33,10 +34,7 @@ export default class TypingArena extends React.Component {
     })
 
     if (newRemaining.length === 0) {
-      this.setState({
-        endTime: new Date().getTime() / 1000,
-        result: true,
-      })
+      this.finish()
     }
   }
 
@@ -50,6 +48,34 @@ export default class TypingArena extends React.Component {
       typed: newTyped,
       remaining_letters: newRemaining,
     })
+  }
+
+  async finish() {
+    const endTime = new Date()
+    const result = evaluateTyping({
+      paragraph: this.props.paragraph,
+      typed_letters: this.state.typed,
+      startTime: this.state.startTime,
+      endTime: endTime.getTime() / 1000,
+    })
+
+    this.setState({
+      result,
+    })
+
+    try {
+      await postUserlog({
+        para: this.props.paraID,
+        wpm: result.correct_wpm,
+        taken_at: endTime.toISOString(),
+        correct_words: result.correct_count,
+        wrong_words: result.wrong_count,
+        total_words: result.total_words,
+        accuracy: result.accuracy,
+      })
+    } catch (e) {
+      console.log(e.response)
+    }
   }
 
   handleKeyDown = (e) => {
@@ -71,33 +97,32 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { remaining_letters, typed, startTime, endTime, result } = this.state
+    const { remaining_letters, typed, result } = this.state
 
     return (
       <div>
-        <div className="parafetch">
-          {typed.map((typed) => (
-            <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
-              {typed.letter}
-            </span>
-          ))}
-          <span className="remaining">{remaining_letters}</span>
-        </div>
-        <div>
-          <input
-            className="userText"
-            placeholder="type here"
-            onKeyDown={this.handleKeyDown}
-          />
-        </div>
+        {!result && (
+          <>
+            <div className="parafetch">
+              {typed.map((typed) => (
+                <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
+                  {typed.letter}
+                </span>
+              ))}
+              <span className="remaining">{remaining_letters}</span>
+            </div>
+            <div>
+              <input
+                className="userText"
+                placeholder="type here"
+                onKeyDown={this.handleKeyDown}
+              />
+            </div>
+          </>
+        )}
         {result && (
           <div className="results">
-            <Result
-              paragraph={this.props.paragraph}
-              typed={typed}
-              startTime={startTime}
-              endTime={endTime}
-            />
+            <Result {...result} />
           </div>
         )}
       </div>
