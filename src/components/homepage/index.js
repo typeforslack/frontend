@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavDropdown, NavItem } from 'react-bootstrap'
 import { navigate, Link } from '@reach/router'
 import { getAuthToken, removeAuthToken } from '../../helpers/storage'
+import { getUserlog } from '../../helpers/api'
 
 export default class HomePage extends React.Component {
   logout = (event) => {
@@ -11,6 +12,7 @@ export default class HomePage extends React.Component {
   }
 
   componentDidMount() {
+    // Authentication hack
     if (!getAuthToken()) {
       setTimeout(async () => {
         await navigate('/login', { replace: false })
