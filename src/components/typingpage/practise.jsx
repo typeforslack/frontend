@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchPara } from '../../helpers/api'
-import TypingArena from '../common/arena'
+import TypingArena from '../arena'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 

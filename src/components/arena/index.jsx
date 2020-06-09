@@ -1,7 +1,7 @@
 import React from 'react'
 import Result from './result'
-import { evaluateTyping } from '../../../helpers/calculations'
-import { postUserlog } from '../../../helpers/api'
+import { evaluateTyping } from '../../helpers/calculations'
+import { postUserlog } from '../../helpers/api'
 import './arena.css'
 
 export default class TypingArena extends React.Component {
@@ -16,9 +16,15 @@ export default class TypingArena extends React.Component {
     }
   }
 
+  // resetTextfield = () => {
+  //   console.log('check')
+  //   document.getElementById('textref').value = ''
+  // }
+
   compare(userTypedLetter) {
     // to copy the state array to prevent mutation
     const newRemaining = [...this.state.remaining_letters]
+    console.log(document.getElementById('textref').value)
 
     const currentLetter = newRemaining.shift()
 
@@ -33,6 +39,7 @@ export default class TypingArena extends React.Component {
       remaining_letters: newRemaining,
     })
 
+    console.log(newTyped)
     if (newRemaining.length === 0) {
       this.finish()
     }
@@ -40,7 +47,9 @@ export default class TypingArena extends React.Component {
 
   revert() {
     // to copy state array to prevent mutation
+
     const newTyped = [...this.state.typed]
+
     const currentLetter = newTyped.pop().letter
 
     const newRemaining = [currentLetter, ...this.state.remaining_letters]
@@ -88,8 +97,8 @@ export default class TypingArena extends React.Component {
     if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
       return
     }
-
-    if (e.key === 'Backspace') {
+    console.log(e.key, e.which)
+    if (e.key === 'Backspace' && this.state.typed.length != 0) {
       this.revert()
     } else {
       this.compare(e.key)
@@ -113,6 +122,7 @@ export default class TypingArena extends React.Component {
             </div>
             <div>
               <input
+                id="textref"
                 className="userText"
                 placeholder="type here"
                 onKeyDown={this.handleKeyDown}

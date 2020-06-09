@@ -45,8 +45,11 @@ export default class HomePage extends React.Component {
             <Nav.Item className="practise">
               <Link to="/practise">Practise</Link>
             </Nav.Item>
+            <Nav.Item className="practise">
+              <Link to="/arcade">Arcade</Link>
+            </Nav.Item>
             <Nav.Item>
-              <Link to="/challenge">Challenge</Link>
+              <Link to="/challenge">race</Link>
             </Nav.Item>
           </Navbar.Collapse>
         </Navbar>

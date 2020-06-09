@@ -6,6 +6,7 @@ import HomePage from '../homepage/index'
 import SettingPage from '../settingspage/settings'
 import Practise from '../typingpage/practise'
 import Challenge from '../typingpage/challenge'
+import Arcade from '../arcade/arcade'
 
 export default class RouterPage extends React.Component {
   render() {
@@ -17,6 +18,7 @@ export default class RouterPage extends React.Component {
         <SettingPage path="/setting" />
         <Practise path="/practise" />
         <Challenge path="/challenge" />
+        <Arcade path="/arcade" />
       </Router>
     )
   }
