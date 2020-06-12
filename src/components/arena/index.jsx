@@ -9,10 +9,14 @@ export default class TypingArena extends React.Component {
     super(props)
     this.state = {
       // more verbal, splitting the para into array of characters
+      paraWords: this.props.paragraph.split(' '),
       remaining_letters: [...this.props.paragraph],
       typed: [],
       startTime: null,
       result: null,
+      userwords: [],
+      userwordsjoined: [],
+      correct: '',
     }
   }
 
@@ -23,8 +27,8 @@ export default class TypingArena extends React.Component {
 
   compare(userTypedLetter) {
     // to copy the state array to prevent mutation
+
     const newRemaining = [...this.state.remaining_letters]
-    console.log(document.getElementById('textref').value)
 
     const currentLetter = newRemaining.shift()
 
@@ -38,6 +42,35 @@ export default class TypingArena extends React.Component {
       typed: newTyped,
       remaining_letters: newRemaining,
     })
+
+    if (currentLetter != ' ') {
+      const usertyping = {
+        lettertyping: userTypedLetter,
+      }
+      const wordjoining = [...this.state.userwords, usertyping]
+      this.setState({
+        userwords: wordjoining,
+      })
+    } else {
+      const joinUserWords = [
+        this.state.userwords.map((typed) => typed.lettertyping).join(''),
+      ]
+      const newparawords = [...this.state.paraWords]
+      const currentWord = newparawords.shift()
+      const istrue = joinUserWords.map((item) => {
+        if (joinUserWords == currentWord) {
+          return true
+        } else {
+          return false
+        }
+      })
+
+      this.setState({
+        userwordsjoined: joinUserWords,
+        userwords: [],
+        correct: istrue[0],
+      })
+    }
 
     console.log(newTyped)
     if (newRemaining.length === 0) {
@@ -94,11 +127,11 @@ export default class TypingArena extends React.Component {
       })
     }
     // TODO: Find and add other unnecessary symbols too
-    if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
+    if (['Shift', 'Alt', 'Control', 'Tab'].indexOf(e.key) !== -1) {
       return
     }
     console.log(e.key, e.which)
-    if (e.key === 'Backspace' && this.state.typed.length != 0) {
+    if (e.key === 'Backspace' && this.state.typed.length !== 0) {
       this.revert()
     } else {
       this.compare(e.key)
@@ -106,7 +139,7 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { remaining_letters, typed, result } = this.state
+    const { remaining_letters, typed, result, correct } = this.state
 
     return (
       <div>
@@ -114,10 +147,15 @@ export default class TypingArena extends React.Component {
           <>
             <div className="parafetch">
               {typed.map((typed) => (
-                <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
+                <span
+                  style={{
+                    color: typed.isCorrect ? 'green' : 'red',
+                    backgroundColor: correct ? 'greenYellow' : 'red',
+                  }}>
                   {typed.letter}
                 </span>
               ))}
+
               <span className="remaining">{remaining_letters}</span>
             </div>
             <div>
