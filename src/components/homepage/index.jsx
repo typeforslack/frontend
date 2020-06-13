@@ -1,8 +1,7 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { navigate, Link } from '@reach/router'
 import { getAuthToken, removeAuthToken } from '../../helpers/storage'
-import { getUserlog } from '../../helpers/api'
 
 export default class HomePage extends React.Component {
   logout = (event) => {

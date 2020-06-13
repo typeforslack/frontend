@@ -2,7 +2,6 @@ import React from 'react'
 import { fetchPara } from '../../helpers/api'
 import { Button } from 'react-bootstrap'
 import './arcade.css'
-import Timer from '../Timer/timer'
 
 export default class Arcade extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ export default class Arcade extends React.Component {
   }
 
   countDown = (countdown) => {
-    if (countdown == 0) {
+    if (countdown === 0) {
       clearInterval(this.timer)
     } else {
       let secondleft = countdown - 1
@@ -69,7 +68,7 @@ export default class Arcade extends React.Component {
               </Button>
             </div>
           )}
-          {paragraph && counter != 0 && (
+          {paragraph && counter !== 0 && (
             <div>
               <div className="parafetch">
                 <span className="remaining">{paragraph}</span>
@@ -85,7 +84,7 @@ export default class Arcade extends React.Component {
               Timer:{counter}
             </div>
           )}
-          {counter == 0 && <div>Results</div>}
+          {counter === 0 && <div>Results</div>}
         </div>
       </div>
     )

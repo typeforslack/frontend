@@ -43,7 +43,7 @@ export default class TypingArena extends React.Component {
       remaining_letters: newRemaining,
     })
 
-    if (currentLetter != ' ') {
+    if (currentLetter !== ' ') {
       const usertyping = {
         lettertyping: userTypedLetter,
       }
@@ -58,7 +58,7 @@ export default class TypingArena extends React.Component {
       const newparawords = [...this.state.paraWords]
       const currentWord = newparawords.shift()
       const istrue = joinUserWords.map((item) => {
-        if (joinUserWords == currentWord) {
+        if (joinUserWords === currentWord) {
           return true
         } else {
           return false
