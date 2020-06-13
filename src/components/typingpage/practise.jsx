@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchPara } from '../../helpers/api'
-import TypingArena from '../arena'
+import { PracticeArena } from '../arena'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 
@@ -48,7 +48,7 @@ export default class Practise extends React.Component {
           </div>
         )}
 
-        {paragraph && <TypingArena paragraph={paragraph} paraID={paraID} />}
+        {paragraph && <PracticeArena paragraph={paragraph} paraID={paraID} />}
       </div>
     )
   }

@@ -9,25 +9,16 @@ export default class TypingArena extends React.Component {
     super(props)
     this.state = {
       // more verbal, splitting the para into array of characters
-      paraWords: this.props.paragraph.split(' '),
       remaining_letters: [...this.props.paragraph],
       typed: [],
       startTime: null,
+      countdown: this.props.countdown,
       result: null,
-      userwords: [],
-      userwordsjoined: [],
-      correct: '',
     }
   }
 
-  // resetTextfield = () => {
-  //   console.log('check')
-  //   document.getElementById('textref').value = ''
-  // }
-
   compare(userTypedLetter) {
     // to copy the state array to prevent mutation
-
     const newRemaining = [...this.state.remaining_letters]
 
     const currentLetter = newRemaining.shift()
@@ -43,46 +34,14 @@ export default class TypingArena extends React.Component {
       remaining_letters: newRemaining,
     })
 
-    if (currentLetter !== ' ') {
-      const usertyping = {
-        lettertyping: userTypedLetter,
-      }
-      const wordjoining = [...this.state.userwords, usertyping]
-      this.setState({
-        userwords: wordjoining,
-      })
-    } else {
-      const joinUserWords = [
-        this.state.userwords.map((typed) => typed.lettertyping).join(''),
-      ]
-      const newparawords = [...this.state.paraWords]
-      const currentWord = newparawords.shift()
-      const istrue = joinUserWords.map((item) => {
-        if (joinUserWords === currentWord) {
-          return true
-        } else {
-          return false
-        }
-      })
-
-      this.setState({
-        userwordsjoined: joinUserWords,
-        userwords: [],
-        correct: istrue[0],
-      })
-    }
-
-    console.log(newTyped)
-    if (newRemaining.length === 0) {
+    if (this.shouldFinish()) {
       this.finish()
     }
   }
 
   revert() {
     // to copy state array to prevent mutation
-
     const newTyped = [...this.state.typed]
-
     const currentLetter = newTyped.pop().letter
 
     const newRemaining = [currentLetter, ...this.state.remaining_letters]
@@ -92,13 +51,19 @@ export default class TypingArena extends React.Component {
     })
   }
 
+  shouldFinish() {
+    if (this.state.countdown <= 0) {
+      return true
+    }
+    return false
+  }
+
   async finish() {
     const endTime = new Date()
     const result = evaluateTyping({
       paragraph: this.props.paragraph,
       typed_letters: this.state.typed,
-      startTime: this.state.startTime,
-      endTime: endTime.getTime() / 1000,
+      time_taken: this.props.countdown,
     })
 
     this.setState({
@@ -120,18 +85,33 @@ export default class TypingArena extends React.Component {
     }
   }
 
+  shouldStart() {
+    return !this.timer
+  }
+
+  start() {
+    this.timer = setInterval(() => {
+      if (this.state.countdown <= 0) {
+        clearInterval(this.timer)
+      }
+      this.setState((state) => ({
+        ...state,
+        countdown: state.countdown - 1,
+      }))
+    }, 1000)
+  }
+
   handleKeyDown = (e) => {
-    if (!this.state.startTime) {
-      this.setState({
-        startTime: new Date().getTime() / 1000,
-      })
+    if (this.shouldStart()) {
+      this.start()
     }
+
     // TODO: Find and add other unnecessary symbols too
-    if (['Shift', 'Alt', 'Control', 'Tab'].indexOf(e.key) !== -1) {
+    if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
       return
     }
-    console.log(e.key, e.which)
-    if (e.key === 'Backspace' && this.state.typed.length !== 0) {
+
+    if (e.key === 'Backspace') {
       this.revert()
     } else {
       this.compare(e.key)
@@ -139,37 +119,34 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { remaining_letters, typed, result, correct } = this.state
+    const { remaining_letters, typed, result, countdown } = this.state
 
     return (
-      <div>
+      <div className="arena-container">
         {!result && (
-          <>
-            <div className="parafetch">
+          <div className="arena-action">
+            <div className="arena-para">
               {typed.map((typed) => (
-                <span
-                  style={{
-                    color: typed.isCorrect ? 'green' : 'red',
-                    backgroundColor: correct ? 'greenYellow' : 'red',
-                  }}>
+                <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
                   {typed.letter}
                 </span>
               ))}
-
               <span className="remaining">{remaining_letters}</span>
             </div>
+            <div className="arena-time-remaining">{countdown} secs</div>
             <div>
               <input
-                id="textref"
-                className="userText"
+                className="arena-input"
+                autoComplete={false}
+                autoSave={false}
                 placeholder="type here"
                 onKeyDown={this.handleKeyDown}
               />
             </div>
-          </>
+          </div>
         )}
         {result && (
-          <div className="results">
+          <div className="arena-results">
             <Result {...result} />
           </div>
         )}

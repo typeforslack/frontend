@@ -1,55 +1,57 @@
-// import React from 'react'
-// import { fetchPara } from '../../helpers/api'
-// import Arcade from '../arcade/arcade'
-// import { Button } from 'react-bootstrap'
-// import './practise.css'
+import React from 'react'
+import { fetchPara } from '../../helpers/api'
+import { ArcadeArena } from '../arena'
+import { Button } from 'react-bootstrap'
+import './practise.css'
 
-// export default class Practise extends React.Component {
-//     state = {
-//         isReady: false,
-//         isParaLoading: false,
-//         paragraph: '',
-//         paraID: null,
-//     }
+export default class Arcade extends React.Component {
+  state = {
+    isReady: false,
+    isParaLoading: false,
+    paragraph: '',
+    paraID: null,
+  }
 
-//     parafetch = async (event) => {
-//         event.preventDefault()
-//         this.setState({
-//             isParaLoading: true,
-//         })
+  parafetch = async (event) => {
+    event.preventDefault()
+    this.setState({
+      isParaLoading: true,
+    })
 
-//         try {
-//             const response = await fetchPara()
-//             console.log(response)
-//             const { para, id } = response.data
-//             this.setState({
-//                 paragraph: para,
-//                 paraID: id,
-//                 isReady: true,
-//             })
-//         } catch (error) {
-//             alert('Oops error happened')
-//         }
+    try {
+      const response = await fetchPara()
+      console.log(response)
+      const { para, id } = response.data
+      this.setState({
+        paragraph: para,
+        paraID: id,
+        isReady: true,
+      })
+    } catch (error) {
+      alert('Oops error happened')
+    }
 
-//         this.setState({
-//             isParaLoading: false,
-//         })
-//     }
+    this.setState({
+      isParaLoading: false,
+    })
+  }
 
-//     render() {
-//         const { isReady, isParaLoading, paragraph, paraID } = this.state
-//         return (
-//             <div>
-//                 {!isReady && (
-//                     <div>
-//                         <Button className="readybtn" onClick={this.parafetch}>
-//                             {isParaLoading ? 'Loading...' : 'Ready'}
-//                         </Button>
-//                     </div>
-//                 )}
+  render() {
+    const { isReady, isParaLoading, paragraph, paraID } = this.state
+    return (
+      <div>
+        {!isReady && (
+          <div>
+            <Button className="readybtn" onClick={this.parafetch}>
+              {isParaLoading ? 'Loading...' : 'Ready'}
+            </Button>
+          </div>
+        )}
 
-//                 {paragraph && <Arcade paragraph={paragraph} paraID={paraID} />}
-//             </div>
-//         )
-//     }
-// }
+        {paragraph && (
+          <ArcadeArena paragraph={paragraph} paraID={paraID} countdown={20} />
+        )}
+      </div>
+    )
+  }
+}

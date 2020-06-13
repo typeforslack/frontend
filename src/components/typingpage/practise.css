@@ -11,15 +11,3 @@
   font-family: monospace;
   font-size: 20px !important;
 }
-
-.parafetch {
-  width: 30%;
-  top: 10%;
-  position: absolute;
-  left: 35%;
-  height: 30%;
-  background-color: #f9f7f7;
-  overflow-y: auto;
-  font-family: cursive;
-  border: outset;
-}

@@ -16,16 +16,9 @@ function getCorrectOnlyStringFromTypedLetters(typed_letters) {
     .split(' ')
 }
 
-export function evaluateTyping({
-  paragraph,
-  typed_letters,
-  startTime,
-  endTime,
-}) {
-  const secs_taken = endTime - startTime
-
+export function evaluateTyping({ paragraph, typed_letters, time_taken }) {
   const real_words = paragraph.split(' ')
-  const basic_wpm = Math.round((real_words.length * 60) / secs_taken)
+  const basic_wpm = Math.round((real_words.length * 60) / time_taken)
 
   const correct_words_arr = getCorrectOnlyStringFromTypedLetters(typed_letters)
 
@@ -40,7 +33,7 @@ export function evaluateTyping({
     }
   })
 
-  const correct_wpm = Math.round((correct_count * 60) / secs_taken)
+  const correct_wpm = Math.round((correct_count * 60) / time_taken)
   const accuracy = ((correct_count / real_words.length) * 100).toFixed(2)
 
   return {
@@ -50,6 +43,6 @@ export function evaluateTyping({
     correct_count,
     wrong_count,
     total_words: real_words.length,
-    time_taken: secs_taken,
+    time_taken: time_taken,
   }
 }
