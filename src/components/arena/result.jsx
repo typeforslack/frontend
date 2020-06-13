@@ -14,3 +14,15 @@ export default function Result(props) {
     </div>
   )
 }
+
+export function ResultArcade(props) {
+  return (
+    <div className="typing-result">
+      <h3>Results</h3>
+      <p>Total Words: {props.totalWords}</p>
+      <p>Correct Words: {props.rightCount}</p>
+      <p>Wrong Words: {props.wrongcount}</p>
+      <p>Accuracy: {props.accuracy}%</p>
+    </div>
+  )
+}

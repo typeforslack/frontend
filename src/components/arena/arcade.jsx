@@ -1,8 +1,10 @@
 import React from 'react'
-import Result from './result'
-import { evaluateTyping } from '../../helpers/calculations'
+import { ResultArcade } from './result'
+import { arcadeCalculations } from '../../helpers/arcadecalculations'
 import { postUserlog } from '../../helpers/api'
 import './arena.css'
+import { navigate } from '@reach/router'
+import { Button } from 'react-bootstrap'
 
 export default class TypingArena extends React.Component {
   constructor(props) {
@@ -74,11 +76,7 @@ export default class TypingArena extends React.Component {
 
   async finish() {
     const endTime = new Date()
-    const result = evaluateTyping({
-      paragraph: this.props.paragraph,
-      typed_letters: this.state.typed,
-      time_taken: this.props.countdown,
-    })
+    const result = arcadeCalculations(this.state.paraWords)
 
     this.setState({
       result,
@@ -87,11 +85,11 @@ export default class TypingArena extends React.Component {
     try {
       await postUserlog({
         para: this.props.paraID,
-        wpm: result.correct_wpm,
-        taken_at: endTime.toISOString(),
-        correct_words: result.correct_count,
-        wrong_words: result.wrong_count,
-        total_words: result.total_words,
+        wpm: result.rightCount,
+        taken_at: result.time_taken,
+        correct_words: result.rightCount,
+        wrong_words: result.wrongcount,
+        total_words: result.totalWords,
         accuracy: result.accuracy,
       })
     } catch (e) {
@@ -105,7 +103,7 @@ export default class TypingArena extends React.Component {
 
   start() {
     this.timer = setInterval(() => {
-      if (this.state.countdown <= 0) {
+      if (this.state.countdown <= 0 || this.state.paraWords.length === 0) {
         clearInterval(this.timer)
         if (!this.state.result) {
           this.finish()
@@ -118,22 +116,22 @@ export default class TypingArena extends React.Component {
     }, 1000)
   }
 
-  handleKeyDown = (e) => {
-    if (this.shouldStart()) {
-      this.start()
-    }
+  // handleKeyDown = (e) => {
+  //   if (this.shouldStart()) {
+  //     this.start()
+  //   }
 
-    // TODO: Find and add other unnecessary symbols too
-    if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
-      return
-    }
+  //   // TODO: Find and add other unnecessary symbols too
+  //   if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
+  //     return
+  //   }
 
-    if (e.key === 'Backspace') {
-      this.revert()
-    } else {
-      this.compare(e.key)
-    }
-  }
+  //   if (e.key === 'Backspace') {
+  //     this.revert()
+  //   } else {
+  //     this.compare(e.key)
+  //   }
+  // }
 
   handleOnChange = (e) => {
     const { userInput } = this.state
@@ -160,6 +158,20 @@ export default class TypingArena extends React.Component {
 
     return wordState
   }
+
+  // navigateHome = () => {
+  //   navigate("/")
+  // }
+
+  // renderPageAgain = () => {
+  //   this.setState({
+  //     remaining_letters: [...this.props.paragraph],
+  //     typed: [],
+  //     startTime: null,
+  //     countdown: this.props.countdown,
+  //     result: null,
+  //   })
+  // }
 
   render() {
     const { paraWords, result, countdown, userInput } = this.state
@@ -191,7 +203,9 @@ export default class TypingArena extends React.Component {
         )}
         {result && (
           <div className="arena-results">
-            <Result {...result} />
+            <ResultArcade {...result} />
+            {/* <Button onClick={this.renderPageAgain}>Retry</Button>
+            <Button onClick={this.navigateHome}>Home</Button> */}
           </div>
         )}
       </div>
