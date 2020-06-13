@@ -34,7 +34,7 @@ export default class TypingArena extends React.Component {
       remaining_letters: newRemaining,
     })
 
-    if (this.shouldFinish()) {
+    if (this.shouldFinish(newRemaining)) {
       this.finish()
     }
   }
@@ -51,8 +51,9 @@ export default class TypingArena extends React.Component {
     })
   }
 
-  shouldFinish() {
-    if (this.state.countdown <= 0) {
+  shouldFinish(remaining) {
+    const { countdown } = this.state
+    if (countdown <= 0 || remaining.length === 0) {
       return true
     }
     return false
@@ -93,6 +94,9 @@ export default class TypingArena extends React.Component {
     this.timer = setInterval(() => {
       if (this.state.countdown <= 0) {
         clearInterval(this.timer)
+        if (!this.state.result) {
+          this.finish()
+        }
       }
       this.setState((state) => ({
         ...state,
