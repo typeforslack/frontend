@@ -38,24 +38,24 @@ export default class TypingArena extends React.Component {
     })
 
     // Word correct logic
-    if (userTypedLetter !== ' ') {
-      const userWord = this.state.currentWordUserTyping + userTypedLetter
-      const currentWord = this.state.paraWords[0]
-      const isWordCorrect = currentWord.startsWith(userWord)
-      this.setState({
-        currentWordUserTyping: userWord,
-        isCurrentWordCorrect: isWordCorrect,
-      })
-    } else if (
-      userTypedLetter === ' ' &&
-      this.state.currentWordUserTyping !== ''
-    ) {
+    if (this.state.isCurrentWordCorrect && currentLetter === ' ') {
       const newParaWords = [...this.state.paraWords]
       newParaWords.shift()
       this.setState({
         currentWordUserTyping: '',
         isCurrentWordCorrect: true,
         paraWords: newParaWords,
+      })
+
+      this.resetTextfield()
+    } else {
+      console.log('User typed letter', userTypedLetter)
+      const userWord = this.state.currentWordUserTyping + userTypedLetter
+      const currentWord = this.state.paraWords[0]
+      const isWordCorrect = currentWord.startsWith(userWord)
+      this.setState({
+        currentWordUserTyping: userWord,
+        isCurrentWordCorrect: isWordCorrect,
       })
     }
 
@@ -65,6 +65,9 @@ export default class TypingArena extends React.Component {
   }
 
   revert() {
+    if (this.state.currentWordUserTyping === '') {
+      return
+    }
     // to copy state array to prevent mutation
     const newTyped = [...this.state.typed]
 
@@ -128,19 +131,26 @@ export default class TypingArena extends React.Component {
       this.start()
     }
     // TODO: Find and add other unnecessary symbols too
-    if (['Shift', 'Alt', 'Control', 'Tab', 'Meta'].indexOf(e.key) !== -1) {
+    if (
+      ['Shift', 'Alt', 'Control', 'Tab', 'Meta', 'Backspac'].indexOf(e.key) !==
+      -1
+    ) {
       return
     }
     console.log(e.key, e.which)
     if (e.key === 'Backspace' && this.state.typed.length !== 0) {
       this.revert()
-    } else {
+    }
+
+    if (e.key !== 'Backspace') {
       this.compare(e.key)
     }
   }
 
-  renderHighlightedWords() {
-    return
+  resetTextfield = () => {
+    console.log('Clearing')
+    // Temporary hac
+    document.getElementById('textref').value = ''
   }
 
   render() {
@@ -161,12 +171,6 @@ export default class TypingArena extends React.Component {
                 <span
                   style={{
                     color: typed.isCorrect ? 'green' : 'red',
-                    backgroundColor:
-                      typed.letter != ' '
-                        ? isCurrentWordCorrect
-                          ? 'greenYellow'
-                          : 'rgba(255,7,58,.6)'
-                        : '',
                   }}>
                   {typed.letter}
                 </span>
@@ -177,6 +181,11 @@ export default class TypingArena extends React.Component {
               <input
                 id="textref"
                 className="arena-input"
+                style={{
+                  backgroundColor: !isCurrentWordCorrect
+                    ? 'rgba(255,7,58,.6)'
+                    : '',
+                }}
                 autoComplete="false"
                 placeholder="type here"
                 onKeyDown={this.handleKeyDown}
