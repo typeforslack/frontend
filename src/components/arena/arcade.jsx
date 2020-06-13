@@ -9,7 +9,9 @@ export default class TypingArena extends React.Component {
     super(props)
     this.state = {
       // more verbal, splitting the para into array of characters
-      remaining_letters: [...this.props.paragraph],
+      remaining_words: this.props.paragraph.split(' '),
+      currentWordUserTyping: '',
+      isCorrectWord: true,
       typed: [],
       startTime: null,
       countdown: this.props.countdown,
@@ -19,20 +21,30 @@ export default class TypingArena extends React.Component {
 
   compare(userTypedLetter) {
     // to copy the state array to prevent mutation
-    const newRemaining = [...this.state.remaining_letters]
+    const newRemaining = [...this.state.remaining_words]
+    const currentWord = newRemaining[0]
 
-    const currentLetter = newRemaining.shift()
+    if (userTypedLetter === ' ') {
+      const typedObj = {
+        word: currentWord,
+        isCorrect: currentWord.startsWith(this.state.currentWordUserTyping),
+      }
 
-    const typedObj = {
-      letter: currentLetter,
-      isCorrect: currentLetter === userTypedLetter,
+      newRemaining.shift()
+
+      const newTyped = [...this.state.typed, typedObj]
+      this.setState({
+        typed: newTyped,
+        remaining_words: newRemaining,
+        isCorrectWord: true,
+      })
+    } else {
+      userTypingWord = this.state.currentWordUserTyping + userTypedLetter
+
+      this.setState({
+        isCorrectWord: currentWord.startsWith(userTypingWord),
+      })
     }
-
-    const newTyped = [...this.state.typed, typedObj]
-    this.setState({
-      typed: newTyped,
-      remaining_letters: newRemaining,
-    })
 
     if (this.shouldFinish(newRemaining)) {
       this.finish()
@@ -44,10 +56,10 @@ export default class TypingArena extends React.Component {
     const newTyped = [...this.state.typed]
     const currentLetter = newTyped.pop().letter
 
-    const newRemaining = [currentLetter, ...this.state.remaining_letters]
+    const newRemaining = [currentLetter, ...this.state.remaining_words]
     this.setState({
       typed: newTyped,
-      remaining_letters: newRemaining,
+      remaining_words: newRemaining,
     })
   }
 
@@ -123,7 +135,7 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { remaining_letters, typed, result, countdown } = this.state
+    const { remaining_words, typed, result, countdown } = this.state
 
     return (
       <div className="arena-container">
@@ -132,10 +144,10 @@ export default class TypingArena extends React.Component {
             <div className="arena-para">
               {typed.map((typed) => (
                 <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
-                  {typed.letter}
+                  {typed.word}
                 </span>
               ))}
-              <span className="remaining">{remaining_letters}</span>
+              <span className="remaining">{remaining_words}</span>
             </div>
             <div className="arena-time-remaining">{countdown} secs</div>
             <div>
