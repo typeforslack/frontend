@@ -46,7 +46,10 @@ export default class TypingArena extends React.Component {
         currentWordUserTyping: userWord,
         isCurrentWordCorrect: isWordCorrect,
       })
-    } else {
+    } else if (
+      userTypedLetter === ' ' &&
+      this.state.currentWordUserTyping !== ''
+    ) {
       const newParaWords = [...this.state.paraWords]
       newParaWords.shift()
       this.setState({
@@ -125,7 +128,7 @@ export default class TypingArena extends React.Component {
       this.start()
     }
     // TODO: Find and add other unnecessary symbols too
-    if (['Shift', 'Alt', 'Control', 'Tab'].indexOf(e.key) !== -1) {
+    if (['Shift', 'Alt', 'Control', 'Tab', 'Meta'].indexOf(e.key) !== -1) {
       return
     }
     console.log(e.key, e.which)
@@ -134,6 +137,10 @@ export default class TypingArena extends React.Component {
     } else {
       this.compare(e.key)
     }
+  }
+
+  renderHighlightedWords() {
+    return
   }
 
   render() {
@@ -148,14 +155,18 @@ export default class TypingArena extends React.Component {
       <div className="arena-container">
         {!result && (
           <div className="arena-action">
+            <div className="arena-word-highlight"></div>
             <div className="arena-para">
               {typed.map((typed) => (
                 <span
                   style={{
                     color: typed.isCorrect ? 'green' : 'red',
-                    backgroundColor: isCurrentWordCorrect
-                      ? 'greenYellow'
-                      : 'red',
+                    backgroundColor:
+                      typed.letter != ' '
+                        ? isCurrentWordCorrect
+                          ? 'greenYellow'
+                          : 'rgba(255,7,58,.6)'
+                        : '',
                   }}>
                   {typed.letter}
                 </span>
