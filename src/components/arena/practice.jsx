@@ -9,20 +9,19 @@ export default class TypingArena extends React.Component {
     super(props)
     this.state = {
       // more verbal, splitting the para into array of characters
-      paraWords: this.props.paragraph.split(' '),
       remaining_letters: [...this.props.paragraph],
       typed: [],
       startTime: null,
       result: null,
-      userwords: [],
-      userwordsjoined: [],
-      correct: '',
+
+      paraWords: this.props.paragraph.split(' '),
+      currentWordUserTyping: [],
+      isCurrentWordCorrect: true,
     }
   }
 
   compare(userTypedLetter) {
     // to copy the state array to prevent mutation
-
     const newRemaining = [...this.state.remaining_letters]
 
     const currentLetter = newRemaining.shift()
@@ -38,36 +37,25 @@ export default class TypingArena extends React.Component {
       remaining_letters: newRemaining,
     })
 
-    if (currentLetter !== ' ') {
-      const usertyping = {
-        lettertyping: userTypedLetter,
-      }
-      const wordjoining = [...this.state.userwords, usertyping]
+    // Word correct logic
+    if (userTypedLetter !== ' ') {
+      const userWord = this.state.currentWordUserTyping + userTypedLetter
+      const currentWord = this.state.paraWords[0]
+      const isWordCorrect = currentWord.startsWith(userWord)
       this.setState({
-        userwords: wordjoining,
+        currentWordUserTyping: userWord,
+        isCurrentWordCorrect: isWordCorrect,
       })
     } else {
-      const joinUserWords = [
-        this.state.userwords.map((typed) => typed.lettertyping).join(''),
-      ]
-      const newparawords = [...this.state.paraWords]
-      const currentWord = newparawords.shift()
-      const istrue = joinUserWords.map((item) => {
-        if (joinUserWords === currentWord) {
-          return true
-        } else {
-          return false
-        }
-      })
-
+      const newParaWords = [...this.state.paraWords]
+      newParaWords.shift()
       this.setState({
-        userwordsjoined: joinUserWords,
-        userwords: [],
-        correct: istrue[0],
+        currentWordUserTyping: '',
+        isCurrentWordCorrect: true,
+        paraWords: newParaWords,
       })
     }
 
-    console.log(newTyped)
     if (newRemaining.length === 0) {
       this.finish()
     }
@@ -83,6 +71,15 @@ export default class TypingArena extends React.Component {
     this.setState({
       typed: newTyped,
       remaining_letters: newRemaining,
+    })
+
+    const userWord = this.state.currentWordUserTyping
+    const newCurrentWord = userWord.substr(0, userWord.length - 1)
+    const currentWord = this.state.paraWords[0]
+    const isWordCorrect = currentWord.startsWith(newCurrentWord)
+    this.setState({
+      currentWordUserTyping: newCurrentWord,
+      isCurrentWordCorrect: isWordCorrect,
     })
   }
 
@@ -140,7 +137,12 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { remaining_letters, typed, result, correct } = this.state
+    const {
+      remaining_letters,
+      typed,
+      result,
+      isCurrentWordCorrect,
+    } = this.state
 
     return (
       <div className="arena-container">
@@ -151,7 +153,9 @@ export default class TypingArena extends React.Component {
                 <span
                   style={{
                     color: typed.isCorrect ? 'green' : 'red',
-                    backgroundColor: correct ? 'greenYellow' : 'red',
+                    backgroundColor: isCurrentWordCorrect
+                      ? 'greenYellow'
+                      : 'red',
                   }}>
                   {typed.letter}
                 </span>
@@ -162,8 +166,7 @@ export default class TypingArena extends React.Component {
               <input
                 id="textref"
                 className="arena-input"
-                autoComplete={false}
-                autoSave={false}
+                autoComplete="false"
                 placeholder="type here"
                 onKeyDown={this.handleKeyDown}
               />
