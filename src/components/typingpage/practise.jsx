@@ -48,7 +48,13 @@ export default class Practise extends React.Component {
           </div>
         )}
 
-        {paragraph && <PracticeArena paragraph={paragraph} paraID={paraID} />}
+        {paragraph && (
+          <PracticeArena
+            paragraph={paragraph}
+            paraID={paraID}
+            strictMode={true}
+          />
+        )}
       </div>
     )
   }

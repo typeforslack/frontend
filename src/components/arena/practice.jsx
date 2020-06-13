@@ -148,6 +148,9 @@ export default class TypingArena extends React.Component {
   }
 
   resetTextfield = () => {
+    if (this.props.strictMode) {
+      return
+    }
     console.log('Clearing')
     // Temporary hac
     document.getElementById('textref').value = ''
@@ -182,9 +185,10 @@ export default class TypingArena extends React.Component {
                 id="textref"
                 className="arena-input"
                 style={{
-                  backgroundColor: !isCurrentWordCorrect
-                    ? 'rgba(255,7,58,.6)'
-                    : '',
+                  backgroundColor:
+                    !isCurrentWordCorrect && !this.props.strictMode
+                      ? 'rgba(255,7,58,.6)'
+                      : '',
                 }}
                 autoComplete="false"
                 placeholder="type here"
