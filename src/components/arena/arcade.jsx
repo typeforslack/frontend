@@ -7,46 +7,47 @@ import './arena.css'
 export default class TypingArena extends React.Component {
   constructor(props) {
     super(props)
+
+    const wordObjs = this.props.paragraph
+      .split(' ')
+      .map((word) => ({ word, state: 'untyped' }))
+
     this.state = {
-      // more verbal, splitting the para into array of characters
-      remaining_words: this.props.paragraph.split(' '),
-      currentWordUserTyping: '',
-      isCorrectWord: true,
-      typed: [],
-      startTime: null,
+      paraWords: wordObjs,
+      currentWordIdx: 0,
+      userInput: '',
       countdown: this.props.countdown,
       result: null,
     }
   }
 
-  compare(userTypedLetter) {
-    // to copy the state array to prevent mutation
-    const newRemaining = [...this.state.remaining_words]
-    const currentWord = newRemaining[0]
+  compare(userInput) {
+    const { paraWords, currentWordIdx } = this.state
+    console.log('In compare: ', userInput)
 
-    if (userTypedLetter === ' ') {
-      const typedObj = {
-        word: currentWord,
-        isCorrect: currentWord.startsWith(this.state.currentWordUserTyping),
-      }
-
-      newRemaining.shift()
-
-      const newTyped = [...this.state.typed, typedObj]
+    if (userInput[userInput.length - 1] === ' ') {
+      const newIdx = currentWordIdx + 1
       this.setState({
-        typed: newTyped,
-        remaining_words: newRemaining,
-        isCorrectWord: true,
+        userInput: '',
+        currentWordIdx: newIdx,
       })
     } else {
-      userTypingWord = this.state.currentWordUserTyping + userTypedLetter
+      const currentWord = paraWords[currentWordIdx]
+      console.log('CHECK: ', currentWord.word, userInput)
+      currentWord.state = currentWord.word.startsWith(userInput)
+        ? 'correct'
+        : 'incorrect'
 
       this.setState({
-        isCorrectWord: currentWord.startsWith(userTypingWord),
+        paraWords: [
+          ...paraWords.slice(0, currentWordIdx),
+          currentWord,
+          ...paraWords.slice(currentWordIdx + 1, paraWords.length),
+        ],
       })
     }
 
-    if (this.shouldFinish(newRemaining)) {
+    if (this.shouldFinish()) {
       this.finish()
     }
   }
@@ -63,9 +64,9 @@ export default class TypingArena extends React.Component {
     })
   }
 
-  shouldFinish(remaining) {
+  shouldFinish() {
     const { countdown } = this.state
-    if (countdown <= 0 || remaining.length === 0) {
+    if (countdown <= 0) {
       return true
     }
     return false
@@ -134,29 +135,56 @@ export default class TypingArena extends React.Component {
     }
   }
 
+  handleOnChange = (e) => {
+    const { userInput } = this.state
+    if (e.target.value === ' ' && userInput === '') {
+      console.log('Blooop pressing space when empty')
+      return
+    }
+
+    this.setState({
+      userInput: e.target.value,
+    })
+
+    if (this.shouldStart()) {
+      this.start()
+    }
+
+    this.compare(e.target.value)
+  }
+
+  getClassesForWord = (idx, wordState) => {
+    if (idx === this.state.currentWordIdx) {
+      return wordState + ' current'
+    }
+
+    return wordState
+  }
+
   render() {
-    const { remaining_words, typed, result, countdown } = this.state
+    const { paraWords, result, countdown, userInput } = this.state
 
     return (
       <div className="arena-container">
         {!result && (
           <div className="arena-action">
             <div className="arena-para">
-              {typed.map((typed) => (
-                <span style={{ color: typed.isCorrect ? 'green' : 'red' }}>
-                  {typed.word}
-                </span>
+              {paraWords.map((wordObj, idx) => (
+                <>
+                  <span className={this.getClassesForWord(idx, wordObj.state)}>
+                    {wordObj.word}
+                  </span>{' '}
+                </>
               ))}
-              <span className="remaining">{remaining_words}</span>
             </div>
             <div className="arena-time-remaining">{countdown} secs</div>
             <div>
               <input
                 className="arena-input"
+                value={userInput}
+                onChange={this.handleOnChange}
                 autoComplete={false}
-                autoSave={false}
-                placeholder="type here"
-                onKeyDown={this.handleKeyDown}
+                placeholder="Type here"
               />
             </div>
           </div>
