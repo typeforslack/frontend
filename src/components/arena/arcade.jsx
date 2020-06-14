@@ -1,10 +1,8 @@
 import React from 'react'
-import { ResultArcade } from './result'
-import { arcadeCalculations } from '../../helpers/arcadecalculations'
+import Result from './result'
+import { evaluateArcade } from '../../helpers/calculations'
 import { postUserlog } from '../../helpers/api'
 import './arena.css'
-import { navigate } from '@reach/router'
-import { Button } from 'react-bootstrap'
 
 export default class TypingArena extends React.Component {
   constructor(props) {
@@ -13,7 +11,7 @@ export default class TypingArena extends React.Component {
       paraWords: this.wordObj(),
       currentWordIdx: 0,
       userInput: '',
-      countdown: 10,
+      countdown: this.props.countdown,
       result: null,
     }
     this.timer = false
@@ -76,7 +74,7 @@ export default class TypingArena extends React.Component {
   }
 
   async finish() {
-    const result = arcadeCalculations(this.state.paraWords)
+    const result = evaluateArcade(this.state.paraWords, this.props.countdown)
     this.timer = false
     this.setState({
       result,
@@ -141,11 +139,7 @@ export default class TypingArena extends React.Component {
     return wordState
   }
 
-  navigateHome = () => {
-    navigate('/')
-  }
-
-  renderPageAgain = () => {
+  resetState = () => {
     this.setState({
       paraWords: this.wordObj(),
       currentWordIdx: 0,
@@ -186,9 +180,7 @@ export default class TypingArena extends React.Component {
         )}
         {result && (
           <div className="arena-results">
-            <ResultArcade {...result} />
-            <Button onClick={this.renderPageAgain}>Retry</Button>
-            <Button onClick={this.navigateHome}>Home</Button>
+            <Result retry={this.resetState} {...result} />
           </div>
         )}
       </div>

@@ -3,8 +3,6 @@ import Result from './result'
 import { evaluateTyping } from '../../helpers/calculations'
 import { postUserlog } from '../../helpers/api'
 import './arena.css'
-import { navigate } from '@reach/router'
-import { Button } from 'react-bootstrap'
 
 export default class TypingArena extends React.Component {
   constructor(props) {
@@ -106,11 +104,11 @@ export default class TypingArena extends React.Component {
     try {
       await postUserlog({
         para: this.props.paraID,
-        wpm: result.correct_wpm,
+        wpm: result.correctWpm,
         taken_at: endTime.toISOString(),
-        correct_words: result.correct_count,
-        wrong_words: result.wrong_count,
-        total_words: result.total_words,
+        correct_words: result.correctCount,
+        wrong_words: result.wrongCount,
+        total_words: result.totalWords,
         accuracy: result.accuracy,
       })
     } catch (e) {
@@ -155,11 +153,7 @@ export default class TypingArena extends React.Component {
     document.getElementById('textref').value = ''
   }
 
-  navigateHome = () => {
-    navigate('/')
-  }
-
-  renderPageAgain = () => {
+  resetState = () => {
     this.setState({
       remaining_letters: [...this.props.paragraph],
       typed: [],
@@ -215,9 +209,7 @@ export default class TypingArena extends React.Component {
         )}
         {result && (
           <div className="arena-results">
-            <Result {...result} />
-            <Button onClick={this.renderPageAgain}>Retry</Button>
-            <Button onClick={this.navigateHome}>Home</Button>
+            <Result {...result} retry={this.resetState} />
           </div>
         )}
       </div>

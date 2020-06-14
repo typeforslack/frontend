@@ -18,31 +18,57 @@ function getCorrectOnlyStringFromTypedLetters(typed_letters) {
 
 export function evaluateTyping({ paragraph, typed_letters, time_taken }) {
   const real_words = paragraph.split(' ')
-  const basic_wpm = Math.round((real_words.length * 60) / time_taken)
+  const timeTaken = Math.round(time_taken)
+  const basicWpm = Math.round((real_words.length * 60) / timeTaken)
 
   const correct_words_arr = getCorrectOnlyStringFromTypedLetters(typed_letters)
 
-  let correct_count = 0,
-    wrong_count = 0
+  let correctCount = 0,
+    wrongCount = 0
 
   real_words.forEach((word, i) => {
     if (correct_words_arr[i] === word) {
-      correct_count++
+      correctCount++
     } else {
-      wrong_count++
+      wrongCount++
     }
   })
 
-  const correct_wpm = Math.round((correct_count * 60) / time_taken)
-  const accuracy = ((correct_count / real_words.length) * 100).toFixed(2)
+  const correctWpm = Math.round((correctCount * 60) / timeTaken)
+  const accuracy = ((correctCount / real_words.length) * 100).toFixed(2)
 
   return {
-    basic_wpm,
-    correct_wpm,
+    basicWpm,
+    correctWpm,
     accuracy,
-    correct_count,
-    wrong_count,
-    total_words: real_words.length,
-    time_taken: time_taken,
+    correctCount,
+    wrongCount,
+    totalWords: real_words.length,
+    timeTaken: timeTaken,
+  }
+}
+
+export function evaluateArcade(parawords, seconds) {
+  const rightTyped = parawords.filter((type) => {
+    return type.state === 'correct'
+  })
+  const correctCount = rightTyped.length
+
+  const wrongTyped = parawords.filter((type) => {
+    return type.state === 'incorrect'
+  })
+  const wrongCount = wrongTyped.length
+
+  const totalWords = correctCount + wrongCount
+  const accuracy = Math.round((correctCount / totalWords) * 100, 2)
+  const correctWpm = Math.round((correctCount * 60) / seconds)
+  console.log('Evaluate Arcade: ', parawords, seconds)
+  return {
+    correctCount,
+    wrongCount,
+    accuracy,
+    timeTaken: seconds,
+    totalWords,
+    correctWpm,
   }
 }
