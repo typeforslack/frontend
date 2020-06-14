@@ -32,27 +32,34 @@ export default class TypingArena extends React.Component {
 
   compare(userInput) {
     const { paraWords, currentWordIdx } = this.state
+    const currentWord = paraWords[currentWordIdx]
+    let newIdx = currentWordIdx
+
     if (userInput[userInput.length - 1] === ' ') {
-      const newIdx = currentWordIdx + 1
-      this.setState({
-        userInput: '',
-        currentWordIdx: newIdx,
-      })
+      currentWord.state =
+        currentWord.word === userInput.substr(0, userInput.length - 1)
+          ? 'correct'
+          : 'incorrect'
+
+      userInput = ''
+      newIdx = currentWordIdx + 1
     } else {
-      const currentWord = paraWords[currentWordIdx]
-
       currentWord.state = currentWord.word.startsWith(userInput)
-        ? 'correct'
+        ? 'typing'
         : 'incorrect'
-
-      this.setState({
-        paraWords: [
-          ...paraWords.slice(0, currentWordIdx),
-          currentWord,
-          ...paraWords.slice(currentWordIdx + 1, paraWords.length),
-        ],
-      })
     }
+
+    console.log(userInput, currentWord.word, currentWord.state)
+
+    this.setState({
+      paraWords: [
+        ...paraWords.slice(0, currentWordIdx),
+        currentWord,
+        ...paraWords.slice(currentWordIdx + 1, paraWords.length),
+      ],
+      userInput,
+      currentWordIdx: newIdx,
+    })
 
     if (this.shouldFinish()) {
       this.finish()
@@ -72,8 +79,8 @@ export default class TypingArena extends React.Component {
   }
 
   shouldFinish() {
-    const { countdown } = this.state
-    if (countdown === 0) {
+    const { countdown, currentWordIdx, paraWords } = this.state
+    if (countdown === 0 || currentWordIdx === paraWords.length + 1) {
       return true
     }
     return false
@@ -179,7 +186,7 @@ export default class TypingArena extends React.Component {
                 className="arena-input"
                 value={userInput}
                 onChange={this.handleOnChange}
-                autoComplete={false}
+                autoComplete="false"
                 placeholder="Type here"
                 autoFocus={true}
               />
