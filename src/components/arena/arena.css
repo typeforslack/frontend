@@ -2,13 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
 }
 
 .arena-action {
   padding: 30px;
   border: 2px dashed #cacaca;
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

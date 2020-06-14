@@ -48,9 +48,7 @@ export default class Arcade extends React.Component {
           </div>
         )}
 
-        {paragraph && (
-          <ArcadeArena paragraph={paragraph} paraID={paraID} countdown={60} />
-        )}
+        {paragraph && <ArcadeArena paragraph={paragraph} paraID={paraID} />}
       </div>
     )
   }

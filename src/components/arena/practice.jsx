@@ -3,6 +3,8 @@ import Result from './result'
 import { evaluateTyping } from '../../helpers/calculations'
 import { postUserlog } from '../../helpers/api'
 import './arena.css'
+import { navigate } from '@reach/router'
+import { Button } from 'react-bootstrap'
 
 export default class TypingArena extends React.Component {
   constructor(props) {
@@ -82,7 +84,7 @@ export default class TypingArena extends React.Component {
     const userWord = this.state.currentWordUserTyping
     const newCurrentWord = userWord.substr(0, userWord.length - 1)
     const currentWord = this.state.paraWords[0]
-    const isWordCorrect = Boolean(currentWord === newCurrentWord)
+    const isWordCorrect = currentWord.startsWith(newCurrentWord)
     this.setState({
       currentWordUserTyping: newCurrentWord,
       isCurrentWordCorrect: isWordCorrect,
@@ -156,6 +158,23 @@ export default class TypingArena extends React.Component {
     document.getElementById('textref').value = ''
   }
 
+  navigateHome = () => {
+    navigate('/')
+  }
+
+  renderPageAgain = () => {
+    this.setState({
+      remaining_letters: [...this.props.paragraph],
+      typed: [],
+      startTime: null,
+      result: null,
+
+      paraWords: this.props.paragraph.split(' '),
+      currentWordUserTyping: [],
+      isCurrentWordCorrect: '',
+    })
+  }
+
   render() {
     const {
       remaining_letters,
@@ -200,6 +219,8 @@ export default class TypingArena extends React.Component {
         {result && (
           <div className="arena-results">
             <Result {...result} />
+            <Button onClick={this.renderPageAgain}>Retry</Button>
+            <Button onClick={this.navigateHome}>Home</Button>
           </div>
         )}
       </div>

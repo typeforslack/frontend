@@ -9,24 +9,25 @@ import { Button } from 'react-bootstrap'
 export default class TypingArena extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      paraWords: this.wordObj(),
+      currentWordIdx: 0,
+      userInput: '',
+      countdown: 10,
+      result: null,
+    }
+    this.timer = false
+  }
 
+  wordObj = () => {
     const wordObjs = this.props.paragraph
       .split(' ')
       .map((word) => ({ word, state: 'untyped' }))
-
-    this.state = {
-      paraWords: wordObjs,
-      currentWordIdx: 0,
-      userInput: '',
-      countdown: this.props.countdown,
-      result: null,
-    }
+    return wordObjs
   }
 
   compare(userInput) {
     const { paraWords, currentWordIdx } = this.state
-    console.log('In compare: ', userInput)
-
     if (userInput[userInput.length - 1] === ' ') {
       const newIdx = currentWordIdx + 1
       this.setState({
@@ -35,7 +36,7 @@ export default class TypingArena extends React.Component {
       })
     } else {
       const currentWord = paraWords[currentWordIdx]
-      console.log('CHECK: ', currentWord.word, userInput)
+
       currentWord.state = currentWord.word.startsWith(userInput)
         ? 'correct'
         : 'incorrect'
@@ -68,7 +69,7 @@ export default class TypingArena extends React.Component {
 
   shouldFinish() {
     const { countdown } = this.state
-    if (countdown <= 0) {
+    if (countdown == 0) {
       return true
     }
     return false
@@ -77,7 +78,7 @@ export default class TypingArena extends React.Component {
   async finish() {
     const endTime = new Date()
     const result = arcadeCalculations(this.state.paraWords)
-
+    this.timer = false
     this.setState({
       result,
     })
@@ -98,6 +99,7 @@ export default class TypingArena extends React.Component {
   }
 
   shouldStart() {
+    console.log(this.timer)
     return !this.timer
   }
 
@@ -116,34 +118,15 @@ export default class TypingArena extends React.Component {
     }, 1000)
   }
 
-  // handleKeyDown = (e) => {
-  //   if (this.shouldStart()) {
-  //     this.start()
-  //   }
-
-  //   // TODO: Find and add other unnecessary symbols too
-  //   if (['Shift', 'Alt', 'Ctrl'].indexOf(e.key) !== -1) {
-  //     return
-  //   }
-
-  //   if (e.key === 'Backspace') {
-  //     this.revert()
-  //   } else {
-  //     this.compare(e.key)
-  //   }
-  // }
-
   handleOnChange = (e) => {
     const { userInput } = this.state
     if (e.target.value === ' ' && userInput === '') {
-      console.log('Blooop pressing space when empty')
       return
     }
 
     this.setState({
       userInput: e.target.value,
     })
-
     if (this.shouldStart()) {
       this.start()
     }
@@ -159,19 +142,19 @@ export default class TypingArena extends React.Component {
     return wordState
   }
 
-  // navigateHome = () => {
-  //   navigate("/")
-  // }
+  navigateHome = () => {
+    navigate('/')
+  }
 
-  // renderPageAgain = () => {
-  //   this.setState({
-  //     remaining_letters: [...this.props.paragraph],
-  //     typed: [],
-  //     startTime: null,
-  //     countdown: this.props.countdown,
-  //     result: null,
-  //   })
-  // }
+  renderPageAgain = () => {
+    this.setState({
+      paraWords: this.wordObj(),
+      currentWordIdx: 0,
+      userInput: '',
+      countdown: 10,
+      result: null,
+    })
+  }
 
   render() {
     const { paraWords, result, countdown, userInput } = this.state
@@ -197,6 +180,7 @@ export default class TypingArena extends React.Component {
                 onChange={this.handleOnChange}
                 autoComplete={false}
                 placeholder="Type here"
+                autoFocus={true}
               />
             </div>
           </div>
@@ -204,8 +188,8 @@ export default class TypingArena extends React.Component {
         {result && (
           <div className="arena-results">
             <ResultArcade {...result} />
-            {/* <Button onClick={this.renderPageAgain}>Retry</Button>
-            <Button onClick={this.navigateHome}>Home</Button> */}
+            <Button onClick={this.renderPageAgain}>Retry</Button>
+            <Button onClick={this.navigateHome}>Home</Button>
           </div>
         )}
       </div>
