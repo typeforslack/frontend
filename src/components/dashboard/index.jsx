@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-// import { LineChart } from './lineChart'
-// import { Card } from "./card";
+import LineChart from '../common/lineChart'
+// import Card from "./card";
 
 export default class Dashboard extends Component {
   state = {}
 
   render() {
-    return(
-      <>
-      </>
-    )
+    return <LineChart width={460} height={400} />
   }
 }
