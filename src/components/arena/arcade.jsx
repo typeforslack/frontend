@@ -11,10 +11,16 @@ export default class TypingArena extends React.Component {
       paraWords: this.wordObj(),
       currentWordIdx: 0,
       userInput: '',
-      countdown: this.props.countdown,
+      countdown: this.getCountdown(),
       result: null,
     }
     this.timer = false
+  }
+
+  getCountdown() {
+    const url = new URL(window.location.href)
+    const timer = parseInt(url.searchParams.get('timer'))
+    return isNaN(timer) ? this.props.countdown : timer
   }
 
   wordObj = () => {
@@ -74,7 +80,7 @@ export default class TypingArena extends React.Component {
   }
 
   async finish() {
-    const result = evaluateArcade(this.state.paraWords, this.props.countdown)
+    const result = evaluateArcade(this.state.paraWords, this.getCountdown())
     this.timer = false
     this.setState({
       result,
@@ -84,7 +90,7 @@ export default class TypingArena extends React.Component {
       await postUserlog({
         para: this.props.paraID,
         wpm: result.rightCount,
-        taken_at: result.time_taken,
+        taken_at: result.timeTaken,
         correct_words: result.rightCount,
         wrong_words: result.wrongcount,
         total_words: result.totalWords,
@@ -107,7 +113,9 @@ export default class TypingArena extends React.Component {
         if (!this.state.result) {
           this.finish()
         }
+        return
       }
+
       this.setState((state) => ({
         ...state,
         countdown: state.countdown - 1,
@@ -144,7 +152,7 @@ export default class TypingArena extends React.Component {
       paraWords: this.wordObj(),
       currentWordIdx: 0,
       userInput: '',
-      countdown: 10,
+      countdown: this.getCountdown(),
       result: null,
     })
   }
