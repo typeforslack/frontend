@@ -18,7 +18,7 @@ export default class TypingArena extends React.Component {
 
       paraWords: this.props.paragraph.split(' '),
       currentWordUserTyping: [],
-      isCurrentWordCorrect: '',
+      isCurrentWordCorrect: true,
     }
   }
 
@@ -45,7 +45,7 @@ export default class TypingArena extends React.Component {
       newParaWords.shift()
       this.setState({
         currentWordUserTyping: '',
-        isCurrentWordCorrect: '',
+        isCurrentWordCorrect: true,
         paraWords: newParaWords,
       })
 
@@ -168,7 +168,7 @@ export default class TypingArena extends React.Component {
 
       paraWords: this.props.paragraph.split(' '),
       currentWordUserTyping: [],
-      isCurrentWordCorrect: '',
+      isCurrentWordCorrect: true,
     })
   }
 

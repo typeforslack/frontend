@@ -69,14 +69,13 @@ export default class TypingArena extends React.Component {
 
   shouldFinish() {
     const { countdown } = this.state
-    if (countdown == 0) {
+    if (countdown === 0) {
       return true
     }
     return false
   }
 
   async finish() {
-    const endTime = new Date()
     const result = arcadeCalculations(this.state.paraWords)
     this.timer = false
     this.setState({
