@@ -132,8 +132,9 @@ export default class LineChart extends Component {
             stroke="#ffab00"
             strokeWidth="3"
           />
-          {data.map((item) => (
+          {data.map((item, i) => (
             <circle
+              key={i}
               className="dashboard-chart-circle"
               transform={`translate(${marginLeft}, ${PADDING_LEFT})`}
               r="5"
