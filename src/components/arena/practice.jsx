@@ -49,7 +49,6 @@ export default class TypingArena extends React.Component {
 
       this.resetTextfield()
     } else {
-      console.log('User typed letter', userTypedLetter)
       const userWord = this.state.currentWordUserTyping + userTypedLetter
       const currentWord = this.state.paraWords[0]
       const isWordCorrect = currentWord.startsWith(userWord)
@@ -60,7 +59,9 @@ export default class TypingArena extends React.Component {
     }
 
     if (newRemaining.length === 0) {
-      this.finish()
+      setTimeout(() => {
+        this.finish()
+      }, 1000)
     }
   }
 
@@ -91,6 +92,7 @@ export default class TypingArena extends React.Component {
 
   async finish() {
     const endTime = new Date()
+
     const result = evaluateTyping({
       paragraph: this.props.paragraph,
       typed_letters: this.state.typed,
@@ -175,43 +177,49 @@ export default class TypingArena extends React.Component {
     } = this.state
 
     return (
-      <div className="arena-container">
-        {!result && (
-          <div className="arena-action">
-            <div className="arena-word-highlight"></div>
-            <div className="arena-para">
-              {typed.map((typed) => (
-                <span
+      <div>
+        <h3 style={{ textAlign: 'center' }}>
+          {this.props.strictMode ? 'Strict mode' : 'Easy Mode'}
+        </h3>
+        <div className="arena-container">
+          {!result && (
+            <div className="arena-action">
+              <div className="arena-word-highlight"></div>
+              <div className="arena-para">
+                {typed.map((typed) => (
+                  <span
+                    style={{
+                      color: typed.isCorrect ? 'green' : 'red',
+                    }}>
+                    {typed.letter}
+                  </span>
+                ))}
+                <span className="remaining">{remaining_letters}</span>
+              </div>
+              <div>
+                <input
+                  id="textref"
+                  className="arena-input"
                   style={{
-                    color: typed.isCorrect ? 'green' : 'red',
-                  }}>
-                  {typed.letter}
-                </span>
-              ))}
-              <span className="remaining">{remaining_letters}</span>
+                    backgroundColor:
+                      !isCurrentWordCorrect && !this.props.strictMode
+                        ? 'rgba(255,7,58,.6)'
+                        : '',
+                  }}
+                  autoComplete="false"
+                  placeholder="type here"
+                  onKeyDown={this.handleKeyDown}
+                />
+              </div>
             </div>
-            <div>
-              <input
-                id="textref"
-                className="arena-input"
-                style={{
-                  backgroundColor:
-                    !isCurrentWordCorrect && !this.props.strictMode
-                      ? 'rgba(255,7,58,.6)'
-                      : '',
-                }}
-                autoComplete="false"
-                placeholder="type here"
-                onKeyDown={this.handleKeyDown}
-              />
+          )}
+
+          {result && (
+            <div className="arena-results">
+              <Result {...result} retry={this.resetState} />
             </div>
-          </div>
-        )}
-        {result && (
-          <div className="arena-results">
-            <Result {...result} retry={this.resetState} />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     )
   }
