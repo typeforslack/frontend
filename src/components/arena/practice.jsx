@@ -133,10 +133,7 @@ export default class TypingArena extends React.Component {
       this.start()
     }
     // TODO: Find and add other unnecessary symbols too
-    if (
-      ['Shift', 'Alt', 'Control', 'Tab', 'Meta', 'Backspac'].indexOf(e.key) !==
-      -1
-    ) {
+    if (['Shift', 'Alt', 'Control', 'Tab', 'Meta'].indexOf(e.key) !== -1) {
       return
     }
     console.log(e.key, e.which)
@@ -154,7 +151,7 @@ export default class TypingArena extends React.Component {
       return
     }
     console.log('Clearing')
-    // Temporary hac
+    // Temporary hack
     document.getElementById('textref').value = ''
   }
 
