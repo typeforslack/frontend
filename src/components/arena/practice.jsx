@@ -59,9 +59,10 @@ export default class TypingArena extends React.Component {
     }
 
     if (newRemaining.length === 0) {
-      setTimeout(() => {
-        this.finish()
-      }, 1000)
+
+      this.finish(newTyped)
+
+
     }
   }
 
@@ -90,12 +91,11 @@ export default class TypingArena extends React.Component {
     })
   }
 
-  async finish() {
+  async finish(newTyped) {
     const endTime = new Date()
-
     const result = evaluateTyping({
       paragraph: this.props.paragraph,
-      typed_letters: this.state.typed,
+      typed_letters: newTyped,
       time_taken: endTime.getTime() / 1000 - this.state.startTime,
     })
 

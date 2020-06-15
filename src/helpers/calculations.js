@@ -7,17 +7,11 @@
  * @param {*} typed_letters Array of typed_letter objects
  */
 function getCorrectOnlyStringFromTypedLetters(typed_letters) {
-  const check1 = typed_letters.filter((obj) => {
+  return typed_letters.filter((obj) => {
     return obj.letter === ' ' || obj.isCorrect
-  })
-
-  console.log('check1', check1)
-  const check2 = check1
-    .map((obj) => obj.letter)
+  }).map((obj) => obj.letter)
     .join('')
     .split(' ')
-  console.log('check2', check2)
-  return check2
 }
 
 export function evaluateTyping({ paragraph, typed_letters, time_taken }) {

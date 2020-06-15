@@ -63,7 +63,7 @@ export default class Login extends Component {
         this.setState({
           loader: false,
         })
-        navigate('/')
+        navigate('/', { replace: true })
       } catch (e) {
         const { non_field_errors } = e.response.data
         this.setState({
@@ -89,53 +89,53 @@ export default class Login extends Component {
             <Loader />
           </div>
         ) : (
-          <div className="login">
-            <Form onSubmit={this.submitForm}>
-              <Form.Group>
-                <Form.Label>Username</Form.Label>
-                <br></br>
+            <div className="login">
+              <Form onSubmit={this.submitForm}>
+                <Form.Group>
+                  <Form.Label>Username</Form.Label>
+                  <br></br>
 
-                <Form.Control
-                  id="txtbox"
-                  type="text"
-                  placeholder="Enter username"
-                  onChange={this.handleInput('username')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.username}
-                  </h6>
-                }
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Password</Form.Label>
-                <br></br>
+                  <Form.Control
+                    id="txtbox"
+                    type="text"
+                    placeholder="Enter username"
+                    onChange={this.handleInput('username')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.username}
+                    </h6>
+                  }
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Password</Form.Label>
+                  <br></br>
 
-                <Form.Control
-                  id="txtbox"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleInput('password')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.password}
-                  </h6>
-                }
-              </Form.Group>
-              <Button id="submtBtn" type="submit">
-                Submit
+                  <Form.Control
+                    id="txtbox"
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleInput('password')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.password}
+                    </h6>
+                  }
+                </Form.Group>
+                <Button id="submtBtn" type="submit">
+                  Submit
               </Button>
-            </Form>
+              </Form>
 
-            <Button
-              id="signupBtn"
-              type="submit"
-              onClick={this.navigateToSignup}>
-              Signup
+              <Button
+                id="signupBtn"
+                type="submit"
+                onClick={this.navigateToSignup}>
+                Signup
             </Button>
-          </div>
-        )}
+            </div>
+          )}
       </div>
     )
   }

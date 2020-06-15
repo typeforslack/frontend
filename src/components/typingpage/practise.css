@@ -11,3 +11,18 @@
   font-family: monospace;
   font-size: 20px !important;
 }
+
+.strictMode {
+  width: 50%;
+  position: relative;
+  left: 20%;
+  text-align: left;
+}
+
+.easyMode {
+  width: 50%;
+  position: relative;
+  left: 60%;
+  bottom: 9rem;
+  text-align: left;
+}

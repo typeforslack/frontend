@@ -51,7 +51,7 @@ export default class Practise extends React.Component {
           <>
             <center>
               <h3>Ready to increase your toughness?</h3>
-              <h4>Use strict mode.</h4>
+              <h4>Choose mode.</h4>
               <label>
                 <input
                   type="radio"
@@ -74,6 +74,31 @@ export default class Practise extends React.Component {
                 No I'm not ready yet. 😔
               </label>
             </center>
+            <div className="strictMode">
+              <h3>Strict Mode </h3>
+              <ul>
+                <li>A realtime typing experience</li>
+                <li>On making errors the letter gets highlighted as red</li>
+                <li>
+                  On writing correct words the letter is highlighted as green
+                </li>
+                <li>The word doesnt vanish away on from textfield</li>
+              </ul>
+            </div>
+            <div className="easyMode">
+              <h3>Easy Mode </h3>
+              <ul>
+                <li>To give a basic practise on typing</li>
+                <li>
+                  Have to write all the words correct else it will keep
+                  highlighting error{' '}
+                </li>
+                <li>
+                  On writing correct the word turns green and jumps to the next
+                  word
+                </li>
+              </ul>
+            </div>
             <div>
               <Button className="readybtn" onClick={this.parafetch}>
                 {isParaLoading ? 'Loading...' : 'Ready'}
