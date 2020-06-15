@@ -1,0 +1,15 @@
+.dashboardChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboardLineChart {
+  display: flex;
+  justify-content: center;
+}
+
+.dasboardChartControls {
+  display: flex;
+  justify-content: flex-end;
+}

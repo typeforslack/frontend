@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Button from '../dashboard/button'
 import {
   select,
   scaleTime,
@@ -12,7 +13,7 @@ import {
   timeDay,
   timeFormat,
 } from 'd3'
-import './lineChart.css'
+import styles from './lineChart.module.css'
 
 export default class LineChart extends Component {
   state = {
@@ -46,25 +47,53 @@ export default class LineChart extends Component {
         value: 90,
       },
     ],
-    marginTop: 10,
-    marginRight: 10,
-    marginBottom: 30,
-    marginLeft: 30,
+    // Show Weekly progress by default
+    weekly: true,
+    monthly: false,
+    yearly: false,
+  }
+
+  weeklyData = () => {
+    if (this.state.weekly === true) return
+    // console.log("Processing and loading weekly data!")
+    this.setState({
+      weekly: true,
+      monthly: false,
+      yearly: false,
+    })
+  }
+
+  monthlyData = () => {
+    if (this.state.monthly === true) return
+    // console.log("Processing and loading monthly data!")
+    this.setState({
+      weekly: false,
+      monthly: true,
+      yearly: false,
+    })
+  }
+
+  yearlyData = () => {
+    if (this.state.yearly === true) return
+    // console.log("Processing and loading yearly data!")
+    this.setState({
+      weekly: false,
+      monthly: false,
+      yearly: true,
+    })
   }
 
   render() {
-    const LABEL_PADDING = 5
-    const PADDING_LEFT = 20
+    const LABEL_PADDING = 5,
+      PADDING_LEFT = 20,
+      MARGIN_TOP = 10,
+      MARGIN_BOTTOM = 30,
+      MARGIN_LEFT = 30,
+      MARGIN_RIGHT = 10,
+      WIDTH = this.props.width - MARGIN_LEFT - MARGIN_RIGHT,
+      HEIGHT = this.props.height - MARGIN_BOTTOM - MARGIN_TOP
 
-    const {
-      data,
-      marginTop,
-      marginRight,
-      marginBottom,
-      marginLeft,
-    } = this.state
-    const width = this.props.width - marginLeft - marginRight
-    const height = this.props.height - marginBottom - marginTop
+    const data = this.state.data
 
     let x = scaleTime()
       .domain(
@@ -72,7 +101,7 @@ export default class LineChart extends Component {
           return d.date
         }),
       )
-      .range([0, width])
+      .range([0, WIDTH])
 
     let y = scaleLinear()
       .domain([
@@ -81,7 +110,7 @@ export default class LineChart extends Component {
           return +d.value
         }),
       ])
-      .range([height, 0])
+      .range([HEIGHT, 0])
 
     const generateLine = line()
       .x(function (d) {
@@ -93,57 +122,80 @@ export default class LineChart extends Component {
       .curve(curveMonotoneX)
 
     return (
-      <div className="dashboard-line-chart">
-        <svg
-          height={height + marginTop + marginBottom}
-          width={width + marginLeft + marginRight}>
-          <g
-            className="dashboard-chart-x"
-            transform={`translate(${marginLeft}, ${
-              height + PADDING_LEFT + LABEL_PADDING
-            })`}
-            ref={(node) =>
-              select(node)
-                .call(
-                  axisBottom(x)
-                    .tickSize(0)
-                    .ticks(timeDay.every(1))
-                    .tickFormat(timeFormat('%a')),
-                )
-                .call((g) => g.select('.domain').remove())
-            }
-          />
-          <g
-            className="dashboard-chart-y"
-            transform={`translate(${
-              marginLeft - LABEL_PADDING
-            }, ${PADDING_LEFT})`}
-            ref={(node) =>
-              select(node)
-                .call(axisLeft(y).tickSize(0))
-                .call((g) => g.select('.domain').remove())
-            }
-          />
-          <path
-            className="dashboard-chart-line"
-            transform={`translate(${marginLeft}, ${PADDING_LEFT})`}
-            d={generateLine(data)}
-            fill="none"
-            stroke="#ffab00"
-            strokeWidth="3"
-          />
-          {data.map((item, i) => (
-            <circle
-              key={i}
-              className="dashboard-chart-circle"
-              transform={`translate(${marginLeft}, ${PADDING_LEFT})`}
-              r="5"
-              cx={x(item.date)}
-              cy={y(item.value)}
-              fill="#ffab00"
+      <div className={styles.dashboardChart}>
+        <div
+          className={styles.dashboardLineChart}
+          style={{ width: WIDTH + MARGIN_LEFT + MARGIN_RIGHT }}>
+          <svg
+            height={HEIGHT + MARGIN_TOP + MARGIN_BOTTOM}
+            width={WIDTH + MARGIN_LEFT + MARGIN_RIGHT}>
+            <g
+              className="dashboard-chart-x"
+              transform={`translate(${MARGIN_LEFT}, ${
+                HEIGHT + PADDING_LEFT + LABEL_PADDING
+              })`}
+              ref={(node) =>
+                select(node)
+                  .call(
+                    axisBottom(x)
+                      .tickSize(0)
+                      .ticks(timeDay.every(1))
+                      .tickFormat(timeFormat('%a')),
+                  )
+                  .call((g) => g.select('.domain').remove())
+              }
             />
-          ))}
-        </svg>
+            <g
+              className="dashboard-chart-y"
+              transform={`translate(${
+                MARGIN_LEFT - LABEL_PADDING
+              }, ${PADDING_LEFT})`}
+              ref={(node) =>
+                select(node)
+                  .call(axisLeft(y).tickSize(0))
+                  .call((g) => g.select('.domain').remove())
+              }
+            />
+            <path
+              className="dashboard-chart-line"
+              transform={`translate(${MARGIN_LEFT}, ${PADDING_LEFT})`}
+              d={generateLine(data)}
+              fill="none"
+              stroke="#ffab00"
+              strokeWidth="3"
+            />
+            {data.map((item, i) => (
+              <circle
+                key={i}
+                className="dashboard-chart-circle"
+                transform={`translate(${MARGIN_LEFT}, ${PADDING_LEFT})`}
+                r="5"
+                cx={x(item.date)}
+                cy={y(item.value)}
+                fill="#ffab00"
+              />
+            ))}
+          </svg>
+        </div>
+        <div
+          className={styles.dasboardChartControls}
+          style={{ width: WIDTH + MARGIN_LEFT + MARGIN_RIGHT }}>
+          <Button
+            text="Weekly"
+            state={this.state.weekly}
+            toggleData={this.weeklyData}
+          />
+          <Button
+            text="Monthly"
+            state={this.state.monthly}
+            toggleData={this.monthlyData}
+          />
+          <Button
+            text="Yearly"
+            state={this.state.yearly}
+            toggleData={this.yearlyData}
+          />
+        </div>
       </div>
     )
   }

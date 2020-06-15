@@ -1,0 +1,45 @@
+/* Disable default button styling */
+.button {
+  font-family: inherit; /* For all browsers */
+  font-size: 100%; /* For all browsers */
+  line-height: 1.15; /* For all browsers */
+  margin: 0; /* Firefox and Safari have margin */
+  overflow: visible; /* Edge hides overflow */
+  text-transform: none; /* Firefox inherits text-transform */
+  -webkit-appearance: button; /* Safari otherwise prevents some styles */
+}
+
+.button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+.button:-moz-focusring {
+  outline: 1px dotted #ffab00;
+}
+
+.button:focus {
+  outline: none;
+}
+
+/* Button Styles */
+.button {
+  background: #f9ecd3;
+  color: #ffab00;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  margin: 0.25rem;
+  cursor: pointer;
+  border: 2px solid #ffab00;
+  border-radius: 0.25rem;
+}
+
+/* Button - active state */
+.buttonActive {
+  background: #ffab00;
+  color: white;
+}
