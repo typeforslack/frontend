@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import LineChart from '../common/lineChart'
-// import Card from "./card";
 import Card from './card'
 import { Navbar, Nav, NavDropdown, Container, Row, Col } from 'react-bootstrap'
 // import { LineChart } from './lineChart'

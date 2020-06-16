@@ -6,7 +6,7 @@
   color: #3a3a3a;
   text-align: center;
   z-index: 1;
-  box-shadow: 0 2px 7px #777;
+  box-shadow: 0 10px 30px rgba(225, 226, 231, 0.8);
   margin-bottom: 100px;
 }
 
@@ -16,6 +16,7 @@
 }
 
 body {
+  font-family: 'DM Sans', sans-serif;
   text-align: center;
   display: flex;
   height: 100vh;
@@ -23,7 +24,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/debut_light.png');
+  /* background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/debut_light.png'); */
 }
 
 .nav {
@@ -35,7 +36,7 @@ body {
   width: 100%;
   background-color: #fff;
   padding: 0 20px;
-  box-shadow: 0 10px 40px rgba(159, 162, 177, 0.8);
+  /* box-shadow: 0 10px 40px rgba(159, 162, 177, 0.8); */
 }
 
 .nav-item {
