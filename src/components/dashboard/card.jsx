@@ -8,7 +8,7 @@ export default class Card extends Component {
     return (
       <div className="card-container">
         <br />
-        <h1>WPM</h1>
+        <h2>{this.props.title}</h2>
       </div>
     )
   }
