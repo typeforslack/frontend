@@ -1,8 +1,7 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { navigate, Link } from '@reach/router'
 import { getAuthToken, removeAuthToken } from '../../helpers/storage'
-import { getUserlog } from '../../helpers/api'
 
 export default class HomePage extends React.Component {
   logout = (event) => {
@@ -45,8 +44,11 @@ export default class HomePage extends React.Component {
             <Nav.Item className="practise">
               <Link to="/practise">Practise</Link>
             </Nav.Item>
+            <Nav.Item className="practise">
+              <Link to="/arcade">Arcade</Link>
+            </Nav.Item>
             <Nav.Item>
-              <Link to="/challenge">Challenge</Link>
+              <Link to="/challenge">race</Link>
             </Nav.Item>
           </Navbar.Collapse>
         </Navbar>

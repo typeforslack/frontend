@@ -73,9 +73,8 @@ export default class Login extends React.Component {
         const errorstatus = error.response
         const errorKeys = Object.keys(errorstatus.data.error)
         const errorvalues = Object.values(errorstatus.data.error)
-        if (errorKeys.length == 1) {
-          if (errorKeys[0] == 'username') {
-            console.log('check1')
+        if (errorKeys.length === 1) {
+          if (errorKeys[0] === 'username') {
             this.setState({
               errors: {
                 username: errorvalues[0],
@@ -89,7 +88,7 @@ export default class Login extends React.Component {
               },
             })
           }
-        } else if (errorKeys.length == 2) {
+        } else if (errorKeys.length === 2) {
           console.log('check3')
           this.setState({
             errors: {

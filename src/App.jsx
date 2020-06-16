@@ -5,9 +5,9 @@ import RouterPage from './components/common/router'
 
 function App() {
   return (
-    <div>
+    <>
       <RouterPage />
-    </div>
+    </>
   )
 }
 
