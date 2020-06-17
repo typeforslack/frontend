@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import LineChart from '../common/lineChart'
 import Card from './card'
-import { Navbar, Nav, NavDropdown, Container, Row, Col } from 'react-bootstrap'
-// import { LineChart } from './lineChart'
+import { Container, Row, Col } from 'react-bootstrap'
 import './card.css'
 
 export default class Dashboard extends Component {
@@ -34,43 +33,51 @@ export default class Dashboard extends Component {
 
     return (
       <div>
-        <nav class="nav">
-          <a href="#" class="nav-item is-active" active-color="orange">
-            TypeForSlack
-          </a>
-          <a href="#" class="nav-item" active-color="green">
-            Dashboard
-          </a>
-          <a href="#" class="nav-item" active-color="blue">
-            Practice
-          </a>
-          <a href="#" class="nav-item" active-color="red">
-            Arcade
-          </a>
-          <a href="#" class="nav-item" active-color="rebeccapurple">
-            Race
-          </a>
-          <span class="nav-indicator"></span>
-        </nav>
-        <br />
-        <br />
-        <Container>
-          <Row>
-            <Col>
-              <Card title="🔥 Streak" />
-            </Col>
-            <Col>
-              <Card title="Accuracy" />
-            </Col>
-            <Col>
-              <Card title="WPM" />
-            </Col>
-            <Col>
-              <Card />
-            </Col>
-          </Row>
-        </Container>
-        <LineChart width={460} height={400} />
+        <div>
+          <nav className="nav">
+            <a
+              href="/dashboard"
+              className="nav-item is-active"
+              active-color="orange">
+              TypeForSlack
+            </a>
+            <a href="/dashboard" className="nav-item" active-color="green">
+              Dashboard
+            </a>
+            <a href="/dashboard" className="nav-item" active-color="blue">
+              Practice
+            </a>
+            <a href="/dashboard" className="nav-item" active-color="red">
+              Arcade
+            </a>
+            <a
+              href="/dashboard"
+              className="nav-item"
+              active-color="rebeccapurple">
+              Race
+            </a>
+            <span className="nav-indicator"></span>
+          </nav>
+          <br />
+          <br />
+          <Container>
+            <Row>
+              <Col>
+                <Card title="🔥 Streak" />
+              </Col>
+              <Col>
+                <Card title="Accuracy" />
+              </Col>
+              <Col>
+                <Card title="WPM" />
+              </Col>
+              <Col>
+                <Card />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        <LineChart width={760} height={300} />
       </div>
     )
   }

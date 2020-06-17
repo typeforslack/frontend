@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../dashboard/button'
+import Dropdown from '../dashboard/dropdown'
+import Labels from '../dashboard/labels'
 import {
   select,
   scaleTime,
@@ -14,6 +16,7 @@ import {
   timeFormat,
 } from 'd3'
 import styles from './lineChart.module.css'
+import './lineChart.css'
 
 export default class LineChart extends Component {
   state = {
@@ -88,8 +91,8 @@ export default class LineChart extends Component {
       PADDING_LEFT = 20,
       MARGIN_TOP = 10,
       MARGIN_BOTTOM = 30,
-      MARGIN_LEFT = 30,
-      MARGIN_RIGHT = 10,
+      MARGIN_LEFT = 40,
+      MARGIN_RIGHT = 20,
       WIDTH = this.props.width - MARGIN_LEFT - MARGIN_RIGHT,
       HEIGHT = this.props.height - MARGIN_BOTTOM - MARGIN_TOP
 
@@ -123,9 +126,11 @@ export default class LineChart extends Component {
 
     return (
       <div className={styles.dashboardChart}>
-        <div
-          className={styles.dashboardLineChart}
-          style={{ width: WIDTH + MARGIN_LEFT + MARGIN_RIGHT }}>
+        <div className={styles.dashboardChartHeader}>
+          <Dropdown />
+          <Labels />
+        </div>
+        <div className={styles.dashboardLineChart}>
           <svg
             height={HEIGHT + MARGIN_TOP + MARGIN_BOTTOM}
             width={WIDTH + MARGIN_LEFT + MARGIN_RIGHT}>
@@ -177,9 +182,7 @@ export default class LineChart extends Component {
             ))}
           </svg>
         </div>
-        <div
-          className={styles.dasboardChartControls}
-          style={{ width: WIDTH + MARGIN_LEFT + MARGIN_RIGHT }}>
+        <div className={styles.dasboardChartControls}>
           <Button
             text="Weekly"
             state={this.state.weekly}

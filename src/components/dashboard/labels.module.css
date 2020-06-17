@@ -1,0 +1,22 @@
+.labels {
+  display: flex;
+  flex-direction: row;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.label {
+  width: 10px;
+  height: 10px;
+  background: #ffab00;
+  border-radius: 50%;
+}
+
+.labelText {
+  margin-bottom: 0;
+  margin-left: 10px;
+}
