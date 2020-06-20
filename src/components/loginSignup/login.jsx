@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
 import Loader from '../common/loader'
+import './loginsignup.css'
+import Logo from '../../images/Keyboard.png'
+import BackgroundPage from '../../images/background.png'
 
 export default class Login extends Component {
   state = {
@@ -89,53 +92,73 @@ export default class Login extends Component {
             <Loader />
           </div>
         ) : (
-            <div className="login">
-              <Form onSubmit={this.submitForm}>
-                <Form.Group>
-                  <Form.Label>Username</Form.Label>
-                  <br></br>
+          <div className="login">
+            <div className="logoDetail">
+              <img
+                src={BackgroundPage}
+                alt="background"
+                className="backgroundImg"
+              />
 
-                  <Form.Control
-                    id="txtbox"
-                    type="text"
-                    placeholder="Enter username"
-                    onChange={this.handleInput('username')}
-                  />
-                  {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
-                      {this.state.errors.username}
-                    </h6>
-                  }
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Password</Form.Label>
-                  <br></br>
-
-                  <Form.Control
-                    id="txtbox"
-                    type="password"
-                    placeholder="Password"
-                    onChange={this.handleInput('password')}
-                  />
-                  {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
-                      {this.state.errors.password}
-                    </h6>
-                  }
-                </Form.Group>
-                <Button id="submtBtn" type="submit">
-                  Submit
-              </Button>
-              </Form>
-
-              <Button
-                id="signupBtn"
-                type="submit"
-                onClick={this.navigateToSignup}>
-                Signup
-            </Button>
+              <img src={Logo} alt="Logo image" className="logoImg" />
             </div>
-          )}
+
+            <div className="formDetails">
+              <div className="formBox">
+                <div className="signin">Sign In </div>
+                <Form className="form" onSubmit={this.submitForm}>
+                  <Form.Group>
+                    <Form.Label className="label">Username</Form.Label>
+                    <br></br>
+
+                    <Form.Control
+                      id="txtbox"
+                      type="text"
+                      placeholder="Enter username"
+                      onChange={this.handleInput('username')}
+                    />
+                    {
+                      <h6 style={{ color: 'red', fontSize: '16px' }}>
+                        {this.state.errors.username}
+                      </h6>
+                    }
+                  </Form.Group>
+                  <Form.Group style={{ marginTop: '10%' }}>
+                    <Form.Label className="label">Password</Form.Label>
+
+                    <br></br>
+
+                    <Form.Control
+                      id="txtbox"
+                      type="password"
+                      placeholder="Password"
+                      onChange={this.handleInput('password')}
+                    />
+                    {
+                      <h6 style={{ color: 'red', fontSize: '16px' }}>
+                        {this.state.errors.password}
+                      </h6>
+                    }
+                  </Form.Group>
+                  <span className="forgotpwd">Forgot Password ?</span>
+                  <button id="loginBtn" type="submit">
+                    Login
+                  </button>
+                </Form>
+                <div className="signupdiv">
+                  <span id="signupBtn">
+                    New Here? &nbsp;
+                    <span
+                      onClick={this.navigateToSignup}
+                      style={{ cursor: 'pointer', color: '#f0a500' }}>
+                      Signup
+                    </span>{' '}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
