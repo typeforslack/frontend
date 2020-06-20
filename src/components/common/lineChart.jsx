@@ -11,12 +11,12 @@ import {
   max,
   axisLeft,
   line,
+  area,
   curveMonotoneX,
   timeDay,
   timeFormat,
 } from 'd3'
 import styles from './lineChart.module.css'
-import './lineChart.css'
 
 export default class LineChart extends Component {
   state = {
@@ -54,6 +54,18 @@ export default class LineChart extends Component {
     weekly: true,
     monthly: false,
     yearly: false,
+    labelData: [
+      {
+        title: 'WPM',
+        color: '#FFAB00',
+      },
+      {
+        title: 'Accuracy',
+        color: '#EC486F',
+      },
+    ],
+    labelOrientation: 'horizontal',
+    dropdownOptions: ['All', 'Practise', 'Arena'],
   }
 
   weeklyData = () => {
@@ -124,18 +136,35 @@ export default class LineChart extends Component {
       })
       .curve(curveMonotoneX)
 
+    const generateArea = area()
+      .x((d) => {
+        return x(d.date)
+      })
+      .y0(y(0))
+      .y1((d, i) => {
+        return y(d.value)
+      })
+      .curve(curveMonotoneX)
+
     return (
       <div className={styles.dashboardChart}>
         <div className={styles.dashboardChartHeader}>
-          <Dropdown />
-          <Labels />
+          <Dropdown data={this.state.dropdownOptions} size="medium" />
+          <Labels
+            data={this.state.labelData}
+            orientation={this.state.labelOrientation}
+          />
         </div>
         <div className={styles.dashboardLineChart}>
           <svg
             height={HEIGHT + MARGIN_TOP + MARGIN_BOTTOM}
             width={WIDTH + MARGIN_LEFT + MARGIN_RIGHT}>
+            <linearGradient id="areaGradient" gradientTransform="rotate(90)">
+              <stop offset="40%" stopColor="#ffab00" />
+              <stop offset="99%" stopColor="white" />
+            </linearGradient>
             <g
-              className="dashboard-chart-x"
+              className={styles.dashboardChartX}
               transform={`translate(${MARGIN_LEFT}, ${
                 HEIGHT + PADDING_LEFT + LABEL_PADDING
               })`}
@@ -151,7 +180,7 @@ export default class LineChart extends Component {
               }
             />
             <g
-              className="dashboard-chart-y"
+              className={styles.dashboardChartY}
               transform={`translate(${
                 MARGIN_LEFT - LABEL_PADDING
               }, ${PADDING_LEFT})`}
@@ -162,12 +191,19 @@ export default class LineChart extends Component {
               }
             />
             <path
-              className="dashboard-chart-line"
               transform={`translate(${MARGIN_LEFT}, ${PADDING_LEFT})`}
               d={generateLine(data)}
               fill="none"
               stroke="#ffab00"
               strokeWidth="3"
+            />
+            <path
+              transform={`translate(${MARGIN_LEFT}, ${PADDING_LEFT})`}
+              d={generateArea(data)}
+              fill={'url(#areaGradient)'}
+              // stroke={"#69b3a2"}
+              // strokeWidth={"1.5"}
+              opacity={0.4}
             />
             {data.map((item, i) => (
               <circle

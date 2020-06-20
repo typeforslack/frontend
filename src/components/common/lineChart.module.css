@@ -29,3 +29,10 @@
   justify-content: flex-end;
   padding: 0.5rem 2.3rem 1.5rem 2.3rem;
 }
+
+.dashboardChartX text,
+.dashboardChartY text {
+  font-size: 12px;
+  font-weight: bold;
+  fill: #acacac;
+}
