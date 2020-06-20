@@ -1,5 +1,4 @@
 import React from 'react'
-import { Form } from 'react-bootstrap'
 import { navigate } from '@reach/router'
 import { signup } from '../../helpers/api'
 import { setAuthToken } from '../../helpers/storage'
@@ -120,13 +119,13 @@ export default class Login extends React.Component {
         <div className="formDetails">
           <div className="signupBox">
             <div className="signin">Sign Up </div>
-            <Form className="form" onSubmit={this.submitForm}>
-              <Form.Group>
-                <Form.Label className="label">Username</Form.Label>
+            <form className="form" onSubmit={this.submitForm}>
+              <div>
+                <label className="label">Username</label>
                 <br></br>
 
-                <Form.Control
-                  id="txtbox"
+                <input
+                  className="txtbox"
                   type="text"
                   placeholder="Enter username"
                   onChange={this.handleInput('username')}
@@ -136,13 +135,13 @@ export default class Login extends React.Component {
                     {this.state.errors.username}
                   </h6>
                 }
-              </Form.Group>
-              <Form.Group style={{ marginTop: '7%' }}>
-                <Form.Label className="label">Email</Form.Label>
+              </div>
+              <div style={{ marginTop: '7%' }}>
+                <label className="label">Email</label>
                 <br></br>
 
-                <Form.Control
-                  id="txtbox"
+                <input
+                  className="txtbox"
                   type="text"
                   placeholder="Enter email"
                   onChange={this.handleInput('email')}
@@ -152,15 +151,15 @@ export default class Login extends React.Component {
                     {this.state.errors.email}
                   </h6>
                 }
-              </Form.Group>
+              </div>
 
-              <Form.Group style={{ marginTop: '7%' }}>
-                <Form.Label className="label">Password</Form.Label>
+              <div style={{ marginTop: '7%' }}>
+                <label className="label">Password</label>
 
                 <br></br>
 
-                <Form.Control
-                  id="txtbox"
+                <input
+                  className="txtbox"
                   type="password"
                   placeholder="Password"
                   onChange={this.handleInput('password')}
@@ -170,12 +169,12 @@ export default class Login extends React.Component {
                     {this.state.errors.password}
                   </h6>
                 }
-              </Form.Group>
+              </div>
 
-              <button id="signupbtn" type="submit">
+              <button className="signupbtn" type="submit">
                 Sign Up
               </button>
-            </Form>
+            </form>
           </div>
         </div>
       </div>

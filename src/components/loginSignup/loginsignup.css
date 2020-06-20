@@ -108,11 +108,15 @@
   color: #000000;
 }
 
-#txtbox {
+.txtbox {
   width: 60%;
   height: 4rem;
   border-radius: 11.4px;
   background-color: rgba(217, 217, 217, 0.4);
+  border-style: none;
+  outline: none;
+  padding: 0 10px;
+  margin-left: -5px;
 }
 
 .forgotpwd {
@@ -129,7 +133,7 @@
   position: absolute;
 }
 
-#loginBtn {
+.loginBtn {
   margin-top: 15%;
   width: 60%;
   height: 5rem;
@@ -144,9 +148,10 @@
   line-height: normal;
   letter-spacing: normal;
   border: none;
+  outline: none;
 }
 
-#signupbtn {
+.signupbtn {
   margin-top: 7%;
   width: 60%;
   height: 5rem;
@@ -161,6 +166,7 @@
   line-height: normal;
   letter-spacing: normal;
   border: none;
+  outline: none;
 }
 
 .signupdiv {
@@ -168,7 +174,7 @@
   top: 30%;
 }
 
-#signupBtn {
+.signupBtn {
   font-family: Roboto;
   font-style: normal;
   font-weight: 300;
@@ -185,14 +191,15 @@
   left: 29%;
 }
 
-/* .signup {
-  width: 20%;
-  position: absolute;
-  top: 30%;
-  left: 43%; */
-/* border: 1px solid; */
-/* color: midnightblue;
-} */
+.signup {
+  cursor: pointer;
+  color: #f0a500;
+}
+
+.signup:hover {
+  text-decoration: underline;
+  text-decoration-color: '#f0a500';
+}
 
 .userText {
   left: 35%;
