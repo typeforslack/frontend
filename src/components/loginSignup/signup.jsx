@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { navigate } from '@reach/router'
 import { signup } from '../../helpers/api'
 import { setAuthToken } from '../../helpers/storage'
@@ -107,61 +107,6 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      // <div className="signup">
-      //   <Form onSubmit={this.submitForm}>
-      //     <Form.Group>
-      //       <Form.Label>Username</Form.Label>
-      //       <br></br>
-
-      //       <Form.Control
-      //         id="txtbox"
-      //         type="text"
-      //         placeholder="Enter username"
-      //         onChange={this.handleInput('username')}
-      //       />
-      //       {
-      //         <h6 style={{ color: 'red', fontSize: '16px' }}>
-      //           {this.state.errors.username}
-      //         </h6>
-      //       }
-      //     </Form.Group>
-      //     <Form.Group>
-      //       <Form.Label>Email</Form.Label>
-      //       <br></br>
-
-      //       <Form.Control
-      //         id="txtbox"
-      //         type="text"
-      //         placeholder="Enter email"
-      //         onChange={this.handleInput('email')}
-      //       />
-      //       {
-      //         <h6 style={{ color: 'red', fontSize: '16px' }}>
-      //           {this.state.errors.email}
-      //         </h6>
-      //       }
-      //     </Form.Group>
-      //     <Form.Group>
-      //       <Form.Label>Password</Form.Label>
-      //       <br></br>
-
-      //       <Form.Control
-      //         id="txtbox"
-      //         type="password"
-      //         placeholder="Password"
-      //         onChange={this.handleInput('password')}
-      //       />
-      //       {
-      //         <h6 style={{ color: 'red', fontSize: '16px' }}>
-      //           {this.state.errors.password}
-      //         </h6>
-      //       }
-      //     </Form.Group>
-      //     <Button id="submtBtn" type="submit">
-      //       Submit
-      //     </Button>
-      //   </Form>
-      // </div>
       <div>
         <div className="logoDetail">
           <img
@@ -170,7 +115,7 @@ export default class Login extends React.Component {
             className="backgroundImg"
           />
 
-          <img src={Logo} alt="Logo image" className="logoImg" />
+          <img src={Logo} alt="Logoimage" className="logoImg" />
         </div>
         <div className="formDetails">
           <div className="signupBox">

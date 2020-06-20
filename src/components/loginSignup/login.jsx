@@ -100,7 +100,7 @@ export default class Login extends Component {
                 className="backgroundImg"
               />
 
-              <img src={Logo} alt="Logo image" className="logoImg" />
+              <img src={Logo} alt="Logoimage" className="logoImg" />
             </div>
 
             <div className="formDetails">
