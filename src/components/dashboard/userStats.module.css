@@ -1,0 +1,36 @@
+.cardContainer {
+  height: 7rem;
+  width: 927px;
+  background-color: #fafafa;
+  border-radius: 5px;
+  color: #3f3e3e;
+  text-align: center;
+  z-index: 1;
+  box-shadow: 0 10px 30px rgba(189, 191, 204, 0.8);
+  margin-bottom: 2rem;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 5rem;
+}
+
+.cardContainer h3 {
+  font-size: 16px;
+  color: #7a7a7a;
+}
+
+.dashBoard {
+  padding: 0 50px;
+}
+.dashScore {
+  font-size: 36px;
+  color: #dda53e;
+  font-weight: 900;
+}
+
+.divider {
+  background-color: #c5c5c5;
+  height: 4rem;
+  width: 2px;
+  border-radius: 5px;
+}

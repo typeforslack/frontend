@@ -3,9 +3,10 @@ import LineChart from '../common/lineChart'
 import NestedDonutChart from '../common/nestedDonutChart'
 import Labels from './labels'
 import Dropdown from './dropdown'
-import Card from './card'
 import styles from './dashboard.module.css'
-import './card.css'
+import './index.css'
+import { Link } from '@reach/router'
+import UserStats from './userStats'
 
 export default class Dashboard extends Component {
   state = {
@@ -30,36 +31,26 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div>
-        <div>
+        <header>
+          <p className="navlogo">TypeForSlack</p>
           <nav className="nav">
-            <a
-              href="/dashboard"
-              className="nav-item is-active"
-              active-color="orange">
-              TypeForSlack
-            </a>
-            <a href="/dashboard" className="nav-item" active-color="green">
-              Dashboard
-            </a>
-            <a href="/dashboard" className="nav-item" active-color="blue">
-              Practice
-            </a>
-            <a href="/dashboard" className="nav-item" active-color="red">
-              Arcade
-            </a>
-            <a
-              href="/dashboard"
-              className="nav-item"
-              active-color="rebeccapurple">
-              Race
-            </a>
+            <ul>
+              <li>
+                <Link to="/dashboard">Practice</Link>
+              </li>
+              <li>
+                <Link to="/dashboard">Arcade</Link>
+              </li>
+              <li>
+                <Link to="/dashboard">Race</Link>
+              </li>
+            </ul>
             <span className="nav-indicator"></span>
           </nav>
-          <br />
-          <br />
-        </div>
+        </header>
         <div className="dashBoard">
-          <Card />
+          <h3 className="dashTitle">User Stats</h3>
+          <UserStats />
           <LineChart width={760} height={300} />
           <div className={styles.paragraphsCard}>
             <div className={styles.paragraphsCardTitle}>
