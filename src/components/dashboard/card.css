@@ -1,13 +1,32 @@
 .card-container {
-  height: 100px;
-  width: 200px;
+  height: 7rem;
+  width: 60rem;
   background-color: #fafafa;
   border-radius: 5px;
-  color: #3a3a3a;
+  color: #3f3e3e;
   text-align: center;
   z-index: 1;
   box-shadow: 0 10px 30px rgba(225, 226, 231, 0.8);
-  margin-bottom: 100px;
+  margin-bottom: 2rem;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+}
+
+.dashBoard {
+  padding: 0 50px;
+}
+.dashScore {
+  font-size: large;
+  color: #dda53e;
+}
+
+.divider {
+  background-color: #dda53e;
+  height: 5rem;
+  width: 2px;
+  border-radius: 5px;
 }
 
 @import url('https://fonts.googleapis.com/css?family=DM+Sans:500,700&display=swap');
@@ -17,7 +36,7 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  text-align: center;
+  /* text-align: center; */
   /* display: flex; */
   height: 100vh;
   width: 100%;
