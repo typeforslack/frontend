@@ -18,10 +18,6 @@
   outline: 1px dotted #ffab00;
 }
 
-.button:focus {
-  outline: none;
-}
-
 /* Button Styles */
 .button {
   background: #f9ecd3;

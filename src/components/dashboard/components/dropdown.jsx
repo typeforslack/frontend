@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './dropdown.module.css'
-import Up from '../../images/chevron-up.svg'
-import Down from '../../images/chevron-down.svg'
+import Up from '../../../images/chevron-up.svg'
+import Down from '../../../images/chevron-down.svg'
 
 export default class Dropdown extends Component {
   state = {

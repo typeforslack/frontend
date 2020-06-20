@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Button from '../dashboard/button'
-import Dropdown from '../dashboard/dropdown'
-import Labels from '../dashboard/labels'
+import Button from '../../dashboard/components/button'
+import Dropdown from '../../dashboard/components/dropdown'
+import Labels from '../../dashboard/components/labels'
 import {
   select,
   scaleTime,
