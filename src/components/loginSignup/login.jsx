@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Form } from 'react-bootstrap'
 import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
-import Loader from '../common/loader'
+
 import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
 import BackgroundPage from '../../images/background.png'
@@ -16,7 +15,6 @@ export default class Login extends Component {
       username: '',
       password: '',
     },
-    loader: false,
   }
 
   handleInput = (stateName) => (e) => {
@@ -28,9 +26,7 @@ export default class Login extends Component {
 
   submitForm = async (event) => {
     event.preventDefault()
-    this.setState({
-      loader: true,
-    })
+    this.setState({})
     var name = this.state.username
     var pwd = this.state.password
 
@@ -63,16 +59,13 @@ export default class Login extends Component {
         const response = await login(postData)
         const token = response.data.token
         setAuthToken(token)
-        this.setState({
-          loader: false,
-        })
+        this.setState({})
         navigate('/', { replace: true })
       } catch (e) {
         const { non_field_errors } = e.response.data
         this.setState({
           errors: {
             password: non_field_errors[0],
-            loader: false,
           },
         })
       }
@@ -84,81 +77,69 @@ export default class Login extends Component {
   }
 
   render() {
-    const { loader } = this.state
     return (
-      <div>
-        {loader ? (
-          <div>
-            <Loader />
-          </div>
-        ) : (
-          <div className="login">
-            <div className="logoDetail">
-              <img
-                src={BackgroundPage}
-                alt="background"
-                className="backgroundImg"
+      <div className="login">
+        <div className="logoDetail">
+          <img
+            src={BackgroundPage}
+            alt="background"
+            className="backgroundImg"
+          />
+
+          <img src={Logo} alt="Logoimage" className="logoImg" />
+        </div>
+
+        <div className="formDetails">
+          <div className="formBox">
+            <div className="signin">Sign In </div>
+            <form className="form" onSubmit={this.submitForm}>
+              <label className="label">Username</label>
+              <br></br>
+
+              <input
+                className="txtbox"
+                type="text"
+                placeholder="Enter username"
+                onChange={this.handleInput('username')}
               />
+              {
+                <h6 style={{ color: 'red', fontSize: '16px' }}>
+                  {this.state.errors.username}
+                </h6>
+              }
 
-              <img src={Logo} alt="Logoimage" className="logoImg" />
-            </div>
+              <div style={{ marginTop: '10%' }}>
+                <label className="label">Password</label>
 
-            <div className="formDetails">
-              <div className="formBox">
-                <div className="signin">Sign In </div>
-                <Form className="form" onSubmit={this.submitForm}>
-                  <Form.Group>
-                    <Form.Label className="label">Username</Form.Label>
-                    <br></br>
+                <br></br>
 
-                    <Form.Control
-                      id="txtbox"
-                      type="text"
-                      placeholder="Enter username"
-                      onChange={this.handleInput('username')}
-                    />
-                    {
-                      <h6 style={{ color: 'red', fontSize: '16px' }}>
-                        {this.state.errors.username}
-                      </h6>
-                    }
-                  </Form.Group>
-                  <Form.Group style={{ marginTop: '10%' }}>
-                    <Form.Label className="label">Password</Form.Label>
-
-                    <br></br>
-
-                    <Form.Control
-                      id="txtbox"
-                      type="password"
-                      placeholder="Password"
-                      onChange={this.handleInput('password')}
-                    />
-                    {
-                      <h6 style={{ color: 'red', fontSize: '16px' }}>
-                        {this.state.errors.password}
-                      </h6>
-                    }
-                  </Form.Group>
-                  <span className="forgotpwd">Forgot Password ?</span>
-                  <button id="loginBtn" type="submit">
-                    Login
-                  </button>
-                </Form>
-                <div className="signupdiv">
-                  <span id="signupBtn">
-                    New Here? &nbsp;
-                    <span
-                      onClick={this.navigateToSignup}
-                      style={{ cursor: 'pointer', color: '#f0a500' }}>
-                      Signup
-                    </span>{' '}
-                  </span>
-                </div>
+                <input
+                  className="txtbox"
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handleInput('password')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.password}
+                  </h6>
+                }
               </div>
+              <span className="forgotpwd">Forgot Password ?</span>
+              <button className="loginBtn" type="submit">
+                Login
+              </button>
+            </form>
+            <div className="signupdiv">
+              <span className="signupBtn">
+                New Here? &nbsp;
+                <span className="signup" onClick={this.navigateToSignup}>
+                  Signup
+                </span>{' '}
+              </span>
             </div>
           </div>
-        )}
+        </div>
       </div>
     )
   }
