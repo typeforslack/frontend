@@ -1,15 +1,14 @@
 import React from 'react'
 import Result from './result'
-import { evaluateArcade } from '../../helpers/calculations'
+import { evaluateTyping } from '../../helpers/calculations'
 import { postUserlog } from '../../helpers/api'
 import './arena.css'
 
-export default class TypingArena extends React.Component {
+export default class TestArena extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      paraWords: this.wordObj(),
-      currentWordIdx: 0,
+      paraLetters: this.letterObj(),
       userInput: '',
       countdown: this.getCountdown(),
       result: null,
@@ -23,42 +22,39 @@ export default class TypingArena extends React.Component {
     return isNaN(timer) ? this.props.countdown : timer
   }
 
-  wordObj = () => {
-    const wordObjs = this.props.paragraph
-      .split(' ')
-      .map((word) => ({ word, state: 'untyped' }))
-    return wordObjs
+  letterObj = () => {
+    return this.props.paragraph
+      .split('')
+      .map((letter) => ({ letter, state: 'untyped' }))
   }
 
   compare(userInput) {
-    const { paraWords, currentWordIdx } = this.state
-    const currentWord = paraWords[currentWordIdx]
-    let newIdx = currentWordIdx
+    const start = performance.now()
+    const newParaLetters = this.letterObj()
+    const len = userInput.length
 
     if (userInput[userInput.length - 1] === ' ') {
-      currentWord.state =
-        currentWord.word === userInput.substr(0, userInput.length - 1)
-          ? 'correct'
-          : 'incorrect'
-
-      userInput = ''
-      newIdx = currentWordIdx + 1
-    } else {
-      currentWord.state = currentWord.word.startsWith(userInput)
-        ? 'typing'
-        : 'incorrect'
+      console.log('Clear up')
     }
 
-    console.log(userInput, currentWord.word, currentWord.state)
+    const paraTillUserTyped = [...newParaLetters.slice(0, len)]
+
+    paraTillUserTyped.forEach((ele, idx) => {
+      if (ele.letter === userInput[idx]) {
+        ele.state = 'correct'
+      } else {
+        ele.state = 'incorrect'
+      }
+    })
+
+    const modified = [...paraTillUserTyped, ...newParaLetters.slice(len)]
+
+    const end = performance.now()
+    console.info(`Took ${end - start} ms`)
 
     this.setState({
-      paraWords: [
-        ...paraWords.slice(0, currentWordIdx),
-        currentWord,
-        ...paraWords.slice(currentWordIdx + 1, paraWords.length),
-      ],
+      paraLetters: modified,
       userInput,
-      currentWordIdx: newIdx,
     })
 
     if (this.shouldFinish()) {
@@ -67,15 +63,15 @@ export default class TypingArena extends React.Component {
   }
 
   shouldFinish() {
-    const { countdown, currentWordIdx, paraWords } = this.state
-    if (countdown === 0 || currentWordIdx === paraWords.length + 1) {
+    const { countdown } = this.state
+    if (countdown === 0) {
       return true
     }
     return false
   }
 
   async finish() {
-    const result = evaluateArcade(this.state.paraWords, this.getCountdown())
+    const result = evaluateTyping(this.state.paraLetters, this.getCountdown())
     this.timer = null
     this.setState({
       result,
@@ -97,13 +93,12 @@ export default class TypingArena extends React.Component {
   }
 
   shouldStart() {
-    console.log(this.timer)
     return !this.timer
   }
 
   start() {
     this.timer = setInterval(() => {
-      if (this.state.countdown <= 0 || this.state.paraWords.length === 0) {
+      if (this.state.countdown <= 0 || this.state.paraLetters.length === 0) {
         clearInterval(this.timer)
         if (!this.state.result) {
           this.finish()
@@ -127,6 +122,7 @@ export default class TypingArena extends React.Component {
     this.setState({
       userInput: e.target.value,
     })
+
     if (this.shouldStart()) {
       this.start()
     }
@@ -135,7 +131,7 @@ export default class TypingArena extends React.Component {
   }
 
   getClassesForWord = (idx, wordState) => {
-    if (idx === this.state.currentWordIdx) {
+    if (idx === this.state.currentLetterIdx) {
       return wordState + ' current'
     }
 
@@ -144,8 +140,8 @@ export default class TypingArena extends React.Component {
 
   resetState = () => {
     this.setState({
-      paraWords: this.wordObj(),
-      currentWordIdx: 0,
+      paraLetters: this.letterObj(),
+      currentLetterIdx: 0,
       userInput: '',
       countdown: this.getCountdown(),
       result: null,
@@ -153,18 +149,19 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { paraWords, result, countdown, userInput } = this.state
+    const { paraLetters, result, countdown, userInput } = this.state
 
     return (
       <div className="arena-container">
         {!result && (
           <div className="arena-action">
             <div className="arena-para">
-              {paraWords.map((wordObj, idx) => (
+              {paraLetters.map((letterObj, idx) => (
                 <>
-                  <span className={this.getClassesForWord(idx, wordObj.state)}>
-                    {wordObj.word}
-                  </span>{' '}
+                  <span
+                    className={this.getClassesForWord(idx, letterObj.state)}>
+                    {letterObj.letter}
+                  </span>
                 </>
               ))}
             </div>

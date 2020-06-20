@@ -8,6 +8,7 @@ import Practise from '../typingpage/practise'
 import Challenge from '../typingpage/challenge'
 import Arcade from '../typingpage/arcade'
 import Dashboard from '../dashboard'
+import TestArena from '../arena/test'
 
 export default class RouterPage extends React.Component {
   render() {
@@ -21,6 +22,11 @@ export default class RouterPage extends React.Component {
         <Challenge path="/challenge" />
         <Arcade path="/arcade" />
         <Dashboard path="/dashboard" />
+        <TestArena
+          path="/test"
+          countdown={60}
+          paragraph="However, we also have professional native translators to translate Hindi to English and vice versa. The work will be error-free and quick and at a reasonable cost."
+        />
       </Router>
     )
   }
