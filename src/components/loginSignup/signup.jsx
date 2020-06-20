@@ -3,6 +3,9 @@ import { Form, Button } from 'react-bootstrap'
 import { navigate } from '@reach/router'
 import { signup } from '../../helpers/api'
 import { setAuthToken } from '../../helpers/storage'
+import './loginsignup.css'
+import Logo from '../../images/Keyboard.png'
+import BackgroundPage from '../../images/background.png'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -104,60 +107,132 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div className="signup">
-        <Form onSubmit={this.submitForm}>
-          <Form.Group>
-            <Form.Label>Username</Form.Label>
-            <br></br>
+      // <div className="signup">
+      //   <Form onSubmit={this.submitForm}>
+      //     <Form.Group>
+      //       <Form.Label>Username</Form.Label>
+      //       <br></br>
 
-            <Form.Control
-              id="txtbox"
-              type="text"
-              placeholder="Enter username"
-              onChange={this.handleInput('username')}
-            />
-            {
-              <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.errors.username}
-              </h6>
-            }
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <br></br>
+      //       <Form.Control
+      //         id="txtbox"
+      //         type="text"
+      //         placeholder="Enter username"
+      //         onChange={this.handleInput('username')}
+      //       />
+      //       {
+      //         <h6 style={{ color: 'red', fontSize: '16px' }}>
+      //           {this.state.errors.username}
+      //         </h6>
+      //       }
+      //     </Form.Group>
+      //     <Form.Group>
+      //       <Form.Label>Email</Form.Label>
+      //       <br></br>
 
-            <Form.Control
-              id="txtbox"
-              type="text"
-              placeholder="Enter email"
-              onChange={this.handleInput('email')}
-            />
-            {
-              <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.errors.email}
-              </h6>
-            }
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <br></br>
+      //       <Form.Control
+      //         id="txtbox"
+      //         type="text"
+      //         placeholder="Enter email"
+      //         onChange={this.handleInput('email')}
+      //       />
+      //       {
+      //         <h6 style={{ color: 'red', fontSize: '16px' }}>
+      //           {this.state.errors.email}
+      //         </h6>
+      //       }
+      //     </Form.Group>
+      //     <Form.Group>
+      //       <Form.Label>Password</Form.Label>
+      //       <br></br>
 
-            <Form.Control
-              id="txtbox"
-              type="password"
-              placeholder="Password"
-              onChange={this.handleInput('password')}
-            />
-            {
-              <h6 style={{ color: 'red', fontSize: '16px' }}>
-                {this.state.errors.password}
-              </h6>
-            }
-          </Form.Group>
-          <Button id="submtBtn" type="submit">
-            Submit
-          </Button>
-        </Form>
+      //       <Form.Control
+      //         id="txtbox"
+      //         type="password"
+      //         placeholder="Password"
+      //         onChange={this.handleInput('password')}
+      //       />
+      //       {
+      //         <h6 style={{ color: 'red', fontSize: '16px' }}>
+      //           {this.state.errors.password}
+      //         </h6>
+      //       }
+      //     </Form.Group>
+      //     <Button id="submtBtn" type="submit">
+      //       Submit
+      //     </Button>
+      //   </Form>
+      // </div>
+      <div>
+        <div className="logoDetail">
+          <img
+            src={BackgroundPage}
+            alt="background"
+            className="backgroundImg"
+          />
+
+          <img src={Logo} alt="Logo image" className="logoImg" />
+        </div>
+        <div className="formDetails">
+          <div className="signupBox">
+            <div className="signin">Sign Up </div>
+            <Form className="form" onSubmit={this.submitForm}>
+              <Form.Group>
+                <Form.Label className="label">Username</Form.Label>
+                <br></br>
+
+                <Form.Control
+                  id="txtbox"
+                  type="text"
+                  placeholder="Enter username"
+                  onChange={this.handleInput('username')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.username}
+                  </h6>
+                }
+              </Form.Group>
+              <Form.Group style={{ marginTop: '7%' }}>
+                <Form.Label className="label">Email</Form.Label>
+                <br></br>
+
+                <Form.Control
+                  id="txtbox"
+                  type="text"
+                  placeholder="Enter email"
+                  onChange={this.handleInput('email')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.email}
+                  </h6>
+                }
+              </Form.Group>
+
+              <Form.Group style={{ marginTop: '7%' }}>
+                <Form.Label className="label">Password</Form.Label>
+
+                <br></br>
+
+                <Form.Control
+                  id="txtbox"
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handleInput('password')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.password}
+                  </h6>
+                }
+              </Form.Group>
+
+              <button id="signupbtn" type="submit">
+                Sign Up
+              </button>
+            </Form>
+          </div>
+        </div>
       </div>
     )
   }
