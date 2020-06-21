@@ -58,12 +58,7 @@ export default class NestedDonutChart extends Component {
           textAnchor="middle">
           {totalWords}
         </text>
-        <text
-          className={styles.totalWordsDescription}
-          x="50%"
-          y="57%"
-          dominantBaseline="middle"
-          textAnchor="middle">
+        <text x="50%" y="57%" dominantBaseline="middle" textAnchor="middle">
           Total Paras
         </text>
       </svg>

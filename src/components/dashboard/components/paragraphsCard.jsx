@@ -26,12 +26,12 @@ export default class ParagraphsCard extends Component {
 
   render() {
     return (
-      <div className={styles.paragraphsCard}>
-        <div className={styles.paragraphsCardTitle}>
+      <div className={styles.card}>
+        <div className={styles.titleSection}>
           <h4>Paragraphs</h4>
           <Dropdown data={this.state.dropdownData} size="small" />
         </div>
-        <div className={styles.paragraphsCardCharts}>
+        <div className={styles.chartSection}>
           <NestedDonutChart />
           <Labels
             data={this.state.labelData}

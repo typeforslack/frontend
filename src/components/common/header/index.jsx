@@ -5,7 +5,7 @@ import styles from './header.module.css'
 export default function Header() {
   return (
     <header>
-      <p className={styles.navlogo}>TypeForSlack</p>
+      <p className={styles.logo}>TypeForSlack</p>
       <nav>
         <ul>
           <li>

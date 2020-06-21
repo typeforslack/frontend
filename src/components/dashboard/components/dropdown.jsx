@@ -46,29 +46,27 @@ export default class Dropdown extends Component {
     }
 
     return (
-      <>
-        <div className={DROPDOWN} onClick={this.toggleDropdown}>
-          <h4 className={SELECTED_TEXT}>{this.state.selectedOption}</h4>
-          <img
-            className={ICON}
-            src={this.state.dropdown ? Up : Down}
-            alt="Dropdown icon"
-          />
-          {this.state.dropdown ? (
-            <div className={DROPDOWN_LIST}>
-              {this.state.options &&
-                this.state.options.map((option, i) => (
-                  <div
-                    className={OPTION}
-                    onClick={() => this.selectOption(option)}
-                    key={i}>
-                    <p className={TEXT}>{option}</p>
-                  </div>
-                ))}
-            </div>
-          ) : null}
-        </div>
-      </>
+      <button className={DROPDOWN} onClick={this.toggleDropdown}>
+        <h4 className={SELECTED_TEXT}>{this.state.selectedOption}</h4>
+        <img
+          className={ICON}
+          src={this.state.dropdown ? Up : Down}
+          alt="Dropdown icon"
+        />
+        {this.state.dropdown ? (
+          <div className={DROPDOWN_LIST}>
+            {this.state.options &&
+              this.state.options.map((option, i) => (
+                <div
+                  className={OPTION}
+                  onClick={() => this.selectOption(option)}
+                  key={i}>
+                  <p className={TEXT}>{option}</p>
+                </div>
+              ))}
+          </div>
+        ) : null}
+      </button>
     )
   }
 }

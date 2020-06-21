@@ -3,29 +3,29 @@
   flex-direction: column;
   background: #ffffff;
   border: 1px solid #e4e4e4;
+  box-sizing: border-box;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  max-width: 360px;
+  /* Temp CSS */
+  max-width: 927px;
   margin-bottom: 40px;
 }
 
-.titleSection {
+.header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
-  min-height: 60px;
-  padding: 12px 17px 12px 17px;
-  border-bottom: 1.125px solid #e1e1e1;
+  padding: 1.5rem 2.3rem 0.5rem 2.3rem;
 }
 
-.titleSection h4 {
-  margin-top: 5px;
-}
-
-.chartSection {
+.chartContainer {
   display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  margin: 1.5rem 0;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 3rem 1.5rem 3rem;
 }
