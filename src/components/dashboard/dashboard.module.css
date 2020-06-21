@@ -1,10 +1,10 @@
 .dashboard {
-  background-color: #d9d8d8;
+  background-color: #e0e0e0;
   padding: 20px;
 }
 
-.dashboard .dashTitle {
+.title {
   color: #656565;
   font-weight: normal;
-  margin-left: 10px;
+  margin-bottom: 1.5rem;
 }

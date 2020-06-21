@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Header from '../common/header'
 import UserStats from './components/userStats'
 import ParagraphsCard from './components/paragraphsCard'
-import styles from './dashboard.module.css'
 import ProgressCard from './components/progressCard'
+import styles from './dashboard.module.css'
 
 export default class Dashboard extends Component {
   render() {
@@ -11,7 +11,7 @@ export default class Dashboard extends Component {
       <div>
         <Header />
         <div className={styles.dashboard}>
-          <h3 className={styles.dashboardTitle}>User Stats</h3>
+          <h3 className={styles.title}>User Stats</h3>
           <UserStats />
           <ProgressCard />
           <ParagraphsCard />

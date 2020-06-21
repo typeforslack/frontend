@@ -14,7 +14,7 @@ export default class ProgressCard extends Component {
     labelData: [
       {
         title: 'WPM',
-        color: '#FFAB00',
+        color: '#F0A500',
       },
       {
         title: 'Accuracy',
