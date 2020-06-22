@@ -26,6 +26,7 @@ export default class Dashboard extends Component {
             <div className={styles.cardHolder}>
               {this.cardDetail.map((cardContent, i) => (
                 <Card
+                  key={i}
                   title={cardContent.title}
                   desc={cardContent.desc}
                   color={cardContent.color}
