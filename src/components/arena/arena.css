@@ -43,6 +43,10 @@
   padding: 10px;
 }
 
+.arena-input.incorrect {
+  background-color: rgba(255, 7, 58, 0.6);
+}
+
 .correct {
   background-color: greenyellow;
 }

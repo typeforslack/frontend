@@ -119,7 +119,6 @@ export default class Practise extends React.Component {
           <ArcadeArena
             paragraph={paragraph}
             paraID={paraID}
-            countdown={60}
             letterComparison={true}
           />
         )}
