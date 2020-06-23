@@ -7,9 +7,11 @@
  * @param {*} typed_letters Array of typed_letter objects
  */
 function getCorrectOnlyStringFromTypedLetters(typed_letters) {
-  return typed_letters.filter((obj) => {
-    return obj.letter === ' ' || obj.isCorrect
-  }).map((obj) => obj.letter)
+  return typed_letters
+    .filter((obj) => {
+      return obj.letter === ' ' || obj.state === 'correct'
+    })
+    .map((obj) => obj.letter)
     .join('')
     .split(' ')
 }

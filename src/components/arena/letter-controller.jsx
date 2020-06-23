@@ -9,19 +9,11 @@ export default class TestArena extends React.Component {
     super(props)
     this.state = {
       paraLetters: this.getLetterArray(),
-      typed: [],
       userInput: '',
-      countdown: this.getCountdown(),
       result: null,
       currentWordIdx: 0,
     }
-    this.timer = false
-  }
-
-  getCountdown() {
-    const url = new URL(window.location.href)
-    const timer = parseInt(url.searchParams.get('timer'))
-    return isNaN(timer) ? this.props.countdown : timer
+    this.startTime = null
   }
 
   getLetterArray = () => {
@@ -33,6 +25,11 @@ export default class TestArena extends React.Component {
   compare(userInput) {
     const start = performance.now()
     const newParaLetters = this.getLetterArray()
+
+    if (this.shouldFinish()) {
+      this.finish()
+      return
+    }
 
     userInput.split('').forEach((letter, idx) => {
       if (newParaLetters[idx].letter === letter) {
@@ -49,23 +46,23 @@ export default class TestArena extends React.Component {
       paraLetters: newParaLetters,
       userInput,
     })
-
-    if (this.shouldFinish()) {
-      this.finish()
-    }
   }
 
   shouldFinish() {
-    const { countdown } = this.state
-    if (countdown === 0) {
+    const { paraLetters, userInput } = this.state
+    if (userInput.length >= paraLetters.length) {
       return true
     }
     return false
   }
 
   async finish() {
-    const result = evaluateTyping(this.state.paraLetters, this.getCountdown())
-    this.timer = null
+    const endTime = new Date()
+    const result = evaluateTyping({
+      paragraph: this.props.paragraph,
+      typed_letters: this.state.paraLetters,
+      time_taken: endTime.getSeconds() - this.startTime,
+    })
     this.setState({
       result,
     })
@@ -73,8 +70,8 @@ export default class TestArena extends React.Component {
     try {
       await postUserlog({
         para: this.props.paraID,
-        wpm: result.rightCount,
-        taken_at: result.timeTaken,
+        wpm: result.correctWpm,
+        taken_at: endTime.toISOString(),
         correct_words: result.rightCount,
         wrong_words: result.wrongcount,
         total_words: result.totalWords,
@@ -86,24 +83,11 @@ export default class TestArena extends React.Component {
   }
 
   shouldStart() {
-    return !this.timer
+    return !this.startTime
   }
 
   start() {
-    this.timer = setInterval(() => {
-      if (this.state.countdown <= 0 || this.state.paraLetters.length === 0) {
-        clearInterval(this.timer)
-        if (!this.state.result) {
-          this.finish()
-        }
-        return
-      }
-
-      this.setState((state) => ({
-        ...state,
-        countdown: state.countdown - 1,
-      }))
-    }, 1000)
+    this.startTime = new Date().getSeconds()
   }
 
   handleOnChange = (e) => {
@@ -130,15 +114,13 @@ export default class TestArena extends React.Component {
   resetState = () => {
     this.setState({
       paraLetters: this.getLetterArray(),
-      currentLetterIdx: 0,
       userInput: '',
-      countdown: this.getCountdown(),
       result: null,
     })
   }
 
   render() {
-    const { paraLetters, result, countdown, userInput } = this.state
+    const { paraLetters, result, userInput } = this.state
 
     return (
       <div className="arena-container">
@@ -154,7 +136,6 @@ export default class TestArena extends React.Component {
                 </>
               ))}
             </div>
-            <div className="arena-time-remaining">{countdown} secs</div>
             <div>
               <input
                 className="arena-input"

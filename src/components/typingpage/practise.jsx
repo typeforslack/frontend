@@ -1,6 +1,7 @@
 import React from 'react'
 import { fetchPara } from '../../helpers/api'
-import { PracticeArena, ArcadeArena } from '../arena'
+import { ArcadeArena } from '../arena'
+import StrictArena from '../arena/letter-controller'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 
@@ -108,11 +109,7 @@ export default class Practise extends React.Component {
         )}
 
         {paragraph && strictMode === 'true' && (
-          <PracticeArena
-            paragraph={paragraph}
-            paraID={paraID}
-            strictMode={strictMode === 'true'}
-          />
+          <StrictArena paragraph={paragraph} paraID={paraID} />
         )}
 
         {paragraph && strictMode === 'false' && (
