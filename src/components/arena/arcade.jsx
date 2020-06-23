@@ -24,29 +24,66 @@ export default class TypingArena extends React.Component {
   }
 
   wordObj = () => {
-    const wordObjs = this.props.paragraph
-      .split(' ')
-      .map((word) => ({ word, state: 'untyped' }))
+    const wordObjs = this.props.paragraph.split(' ').map((word) => ({
+      word,
+      state: 'untyped',
+      letters: this.getComparedLetters(word),
+    }))
     return wordObjs
+  }
+
+  getComparedLetters = (word, userInput = '') => {
+    const letters = [...word].map((letter) => ({
+      letter,
+      state: 'untyped',
+    }))
+
+    // When userInput string is empty this is skipped resulting in default values
+    userInput.split('').forEach((letter, idx) => {
+      if (idx >= letters.length) {
+        return
+      }
+
+      if (letters[idx].letter === letter) {
+        letters[idx].state = 'correct'
+      } else {
+        letters[idx].state = 'incorrect'
+      }
+    })
+
+    return letters
   }
 
   compare(userInput) {
     const { paraWords, currentWordIdx } = this.state
+    const { letterComparison } = this.props
+
     const currentWord = paraWords[currentWordIdx]
     let newIdx = currentWordIdx
 
     if (userInput[userInput.length - 1] === ' ') {
+      const wordWithoutSpace = userInput.substr(0, userInput.length - 1)
       currentWord.state =
-        currentWord.word === userInput.substr(0, userInput.length - 1)
-          ? 'correct'
-          : 'incorrect'
+        currentWord.word === wordWithoutSpace ? 'correct' : 'incorrect'
 
-      userInput = ''
-      newIdx = currentWordIdx + 1
+      if (
+        !letterComparison ||
+        (letterComparison && currentWord.state === 'correct')
+      ) {
+        userInput = ''
+        newIdx = currentWordIdx + 1
+      }
     } else {
       currentWord.state = currentWord.word.startsWith(userInput)
         ? 'typing'
         : 'incorrect'
+
+      if (letterComparison) {
+        currentWord.letters = this.getComparedLetters(
+          currentWord.word,
+          userInput,
+        )
+      }
     }
 
     console.log(userInput, currentWord.word, currentWord.state)
@@ -135,6 +172,10 @@ export default class TypingArena extends React.Component {
   }
 
   getClassesForWord = (idx, wordState) => {
+    if (this.props.letterComparison) {
+      return ''
+    }
+
     if (idx === this.state.currentWordIdx) {
       return wordState + ' current'
     }
@@ -152,6 +193,12 @@ export default class TypingArena extends React.Component {
     })
   }
 
+  renderLetters = (word) => {
+    return word.letters.map((letterObj) => (
+      <span className={letterObj.state}>{letterObj.letter}</span>
+    ))
+  }
+
   render() {
     const { paraWords, result, countdown, userInput } = this.state
 
@@ -163,7 +210,9 @@ export default class TypingArena extends React.Component {
               {paraWords.map((wordObj, idx) => (
                 <>
                   <span className={this.getClassesForWord(idx, wordObj.state)}>
-                    {wordObj.word}
+                    {this.props.letterComparison
+                      ? this.renderLetters(wordObj)
+                      : wordObj.word}
                   </span>{' '}
                 </>
               ))}

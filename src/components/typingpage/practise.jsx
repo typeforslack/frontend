@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchPara } from '../../helpers/api'
-import { PracticeArena } from '../arena'
+import { PracticeArena, ArcadeArena } from '../arena'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 
@@ -107,11 +107,20 @@ export default class Practise extends React.Component {
           </>
         )}
 
-        {paragraph && (
+        {paragraph && strictMode === 'true' && (
           <PracticeArena
             paragraph={paragraph}
             paraID={paraID}
             strictMode={strictMode === 'true'}
+          />
+        )}
+
+        {paragraph && strictMode === 'false' && (
+          <ArcadeArena
+            paragraph={paragraph}
+            paraID={paraID}
+            countdown={60}
+            letterComparison={true}
           />
         )}
       </div>

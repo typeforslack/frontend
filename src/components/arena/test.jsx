@@ -8,10 +8,12 @@ export default class TestArena extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      paraLetters: this.letterObj(),
+      paraLetters: this.getLetterArray(),
+      typed: [],
       userInput: '',
       countdown: this.getCountdown(),
       result: null,
+      currentWordIdx: 0,
     }
     this.timer = false
   }
@@ -22,7 +24,7 @@ export default class TestArena extends React.Component {
     return isNaN(timer) ? this.props.countdown : timer
   }
 
-  letterObj = () => {
+  getLetterArray = () => {
     return this.props.paragraph
       .split('')
       .map((letter) => ({ letter, state: 'untyped' }))
@@ -30,30 +32,21 @@ export default class TestArena extends React.Component {
 
   compare(userInput) {
     const start = performance.now()
-    const newParaLetters = this.letterObj()
-    const len = userInput.length
+    const newParaLetters = this.getLetterArray()
 
-    if (userInput[userInput.length - 1] === ' ') {
-      console.log('Clear up')
-    }
-
-    const paraTillUserTyped = [...newParaLetters.slice(0, len)]
-
-    paraTillUserTyped.forEach((ele, idx) => {
-      if (ele.letter === userInput[idx]) {
-        ele.state = 'correct'
+    userInput.split('').forEach((letter, idx) => {
+      if (newParaLetters[idx].letter === letter) {
+        newParaLetters[idx].state = 'correct'
       } else {
-        ele.state = 'incorrect'
+        newParaLetters[idx].state = 'incorrect'
       }
     })
-
-    const modified = [...paraTillUserTyped, ...newParaLetters.slice(len)]
 
     const end = performance.now()
     console.info(`Took ${end - start} ms`)
 
     this.setState({
-      paraLetters: modified,
+      paraLetters: newParaLetters,
       userInput,
     })
 
@@ -119,10 +112,6 @@ export default class TestArena extends React.Component {
       return
     }
 
-    this.setState({
-      userInput: e.target.value,
-    })
-
     if (this.shouldStart()) {
       this.start()
     }
@@ -140,7 +129,7 @@ export default class TestArena extends React.Component {
 
   resetState = () => {
     this.setState({
-      paraLetters: this.letterObj(),
+      paraLetters: this.getLetterArray(),
       currentLetterIdx: 0,
       userInput: '',
       countdown: this.getCountdown(),
