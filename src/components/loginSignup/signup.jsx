@@ -117,10 +117,10 @@ export default class Login extends React.Component {
           <img src={Logo} alt="Logoimage" className="logoImg" />
         </div>
         <div className="formDetails">
-          <div className="signupBox">
+          <div className="formBox">
             <div className="signin">Sign Up </div>
             <form className="form" onSubmit={this.submitForm}>
-              <div>
+              <div className="detailsdiv">
                 <label className="label">Username</label>
                 <br></br>
 
@@ -136,7 +136,7 @@ export default class Login extends React.Component {
                   </h6>
                 }
               </div>
-              <div style={{ marginTop: '7%' }}>
+              <div className="detailsdiv" style={{ marginTop: '7%' }}>
                 <label className="label">Email</label>
                 <br></br>
 
@@ -153,7 +153,7 @@ export default class Login extends React.Component {
                 }
               </div>
 
-              <div style={{ marginTop: '7%' }}>
+              <div className="detailsdiv" style={{ marginTop: '7%' }}>
                 <label className="label">Password</label>
 
                 <br></br>

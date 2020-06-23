@@ -93,22 +93,23 @@ export default class Login extends Component {
           <div className="formBox">
             <div className="signin">Sign In </div>
             <form className="form" onSubmit={this.submitForm}>
-              <label className="label">Username</label>
-              <br></br>
+              <div className="detailsdiv">
+                <label className="label">Username</label>
+                <br></br>
 
-              <input
-                className="txtbox"
-                type="text"
-                placeholder="Enter username"
-                onChange={this.handleInput('username')}
-              />
-              {
-                <h6 style={{ color: 'red', fontSize: '16px' }}>
-                  {this.state.errors.username}
-                </h6>
-              }
-
-              <div style={{ marginTop: '10%' }}>
+                <input
+                  className="txtbox"
+                  type="text"
+                  placeholder="Enter username"
+                  onChange={this.handleInput('username')}
+                />
+                {
+                  <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    {this.state.errors.username}
+                  </h6>
+                }
+              </div>
+              <div className="detailsdiv" style={{ marginTop: '10%' }}>
                 <label className="label">Password</label>
 
                 <br></br>
@@ -125,7 +126,8 @@ export default class Login extends Component {
                   </h6>
                 }
               </div>
-              <span className="forgotpwd">Forgot Password ?</span>
+              <div className="forgotpwd">Forgot Password ?</div>
+
               <button className="loginBtn" type="submit">
                 Login
               </button>
