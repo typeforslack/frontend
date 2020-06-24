@@ -38,6 +38,7 @@
   background: #d6d6d6;
   box-shadow: 0px 22.4801px 22.4801px rgba(0, 0, 0, 0.25);
 }
+
 .formDetails {
   position: absolute;
   width: 48%;
@@ -46,7 +47,6 @@
   top: 0px;
   background: #ffffff;
   box-shadow: 0px 4.89691px 20.4038px rgba(0, 0, 0, 0.25);
-  min-height: 948px;
 }
 .formBox {
   text-align: center;
@@ -57,6 +57,7 @@
   height: 90%;
   position: absolute;
 }
+
 .signin {
   position: relative;
   font-family: 'DM Sans', sans-serif !important;
@@ -74,6 +75,7 @@
   position: relative;
   top: 15%;
 }
+
 .label {
   max-width: 100%;
   font-family: 'DM Sans', sans-serif !important;
@@ -85,7 +87,7 @@
   letter-spacing: normal;
   color: #000000;
   position: absolute;
-  left: 20%;
+  left: 18%;
   word-break: break-all;
 }
 
@@ -114,7 +116,7 @@
   font-style: normal;
   line-height: normal;
   color: #ecb22e;
-  position: absolute;
+  position: relative;
   display: block;
   word-break: break-all;
   left: 20%;
@@ -122,6 +124,7 @@
   max-width: 32%;
   font-family: 'DM Sans', sans-serif !important;
 }
+
 .loginBtn {
   width: 60%;
   height: 5rem;
@@ -220,6 +223,18 @@
   height: 80%;
   position: absolute;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 .signupBox {
   width: 50%;
   background-color: rgb(181, 181, 181, 0.1);
@@ -245,7 +260,7 @@
   max-width: 100%;
   position: absolute;
   left: 20%;
-}
+} */
 
 /* 
 
