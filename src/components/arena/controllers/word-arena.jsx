@@ -1,7 +1,4 @@
 import React from 'react'
-import Result from '../result'
-import { evaluateArcade } from '../../../helpers/calculations'
-import { postUserlog } from '../../../helpers/api'
 import '../arena.css'
 
 export default class TypingArena extends React.Component {
@@ -12,7 +9,7 @@ export default class TypingArena extends React.Component {
       currentWordIdx: 0,
       userInput: '',
       secondsSinceStart: 0,
-      result: null,
+      done: false,
     }
     this.timer = null
   }
@@ -128,25 +125,13 @@ export default class TypingArena extends React.Component {
   async finish() {
     clearTimeout(this.timer)
     this.timer = null
-    const { paraWords, secondsSinceStart } = this.state
-    const result = evaluateArcade(paraWords, secondsSinceStart)
+
     this.setState({
-      result,
+      done: true,
     })
 
-    try {
-      await postUserlog({
-        para: this.props.paraID,
-        wpm: result.correctWpm,
-        taken_at: new Date().toISOString(),
-        correct_words: result.rightCount,
-        wrong_words: result.wrongcount,
-        total_words: result.totalWords,
-        accuracy: result.accuracy,
-      })
-    } catch (e) {
-      console.log(e.response)
-    }
+    const { paraWords, secondsSinceStart } = this.state
+    this.props.evaluateResult(paraWords, secondsSinceStart)
   }
 
   shouldStart() {
@@ -178,16 +163,6 @@ export default class TypingArena extends React.Component {
     return wordState
   }
 
-  resetState = () => {
-    this.setState({
-      paraWords: this.wordObj(),
-      currentWordIdx: 0,
-      userInput: '',
-      countdown: this.getCountdown(),
-      result: null,
-    })
-  }
-
   renderLetters = (word) => {
     return word.letters.map((letterObj) => (
       <span className={letterObj.state}>{letterObj.letter}</span>
@@ -203,45 +178,43 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    const { paraWords, result, secondsSinceStart, userInput } = this.state
+    const { paraWords, done, secondsSinceStart, userInput } = this.state
     const { countdown } = this.props
+
+    if (done) {
+      return null
+    }
+
     return (
       <div className="arena-container">
-        {!result && (
-          <div className="arena-action">
-            <div className="arena-para">
-              {paraWords.map((wordObj, idx) => (
-                <>
-                  <span className={this.getClassesForWord(idx, wordObj.state)}>
-                    {this.props.letterComparison
-                      ? this.renderLetters(wordObj)
-                      : wordObj.word}
-                  </span>{' '}
-                </>
-              ))}
-            </div>
-            {countdown && (
-              <div className="arena-time-remaining">
-                {countdown - secondsSinceStart} secs
-              </div>
-            )}
-            <div>
-              <input
-                className={this.getInputClassName()}
-                value={userInput}
-                onChange={this.handleOnChange}
-                autoComplete="false"
-                placeholder="Type here"
-                autoFocus={true}
-              />
-            </div>
+        <div className="arena-action">
+          <div className="arena-para">
+            {paraWords.map((wordObj, idx) => (
+              <>
+                <span className={this.getClassesForWord(idx, wordObj.state)}>
+                  {this.props.letterComparison
+                    ? this.renderLetters(wordObj)
+                    : wordObj.word}
+                </span>{' '}
+              </>
+            ))}
           </div>
-        )}
-        {result && (
-          <div className="arena-results">
-            <Result retry={this.resetState} {...result} />
+          {countdown && (
+            <div className="arena-time-remaining">
+              {countdown - secondsSinceStart} secs
+            </div>
+          )}
+          <div>
+            <input
+              className={this.getInputClassName()}
+              value={userInput}
+              onChange={this.handleOnChange}
+              autoComplete="false"
+              placeholder="Type here"
+              autoFocus={true}
+            />
           </div>
-        )}
+        </div>
       </div>
     )
   }

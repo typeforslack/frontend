@@ -1,16 +1,21 @@
 import React from 'react'
-import { fetchPara } from '../../helpers/api'
+import { fetchPara, postUserlog } from '../../helpers/api'
 import { WordArena } from '../arena'
+import Result from '../arena/result'
 import { Button } from 'react-bootstrap'
+import { evaluateArcade } from '../../helpers/calculations'
+
 import './practise.css'
 
+const DEFAULT_STATE = {
+  isReady: false,
+  isParaLoading: false,
+  paragraph: '',
+  paraID: null,
+  result: null,
+}
 export default class Arcade extends React.Component {
-  state = {
-    isReady: false,
-    isParaLoading: false,
-    paragraph: '',
-    paraID: null,
-  }
+  state = DEFAULT_STATE
 
   parafetch = async (event) => {
     event.preventDefault()
@@ -36,8 +41,33 @@ export default class Arcade extends React.Component {
     })
   }
 
+  evaluate = async (paraWords, secondsSinceStart) => {
+    const result = evaluateArcade(paraWords, secondsSinceStart)
+    this.setState({
+      result,
+    })
+
+    try {
+      await postUserlog({
+        para: this.state.paraID,
+        wpm: result.correctWpm,
+        taken_at: new Date().toISOString(),
+        correct_words: result.rightCount,
+        wrong_words: result.wrongcount,
+        total_words: result.totalWords,
+        accuracy: result.accuracy,
+      })
+    } catch (e) {
+      console.log(e.response)
+    }
+  }
+
+  retry = () => {
+    this.setState(DEFAULT_STATE)
+  }
+
   render() {
-    const { isReady, isParaLoading, paragraph, paraID } = this.state
+    const { isReady, isParaLoading, paragraph, paraID, result } = this.state
     return (
       <div>
         {!isReady && (
@@ -48,9 +78,16 @@ export default class Arcade extends React.Component {
           </div>
         )}
 
-        {paragraph && (
-          <WordArena paragraph={paragraph} paraID={paraID} countdown={60} />
+        {paragraph && !result && (
+          <WordArena
+            paragraph={paragraph}
+            paraID={paraID}
+            countdown={60}
+            evaluateResult={this.evaluate}
+          />
         )}
+
+        {result && <Result retry={this.retry} {...result} />}
       </div>
     )
   }

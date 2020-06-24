@@ -16,7 +16,7 @@ function getCorrectOnlyStringFromTypedLetters(typed_letters) {
     .split(' ')
 }
 
-export function evaluateTyping({ paragraph, typed_letters, time_taken }) {
+export function evaluateTyping(paragraph, typed_letters, time_taken) {
   const real_words = paragraph.split(' ')
   const timeTaken = Math.round(time_taken)
   const basicWpm = Math.round((real_words.length * 60) / timeTaken)

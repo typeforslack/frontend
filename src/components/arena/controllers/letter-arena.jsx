@@ -1,7 +1,4 @@
 import React from 'react'
-import Result from '../result'
-import { evaluateTyping } from '../../../helpers/calculations'
-import { postUserlog } from '../../../helpers/api'
 import '../arena.css'
 
 export default class TestArena extends React.Component {
@@ -10,7 +7,7 @@ export default class TestArena extends React.Component {
     this.state = {
       paraLetters: this.getLetterArray(),
       userInput: '',
-      result: null,
+      done: false,
       currentWordIdx: 0,
     }
     this.startTime = null
@@ -58,28 +55,13 @@ export default class TestArena extends React.Component {
 
   async finish() {
     const endTime = new Date()
-    const result = evaluateTyping({
-      paragraph: this.props.paragraph,
-      typed_letters: this.state.paraLetters,
-      time_taken: this.startTime - endTime.getSeconds(),
-    })
+    const timeTaken = this.startTime - endTime.getSeconds()
+
     this.setState({
-      result,
+      done: true,
     })
 
-    try {
-      await postUserlog({
-        para: this.props.paraID,
-        wpm: result.correctWpm,
-        taken_at: endTime.toISOString(),
-        correct_words: result.rightCount,
-        wrong_words: result.wrongcount,
-        total_words: result.totalWords,
-        accuracy: result.accuracy,
-      })
-    } catch (e) {
-      console.log(e.response)
-    }
+    this.props.evaluateResult(this.state.paraLetters, timeTaken)
   }
 
   shouldStart() {
@@ -111,48 +93,36 @@ export default class TestArena extends React.Component {
     return wordState
   }
 
-  resetState = () => {
-    this.setState({
-      paraLetters: this.getLetterArray(),
-      userInput: '',
-      result: null,
-    })
-  }
-
   render() {
-    const { paraLetters, result, userInput } = this.state
+    const { paraLetters, done, userInput } = this.state
+
+    if (done) {
+      return null
+    }
 
     return (
       <div className="arena-container">
-        {!result && (
-          <div className="arena-action">
-            <div className="arena-para">
-              {paraLetters.map((letterObj, idx) => (
-                <>
-                  <span
-                    className={this.getClassesForWord(idx, letterObj.state)}>
-                    {letterObj.letter}
-                  </span>
-                </>
-              ))}
-            </div>
-            <div>
-              <input
-                className="arena-input"
-                value={userInput}
-                onChange={this.handleOnChange}
-                autoComplete="false"
-                placeholder="Type here"
-                autoFocus={true}
-              />
-            </div>
+        <div className="arena-action">
+          <div className="arena-para">
+            {paraLetters.map((letterObj, idx) => (
+              <>
+                <span className={this.getClassesForWord(idx, letterObj.state)}>
+                  {letterObj.letter}
+                </span>
+              </>
+            ))}
           </div>
-        )}
-        {result && (
-          <div className="arena-results">
-            <Result retry={this.resetState} {...result} />
+          <div>
+            <input
+              className="arena-input"
+              value={userInput}
+              onChange={this.handleOnChange}
+              autoComplete="false"
+              placeholder="Type here"
+              autoFocus={true}
+            />
           </div>
-        )}
+        </div>
       </div>
     )
   }
