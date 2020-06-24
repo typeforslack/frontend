@@ -50,6 +50,9 @@ export default class HomePage extends React.Component {
             <Nav.Item>
               <Link to="/challenge">race</Link>
             </Nav.Item>
+            <Nav.Item>
+              <Link to="/dashboard">Dashboard</Link>
+            </Nav.Item>
           </Navbar.Collapse>
         </Navbar>
       </div>

@@ -1,0 +1,108 @@
+@import '../../../variables.css';
+
+/* Disable default button styling */
+.dropdown,
+.dropdownSmall {
+  font-family: inherit; /* For all browsers */
+  font-size: 100%; /* For all browsers */
+  line-height: 1.15; /* For all browsers */
+  margin: 0; /* Firefox and Safari have margin */
+  overflow: visible; /* Edge hides overflow */
+  text-transform: none; /* Firefox inherits text-transform */
+  -webkit-appearance: button; /* Safari otherwise prevents some styles */
+}
+
+.dropdown::-moz-focus-inner,
+.dropdownSmall::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+.dropdown::-moz-focus,
+.dropdownSmall::-moz-focus {
+  outline: none;
+}
+
+.dropdown:focus,
+.dropdownSmall:focus {
+  outline: none;
+}
+
+/* Custom CSS */
+.dropdown,
+.dropdownSmall {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  /* border: 1px solid black; */
+  width: 164px;
+  padding: 0;
+
+  background: var(--component-bg);
+  border: 1px solid #e4e4e4;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.dropdownSmall {
+  width: 130px;
+}
+
+.dropdown .selectedText,
+.dropdownSmall .selectedText {
+  font-size: 20px;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.dropdownSmall .selectedText {
+  font-size: 18px;
+  margin-left: 1rem;
+}
+
+.dropdown .icon,
+.dropdownSmall .icon {
+  margin: 5px;
+}
+
+.dropdownList,
+.dropdownListSmall {
+  position: absolute;
+  margin-top: calc(30px + 44px);
+  background: var(--component-bg);
+  /* border: 1px solid black; */
+  cursor: pointer;
+  width: 164px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.dropdownListSmall {
+  left: 0;
+  width: 130px;
+  margin-top: calc(30px + 41px);
+}
+
+.dropdownList .option,
+.dropdownListSmall .option {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.dropdownList .option:hover,
+.dropdownListSmall .option:hover {
+  background: var(--color-yellow); /* #ffab00a6; */
+  color: white;
+}
+
+.dropdownList .text {
+  margin: 0.5rem 1.5rem;
+}
+
+.dropdownListSmall .text {
+  margin: 0.5rem 1rem;
+}

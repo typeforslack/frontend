@@ -1,0 +1,24 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e0e0e0;
+  padding: 45px;
+}
+
+.title {
+  color: #656565;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+.cards {
+  display: flex;
+  max-width: 927px;
+}
+
+.cardHolder {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+}
