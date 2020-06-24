@@ -4,7 +4,6 @@ import { signup } from '../../helpers/api'
 import { setAuthToken } from '../../helpers/storage'
 import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
-import BackgroundPage from '../../images/background.png'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -106,75 +105,109 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="login">
         <div className="logoDetail">
-          <img
-            src={BackgroundPage}
-            alt="background"
-            className="backgroundImg"
-          />
-
-          <img src={Logo} alt="Logoimage" className="logoImg" />
+          <div className="bgText">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum." "Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.""Lorem ipsum dolor sit
+            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum."
+          </div>
         </div>
+        <img src={Logo} alt="Logoimage" className="logoImg" />
+
         <div className="formDetails">
           <div className="formBox">
             <div className="signin">Sign Up </div>
-            <form className="form" onSubmit={this.submitForm}>
-              <div className="detailsdiv">
-                <label className="label">Username</label>
-                <br></br>
+            <div className="form">
+              <form className="form" onSubmit={this.submitForm}>
+                <div className="detailsdiv">
+                  <label className="label">Username</label>
+                  <br></br>
 
-                <input
-                  className="txtbox"
-                  type="text"
-                  placeholder="Enter username"
-                  onChange={this.handleInput('username')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.username}
-                  </h6>
-                }
-              </div>
-              <div className="detailsdiv" style={{ marginTop: '7%' }}>
-                <label className="label">Email</label>
-                <br></br>
+                  <input
+                    className="txtbox"
+                    type="text"
+                    placeholder="Enter username"
+                    onChange={this.handleInput('username')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.username}
+                    </h6>
+                  }
+                </div>
+                <div className="detailsdiv" style={{ marginTop: '7%' }}>
+                  <label className="label">Email</label>
+                  <br></br>
 
-                <input
-                  className="txtbox"
-                  type="text"
-                  placeholder="Enter email"
-                  onChange={this.handleInput('email')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.email}
-                  </h6>
-                }
-              </div>
+                  <input
+                    className="txtbox"
+                    type="text"
+                    placeholder="Enter email"
+                    onChange={this.handleInput('email')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.email}
+                    </h6>
+                  }
+                </div>
 
-              <div className="detailsdiv" style={{ marginTop: '7%' }}>
-                <label className="label">Password</label>
+                <div className="detailsdiv" style={{ marginTop: '7%' }}>
+                  <label className="label">Password</label>
 
-                <br></br>
+                  <br></br>
 
-                <input
-                  className="txtbox"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleInput('password')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.password}
-                  </h6>
-                }
-              </div>
+                  <input
+                    className="txtbox"
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleInput('password')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.password}
+                    </h6>
+                  }
+                </div>
 
-              <button className="signupbtn" type="submit">
-                Sign Up
-              </button>
-            </form>
+                <button className="loginBtn" type="submit">
+                  Sign Up
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
