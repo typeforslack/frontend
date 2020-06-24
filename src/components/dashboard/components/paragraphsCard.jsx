@@ -1,44 +1,37 @@
-import React, { Component } from 'react'
+import React from 'react'
 import NestedDonutChart from '../../common/charts/nestedDonutChart'
 import Labels from './labels'
 import Dropdown from './dropdown'
 import styles from './paragraphsCard.module.css'
 
-export default class ParagraphsCard extends Component {
-  state = {
-    labelData: [
-      {
-        title: 'Total',
-        color: '#F0A500',
-      },
-      {
-        title: 'Practise',
-        color: '#DF6C01',
-      },
-      {
-        title: 'Arcade',
-        color: '#E01E5A',
-      },
-    ],
-    labelOrientation: 'vertical',
-    dropdownData: ['All Time', 'Weekly', 'Monthly'],
-  }
+const labelOrientation = 'vertical',
+  dropdownData = ['All Time', 'Weekly', 'Monthly'],
+  labelData = [
+    {
+      title: 'Total',
+      color: '#F0A500',
+    },
+    {
+      title: 'Practise',
+      color: '#DF6C01',
+    },
+    {
+      title: 'Arcade',
+      color: '#E01E5A',
+    },
+  ]
 
-  render() {
-    return (
-      <div className={styles.card}>
-        <div className={styles.titleSection}>
-          <h4>Paragraphs</h4>
-          <Dropdown data={this.state.dropdownData} size="small" />
-        </div>
-        <div className={styles.chartSection}>
-          <NestedDonutChart />
-          <Labels
-            data={this.state.labelData}
-            orientation={this.state.labelOrientation}
-          />
-        </div>
+export default function ParagraphsCard() {
+  return (
+    <div className={styles.card}>
+      <div className={styles.titleSection}>
+        <h4>Paragraphs</h4>
+        <Dropdown data={dropdownData} size="small" />
       </div>
-    )
-  }
+      <div className={styles.chartSection}>
+        <NestedDonutChart />
+        <Labels data={labelData} orientation={labelOrientation} />
+      </div>
+    </div>
+  )
 }

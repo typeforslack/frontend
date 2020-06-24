@@ -7,7 +7,7 @@ import SettingPage from '../settingspage/settings'
 import Practise from '../typingpage/practise'
 import Challenge from '../typingpage/challenge'
 import Arcade from '../typingpage/arcade'
-import Dashboard from '../dashboard/index'
+import Dashboard from '../dashboard'
 
 export default class RouterPage extends React.Component {
   render() {

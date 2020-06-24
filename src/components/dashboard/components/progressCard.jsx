@@ -5,24 +5,25 @@ import Button from './button'
 import Dropdown from './dropdown'
 import Labels from './labels'
 
+const labelOrientation = 'horizontal',
+  dropdownOptions = ['All', 'Practise', 'Arena'],
+  labelData = [
+    {
+      title: 'WPM',
+      color: '#F0A500',
+    },
+    {
+      title: 'Accuracy',
+      color: '#EC486F',
+    },
+  ]
+
 export default class ProgressCard extends Component {
   state = {
     // Show Weekly progress by default
     weekly: true,
     monthly: false,
     yearly: false,
-    labelData: [
-      {
-        title: 'WPM',
-        color: '#F0A500',
-      },
-      {
-        title: 'Accuracy',
-        color: '#EC486F',
-      },
-    ],
-    labelOrientation: 'horizontal',
-    dropdownOptions: ['All', 'Practise', 'Arena'],
   }
 
   weeklyData = () => {
@@ -59,11 +60,8 @@ export default class ProgressCard extends Component {
     return (
       <div className={styles.card}>
         <div className={styles.header}>
-          <Dropdown data={this.state.dropdownOptions} size="medium" />
-          <Labels
-            data={this.state.labelData}
-            orientation={this.state.labelOrientation}
-          />
+          <Dropdown data={dropdownOptions} size="medium" />
+          <Labels data={labelData} orientation={labelOrientation} />
         </div>
         <div className={styles.chartContainer}>
           <LineChart width={870} height={300} />
@@ -71,17 +69,17 @@ export default class ProgressCard extends Component {
         <div className={styles.controls}>
           <Button
             text="Weekly"
-            state={this.state.weekly}
+            active={this.state.weekly}
             toggleData={this.weeklyData}
           />
           <Button
             text="Monthly"
-            state={this.state.monthly}
+            active={this.state.monthly}
             toggleData={this.monthlyData}
           />
           <Button
             text="Yearly"
-            state={this.state.yearly}
+            active={this.state.yearly}
             toggleData={this.yearlyData}
           />
         </div>

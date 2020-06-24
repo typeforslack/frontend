@@ -4,11 +4,14 @@ import Up from '../../../images/chevron-up.svg'
 import Down from '../../../images/chevron-down.svg'
 
 export default class Dropdown extends Component {
-  state = {
-    selectedOption: '',
-    dropdown: false,
-    options: [],
-    size: 'medium', // Default size is medium
+  constructor(props) {
+    super(props)
+    this.state = {
+      options: this.props.data || [],
+      selectedOption: this.props.data ? this.props.data[0] : '',
+      dropdown: false,
+      size: this.props.size ? this.props.size : 'medium', // Default size is medium
+    }
   }
 
   toggleDropdown = () => {
@@ -21,14 +24,6 @@ export default class Dropdown extends Component {
     this.setState({
       selectedOption: option,
       dropdown: false,
-    })
-  }
-
-  componentDidMount() {
-    this.setState({
-      options: this.props.data,
-      selectedOption: this.props.data && this.props.data[0],
-      size: this.props.size ? this.props.size : this.state.size,
     })
   }
 
