@@ -1,16 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styles from './card.module.css'
 
-export default class Card extends Component {
-  render() {
-    return (
-      <div className={styles.card}>
-        <div
-          className={styles.cardMargin}
-          style={{ backgroundColor: this.props.color }}></div>
-        <h2>{this.props.title}</h2>
-        <p>{this.props.desc}</p>
-      </div>
-    )
-  }
+export default function Card(props) {
+  return (
+    <div className={styles.card}>
+      <div
+        className={styles.cardMargin}
+        style={{ backgroundColor: props.color }}></div>
+      <h2>{props.title}</h2>
+      <p>{props.desc}</p>
+    </div>
+  )
 }
