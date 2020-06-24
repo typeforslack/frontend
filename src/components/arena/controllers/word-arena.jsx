@@ -1,8 +1,8 @@
 import React from 'react'
-import Result from './result'
-import { evaluateArcade } from '../../helpers/calculations'
-import { postUserlog } from '../../helpers/api'
-import './arena.css'
+import Result from '../result'
+import { evaluateArcade } from '../../../helpers/calculations'
+import { postUserlog } from '../../../helpers/api'
+import '../arena.css'
 
 export default class TypingArena extends React.Component {
   constructor(props) {

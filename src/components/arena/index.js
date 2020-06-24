@@ -1,2 +1,2 @@
-export { default as ArcadeArena } from './arcade'
-export { default as PracticeArena } from './practice'
+export { default as WordArena } from './controllers/word-arena'
+export { default as LetterArena } from './controllers/letter-arena'

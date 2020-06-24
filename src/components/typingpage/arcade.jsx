@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchPara } from '../../helpers/api'
-import { ArcadeArena } from '../arena'
+import { WordArena } from '../arena'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 
@@ -49,7 +49,7 @@ export default class Arcade extends React.Component {
         )}
 
         {paragraph && (
-          <ArcadeArena paragraph={paragraph} paraID={paraID} countdown={60} />
+          <WordArena paragraph={paragraph} paraID={paraID} countdown={60} />
         )}
       </div>
     )

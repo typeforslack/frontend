@@ -1,8 +1,8 @@
 import React from 'react'
-import Result from './result'
-import { evaluateTyping } from '../../helpers/calculations'
-import { postUserlog } from '../../helpers/api'
-import './arena.css'
+import Result from '../result'
+import { evaluateTyping } from '../../../helpers/calculations'
+import { postUserlog } from '../../../helpers/api'
+import '../arena.css'
 
 export default class TestArena extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ export default class TestArena extends React.Component {
     const result = evaluateTyping({
       paragraph: this.props.paragraph,
       typed_letters: this.state.paraLetters,
-      time_taken: endTime.getSeconds() - this.startTime,
+      time_taken: this.startTime - endTime.getSeconds(),
     })
     this.setState({
       result,
