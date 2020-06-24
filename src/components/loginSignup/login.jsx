@@ -5,7 +5,6 @@ import { setAuthToken } from '../../helpers/storage'
 
 import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
-import BackgroundPage from '../../images/background.png'
 
 export default class Login extends Component {
   state = {
@@ -80,64 +79,93 @@ export default class Login extends Component {
     return (
       <div className="login">
         <div className="logoDetail">
-          <img
-            src={BackgroundPage}
-            alt="background"
-            className="backgroundImg"
-          />
-
-          <img src={Logo} alt="Logoimage" className="logoImg" />
+          <div className="bgText">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum." "Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.""Lorem ipsum dolor sit
+            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum."
+          </div>
         </div>
-
+        <img src={Logo} alt="Logoimage" className="logoImg" />
         <div className="formDetails">
           <div className="formBox">
             <div className="signin">Sign In </div>
-            <form className="form" onSubmit={this.submitForm}>
-              <div className="detailsdiv">
-                <label className="label">Username</label>
-                <br></br>
+            <div className="form">
+              <form onSubmit={this.submitForm}>
+                <div className="detailsdiv">
+                  <label className="label">Username</label>
+                  <br></br>
 
-                <input
-                  className="txtbox"
-                  type="text"
-                  placeholder="Enter username"
-                  onChange={this.handleInput('username')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.username}
-                  </h6>
-                }
-              </div>
-              <div className="detailsdiv" style={{ marginTop: '10%' }}>
-                <label className="label">Password</label>
+                  <input
+                    className="txtbox"
+                    type="text"
+                    placeholder="Enter username"
+                    onChange={this.handleInput('username')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.username}
+                    </h6>
+                  }
+                </div>
+                <div className="detailsdiv" style={{ marginTop: '8%' }}>
+                  <label className="label">Password</label>
 
-                <br></br>
+                  <br></br>
 
-                <input
-                  className="txtbox"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleInput('password')}
-                />
-                {
-                  <h6 style={{ color: 'red', fontSize: '16px' }}>
-                    {this.state.errors.password}
-                  </h6>
-                }
-              </div>
+                  <input
+                    className="txtbox"
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleInput('password')}
+                  />
+                  {
+                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                      {this.state.errors.password}
+                    </h6>
+                  }
+                </div>
+              </form>
               <div className="forgotpwd">Forgot Password ?</div>
-
               <button className="loginBtn" type="submit">
                 Login
               </button>
-            </form>
+            </div>
             <div className="signupdiv">
-              <span className="signupBtn">
-                New Here? &nbsp;
-                <span className="signup" onClick={this.navigateToSignup}>
-                  Signup
-                </span>{' '}
+              New Here? &nbsp;
+              <span className="signup" onClick={this.navigateToSignup}>
+                Signup
               </span>
             </div>
           </div>
