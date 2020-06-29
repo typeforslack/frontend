@@ -128,7 +128,7 @@ export default class Login extends React.Component {
           <div className="formBox">
             <div className="signin">Sign Up </div>
             <div className="form">
-              <form>
+              <form onSubmit={this.submitForm}>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
@@ -193,11 +193,8 @@ export default class Login extends React.Component {
                   }
                 </div>
               </form>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <button
-                  className="loginBtn"
-                  type="submit"
-                  onClick={this.submitForm}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <button className="loginBtn" type="submit">
                   Sign Up
                 </button>
               </div>

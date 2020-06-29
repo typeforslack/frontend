@@ -157,7 +157,7 @@ export default class Login extends Component {
                 Login
               </ButtonWithLoader>
             </div>
-            <div className="signupdiv">
+            <div className="col-md-12 text-center signupdiv">
               New Here? &nbsp;
               <span className="signup" onClick={this.navigateToSignup}>
                 Signup
