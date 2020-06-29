@@ -4,6 +4,7 @@ import { signup } from '../../helpers/api'
 import { setAuthToken } from '../../helpers/storage'
 import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
+import Para from './bgpara'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -108,50 +109,15 @@ export default class Login extends React.Component {
       <div className="login">
         <div className="logoDetail">
           <div className="bgText">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum." "Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim id est laborum.""Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum."
+            <Para />
           </div>
         </div>
         <img src={Logo} alt="Logoimage" className="logoImg" />
-
         <div className="formDetails">
           <div className="formBox">
             <div className="signin">Sign Up </div>
             <div className="form">
-              <form className="form" onSubmit={this.submitForm}>
+              <form onSubmit={this.submitForm}>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
@@ -202,11 +168,12 @@ export default class Login extends React.Component {
                     </h6>
                   }
                 </div>
-
+              </form>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <button className="loginBtn" type="submit">
                   Sign Up
                 </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>

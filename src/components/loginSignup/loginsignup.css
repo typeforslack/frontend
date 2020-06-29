@@ -1,18 +1,17 @@
 .login {
-  min-height: 660px;
+  min-height: 700px;
   min-width: 400px;
-  width: 60%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 10%;
-  left: 19%;
+  
   box-shadow: 0px 4.89691px 20.4038px rgba(0, 0, 0, 0.25);
   background: linear-gradient(180deg, #f0a500 0%, #cf7500 100%);
 }
 
 .logoDetail {
   position: absolute;
-  width: 50%;
+  width: 52%;
   height: 100%;
   left: 0px;
   top: 0px;
@@ -25,7 +24,7 @@
 .bgText {
   color: #a65e00;
   text-align: justify;
-  font-size: 20px;
+  font-size: 22.5px;
   cursor: default;
   user-select: none;
   opacity: 0.3;
@@ -33,9 +32,9 @@
 
 .logoImg {
   position: absolute;
-  width: 25%;
+  width: 17%;
   height: 13%;
-  left: 12.5%;
+  left: 17.5%;
   top: 42%;
   background: #d6d6d6;
   box-shadow: 0px 22.4801px 22.4801px rgba(0, 0, 0, 0.25);
@@ -43,9 +42,9 @@
 
 .formDetails {
   position: absolute;
-  width: 50%;
+  width: 48%;
   height: 100%;
-  left: 50%;
+  left: 52%;
   top: 0px;
   background: #ffffff;
   box-shadow: 0px 4.89691px 20.4038px rgba(0, 0, 0, 0.25);
@@ -89,12 +88,12 @@
   letter-spacing: normal;
   color: #000000;
   position: absolute;
-  left: 18%;
+  left: 20%;
   word-break: break-all;
 }
 
 .txtbox {
-  width: 60%;
+  width: 57%;
   height: 4rem;
   border-radius: 11.4px;
   background-color: rgba(217, 217, 217, 0.4);
@@ -115,7 +114,7 @@
   position: relative;
   display: block;
   word-break: break-all;
-  left: 18%;
+  left: 20%;
   bottom: 30px;
   max-width: 32%;
   font-family: 'DM Sans', sans-serif !important;
@@ -135,12 +134,11 @@
   max-width: 100%;
   position: relative;
   cursor: pointer;
+  margin-top: 4%;
 }
 
 .signupdiv {
-  position: relative;
-  min-width: 60%;
-  width: 47%;
+  position: relative; 
   top: 20%;
   font-family: 'DM Sans', sans-serif !important;
   font-style: normal;
@@ -154,7 +152,7 @@
   font-stretch: normal;
   letter-spacing: normal;
   border: none;
-  left: 28%;
+  justify-content: center;
   word-break: break-all;
 }
 .signup:hover {
@@ -185,7 +183,7 @@
   color: #f0a500;
 }
 
-/* 
+
 
 
 
