@@ -1,30 +1,11 @@
 import React from 'react'
+import cx from '../../../helpers/cx'
 import '../arena.css'
-
-function getClassesForWord(idx, wordState, currWordIdx, letterMode) {
-  if (letterMode) {
-    return ''
-  }
-
-  if (idx === currWordIdx) {
-    return wordState + ' current'
-  }
-
-  return wordState
-}
 
 function renderLetters(word) {
   return word.letters.map((letterObj) => (
     <span className={letterObj.state}>{letterObj.letter}</span>
   ))
-}
-
-function getInputClassName(letterMode, paraObjs, currWordIdx) {
-  let base = 'arena-input '
-  if (letterMode) {
-    base += paraObjs[currWordIdx].state
-  }
-  return base
 }
 
 export default function ArenaDisplay({
@@ -43,12 +24,10 @@ export default function ArenaDisplay({
           {paraObjs.map((wordObj, idx) => (
             <>
               <span
-                className={getClassesForWord(
-                  idx,
-                  wordObj.state,
-                  currWordIdx,
-                  letterMode,
-                )}>
+                className={cx({
+                  [wordObj.state]: !letterMode,
+                  current: !letterMode && idx === currWordIdx,
+                })}>
                 {letterMode ? renderLetters(wordObj) : wordObj.word}
               </span>{' '}
             </>
@@ -61,7 +40,9 @@ export default function ArenaDisplay({
         )}
         <div>
           <input
-            className={getInputClassName(letterMode, paraObjs, currWordIdx)}
+            className={cx('arena-input', {
+              [paraObjs[currWordIdx]?.state]: letterMode,
+            })}
             value={userInput}
             onChange={handleOnChange}
             autoComplete="false"
