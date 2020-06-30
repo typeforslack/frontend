@@ -1,7 +1,7 @@
 import React from 'react'
 import { fetchPara, postUserlog } from '../../helpers/api'
 import { LetterArena, WordArena } from '../arena'
-import Result from '../arena/result'
+import Result from '../arena/components/result'
 import { evaluateArcade, evaluateTyping } from '../../helpers/calculations'
 import { Button } from 'react-bootstrap'
 import './practise.css'

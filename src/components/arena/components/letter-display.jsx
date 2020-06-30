@@ -1,29 +1,14 @@
 import React from 'react'
 import '../arena.css'
 
-function getClassesForWord(idx, wordState, currWordIdx) {
-  if (idx === currWordIdx) {
-    return wordState + ' current'
-  }
-
-  return wordState
-}
-
-export default function ArenaDisplay({
-  paraObjs,
-  currWordIdx,
-  userInput,
-  handleOnChange,
-}) {
+export default function ArenaDisplay({ paraObjs, userInput, handleOnChange }) {
   return (
     <div className="arena-container">
       <div className="arena-action">
         <div className="arena-para">
-          {paraObjs.map((obj, idx) => (
+          {paraObjs.map((obj) => (
             <>
-              <span className={getClassesForWord(idx, obj.state, currWordIdx)}>
-                {obj.letter}
-              </span>
+              <span className={obj.state}>{obj.letter}</span>
             </>
           ))}
         </div>

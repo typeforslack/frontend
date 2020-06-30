@@ -152,17 +152,19 @@ export default class TypingArena extends React.Component {
   }
 
   render() {
-    if (!this.state.done) {
-      return (
-        <WordDisplay
-          paraObjs={this.state.paraWords}
-          countdown={this.props.countdown}
-          secondsSinceStart={this.state.secondsSinceStart}
-          currWordIdx={this.state.currentWordIdx}
-          userInput={this.state.userInput}
-          handleOnChange={this.handleOnChange}
-        />
-      )
+    if (this.state.done) {
+      return null
     }
+
+    return (
+      <WordDisplay
+        paraObjs={this.state.paraWords}
+        countdown={this.props.countdown}
+        secondsSinceStart={this.state.secondsSinceStart}
+        currWordIdx={this.state.currentWordIdx}
+        userInput={this.state.userInput}
+        handleOnChange={this.handleOnChange}
+      />
+    )
   }
 }

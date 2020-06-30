@@ -9,7 +9,6 @@ export default class TestArena extends React.Component {
       paraLetters: this.getLetterArray(),
       userInput: '',
       done: false,
-      currentWordIdx: 0,
     }
     this.startTime = null
   }
@@ -87,15 +86,16 @@ export default class TestArena extends React.Component {
   }
 
   render() {
-    if (!this.state.done) {
-      return (
-        <LetterDisplay
-          paraObjs={this.state.paraLetters}
-          currWordIdx={this.state.currentWordIdx}
-          userInput={this.state.userInput}
-          handleOnChange={this.handleOnChange}
-        />
-      )
+    if (this.state.done) {
+      return null
     }
+
+    return (
+      <LetterDisplay
+        paraObjs={this.state.paraLetters}
+        userInput={this.state.userInput}
+        handleOnChange={this.handleOnChange}
+      />
+    )
   }
 }
