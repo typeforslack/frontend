@@ -18,9 +18,7 @@ export default class Login extends Component {
 
   handleInput = (stateName) => (e) => {
     e.preventDefault()
-    this.setState({
-      [stateName]: e.target.value.trim(),
-    })
+    console.log(e.target.value)
   }
 
   submitForm = async (event) => {
@@ -64,7 +62,7 @@ export default class Login extends Component {
         const { non_field_errors } = e.response.data
         this.setState({
           errors: {
-            password: non_field_errors[0],
+            credentials: non_field_errors[0],
           },
         })
       }
@@ -88,19 +86,19 @@ export default class Login extends Component {
           <div className="formBox">
             <div className="signin">Sign In </div>
             <div className="form">
-              <form onSubmit={this.submitForm}>
+              <form >
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
 
                   <input
-                    className="txtbox"
+                    className={this.state.errors.username ? "txtboxRed" : "txtbox"}
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
                       {this.state.errors.username}
                     </h6>
                   }
@@ -111,29 +109,35 @@ export default class Login extends Component {
                   <br></br>
 
                   <input
-                    className="txtbox"
+                    className={this.state.errors.password ? "txtboxRed" : "txtbox"}
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
                       {this.state.errors.password}
                     </h6>
                   }
                 </div>
               </form>
               <div className="forgotpwd">Forgot Password ?</div>
-              <button className="loginBtn" type="submit">
+              {
+                <h6 style={{ color: 'red', fontSize: '16px' }}>
+                  {this.state.errors.credentials}
+                </h6>
+              }
+              <button className="loginBtn" type="submit" onClick={this.submitForm}>
                 Login
               </button>
             </div>
-            <div className="col-md-12 text-center signupdiv">
+            <div className="signupdiv">
               New Here? &nbsp;
               <span className="signup" onClick={this.navigateToSignup}>
                 Signup
               </span>
             </div>
+
           </div>
         </div>
       </div>
