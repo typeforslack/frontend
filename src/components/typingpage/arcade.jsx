@@ -14,6 +14,7 @@ const DEFAULT_STATE = {
   paraID: null,
   result: null,
 }
+
 export default class Arcade extends React.Component {
   state = DEFAULT_STATE
 
@@ -52,8 +53,8 @@ export default class Arcade extends React.Component {
         para: this.state.paraID,
         wpm: result.correctWpm,
         taken_at: new Date().toISOString(),
-        correct_words: result.rightCount,
-        wrong_words: result.wrongcount,
+        correct_words: result.correctCount,
+        wrong_words: result.wrongCount,
         total_words: result.totalWords,
         accuracy: result.accuracy,
       })

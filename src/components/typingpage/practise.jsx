@@ -57,8 +57,8 @@ export default class Practise extends React.Component {
         para: this.state.paraID,
         wpm: result.correctWpm,
         taken_at: new Date().toISOString(),
-        correct_words: result.rightCount,
-        wrong_words: result.wrongcount,
+        correct_words: result.correctWpm,
+        wrong_words: result.wrongCount,
         total_words: result.totalWords,
         accuracy: result.accuracy,
       })

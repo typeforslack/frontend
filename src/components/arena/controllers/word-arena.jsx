@@ -158,6 +158,7 @@ export default class TypingArena extends React.Component {
 
     return (
       <WordDisplay
+        letterMode={this.props.letterComparison}
         paraObjs={this.state.paraWords}
         countdown={this.props.countdown}
         secondsSinceStart={this.state.secondsSinceStart}
