@@ -108,6 +108,19 @@
   border-color: red;
   border-style: dashed;
 }
+.txtboxRed {
+  width: 57%;
+  height: 4rem;
+  border-radius: 11.4px;
+  background-color: rgba(217, 217, 217, 0.4);
+  border-style: none;
+  outline: none;
+  padding: 0 10px;
+  margin-left: -5px;
+  margin-top: 3%;
+  border-color: red;
+  border-style: dashed;
+}
 .forgotpwd {
   text-align: left;
   font-size: 17.1px;
