@@ -1,4 +1,5 @@
 import React from 'react'
+import LetterDisplay from '../components/letter-display'
 import '../arena.css'
 
 export default class TestArena extends React.Component {
@@ -53,7 +54,7 @@ export default class TestArena extends React.Component {
     return false
   }
 
-  async finish() {
+  finish() {
     const endTime = new Date()
     const timeTaken = this.startTime - endTime.getSeconds()
 
@@ -85,45 +86,16 @@ export default class TestArena extends React.Component {
     this.compare(e.target.value)
   }
 
-  getClassesForWord = (idx, wordState) => {
-    if (idx === this.state.currentLetterIdx) {
-      return wordState + ' current'
-    }
-
-    return wordState
-  }
-
   render() {
-    const { paraLetters, done, userInput } = this.state
-
-    if (done) {
-      return null
+    if (!this.state.done) {
+      return (
+        <LetterDisplay
+          paraObjs={this.state.paraLetters}
+          currWordIdx={this.state.currentWordIdx}
+          userInput={this.state.userInput}
+          handleOnChange={this.handleOnChange}
+        />
+      )
     }
-
-    return (
-      <div className="arena-container">
-        <div className="arena-action">
-          <div className="arena-para">
-            {paraLetters.map((letterObj, idx) => (
-              <>
-                <span className={this.getClassesForWord(idx, letterObj.state)}>
-                  {letterObj.letter}
-                </span>
-              </>
-            ))}
-          </div>
-          <div>
-            <input
-              className="arena-input"
-              value={userInput}
-              onChange={this.handleOnChange}
-              autoComplete="false"
-              placeholder="Type here"
-              autoFocus={true}
-            />
-          </div>
-        </div>
-      </div>
-    )
   }
 }

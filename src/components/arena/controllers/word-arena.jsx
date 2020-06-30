@@ -1,5 +1,5 @@
 import React from 'react'
-import '../arena.css'
+import WordDisplay from '../components/word-display'
 
 export default class TypingArena extends React.Component {
   constructor(props) {
@@ -122,7 +122,7 @@ export default class TypingArena extends React.Component {
     return false
   }
 
-  async finish() {
+  finish() {
     clearTimeout(this.timer)
     this.timer = null
 
@@ -151,71 +151,18 @@ export default class TypingArena extends React.Component {
     }, 1000)
   }
 
-  getClassesForWord = (idx, wordState) => {
-    if (this.props.letterComparison) {
-      return ''
-    }
-
-    if (idx === this.state.currentWordIdx) {
-      return wordState + ' current'
-    }
-
-    return wordState
-  }
-
-  renderLetters = (word) => {
-    return word.letters.map((letterObj) => (
-      <span className={letterObj.state}>{letterObj.letter}</span>
-    ))
-  }
-
-  getInputClassName = () => {
-    let base = 'arena-input '
-    if (this.props.letterComparison && !this.shouldFinish()) {
-      base += this.state.paraWords[this.state.currentWordIdx].state
-    }
-    return base
-  }
-
   render() {
-    const { paraWords, done, secondsSinceStart, userInput } = this.state
-    const { countdown } = this.props
-
-    if (done) {
-      return null
+    if (!this.state.done) {
+      return (
+        <WordDisplay
+          paraObjs={this.state.paraWords}
+          countdown={this.props.countdown}
+          secondsSinceStart={this.state.secondsSinceStart}
+          currWordIdx={this.state.currentWordIdx}
+          userInput={this.state.userInput}
+          handleOnChange={this.handleOnChange}
+        />
+      )
     }
-
-    return (
-      <div className="arena-container">
-        <div className="arena-action">
-          <div className="arena-para">
-            {paraWords.map((wordObj, idx) => (
-              <>
-                <span className={this.getClassesForWord(idx, wordObj.state)}>
-                  {this.props.letterComparison
-                    ? this.renderLetters(wordObj)
-                    : wordObj.word}
-                </span>{' '}
-              </>
-            ))}
-          </div>
-          {countdown && (
-            <div className="arena-time-remaining">
-              {countdown - secondsSinceStart} secs
-            </div>
-          )}
-          <div>
-            <input
-              className={this.getInputClassName()}
-              value={userInput}
-              onChange={this.handleOnChange}
-              autoComplete="false"
-              placeholder="Type here"
-              autoFocus={true}
-            />
-          </div>
-        </div>
-      </div>
-    )
   }
 }
