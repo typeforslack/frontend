@@ -1,10 +1,10 @@
 import React from 'react'
 import cx from '../../../helpers/cx'
-import '../arena.css'
+import styles from '../arena.module.css'
 
 function renderLetters(word) {
   return word.letters.map((letterObj) => (
-    <span className={letterObj.state}>{letterObj.letter}</span>
+    <span className={styles[letterObj.state]}>{letterObj.letter}</span>
   ))
 }
 
@@ -18,15 +18,15 @@ export default function ArenaDisplay({
   handleOnChange,
 }) {
   return (
-    <div className="arena-container">
-      <div className="arena-action">
-        <div className="arena-para">
+    <div className={styles.arenaContainer}>
+      <div className={styles.arenaAction}>
+        <div className={styles.arenaPara}>
           {paraObjs.map((wordObj, idx) => (
             <>
               <span
                 className={cx({
-                  [wordObj.state]: !letterMode,
-                  current: !letterMode && idx === currWordIdx,
+                  [styles[wordObj.state]]: !letterMode,
+                  [styles.current]: !letterMode && idx === currWordIdx,
                 })}>
                 {letterMode ? renderLetters(wordObj) : wordObj.word}
               </span>{' '}
@@ -34,14 +34,14 @@ export default function ArenaDisplay({
           ))}
         </div>
         {countdown && (
-          <div className="arena-time-remaining">
+          <div className={styles.arenaTimeRemaining}>
             {countdown - secondsSinceStart} secs
           </div>
         )}
         <div>
           <input
-            className={cx('arena-input', {
-              [paraObjs[currWordIdx]?.state]: letterMode,
+            className={cx(styles.arenaInput, {
+              [styles[paraObjs[currWordIdx]?.state]]: letterMode,
             })}
             value={userInput}
             onChange={handleOnChange}

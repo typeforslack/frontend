@@ -1,6 +1,5 @@
 import React from 'react'
 import LetterDisplay from '../components/letter-display'
-import '../arena.css'
 
 export default class TestArena extends React.Component {
   constructor(props) {

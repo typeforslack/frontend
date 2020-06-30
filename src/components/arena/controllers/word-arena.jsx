@@ -45,7 +45,7 @@ export default class TypingArena extends React.Component {
     return letters
   }
 
-  async compare(userInput) {
+  compare(userInput) {
     const { paraWords, currentWordIdx } = this.state
     const { letterComparison } = this.props
 

@@ -1,20 +1,20 @@
 import React from 'react'
-import '../arena.css'
+import styles from '../arena.module.css'
 
 export default function ArenaDisplay({ paraObjs, userInput, handleOnChange }) {
   return (
-    <div className="arena-container">
-      <div className="arena-action">
-        <div className="arena-para">
+    <div className={styles.arenaContainer}>
+      <div className={styles.arenaAction}>
+        <div className={styles.arenaPara}>
           {paraObjs.map((obj) => (
             <>
-              <span className={obj.state}>{obj.letter}</span>
+              <span className={styles[obj.state]}>{obj.letter}</span>
             </>
           ))}
         </div>
         <div>
           <input
-            className="arena-input"
+            className={styles.arenaInput}
             value={userInput}
             onChange={handleOnChange}
             autoComplete="false"
