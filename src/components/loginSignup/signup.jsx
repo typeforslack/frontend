@@ -117,19 +117,19 @@ export default class Login extends React.Component {
           <div className="formBox">
             <div className="signin">Sign Up </div>
             <div className="form">
-              <form onSubmit={this.submitForm}>
+              <form >
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
 
                   <input
-                    className="txtbox"
+                    className={this.state.errors.username ? "txtboxRed" : "txtbox"}
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
                       {this.state.errors.username}
                     </h6>
                   }
@@ -139,13 +139,13 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className="txtbox"
+                    className={this.state.errors.email ? "txtboxRed" : "txtbox"}
                     type="text"
                     placeholder="Enter email"
                     onChange={this.handleInput('email')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
                       {this.state.errors.email}
                     </h6>
                   }
@@ -157,20 +157,20 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className="txtbox"
+                    className={this.state.errors.password ? "txtboxRed" : "txtbox"}
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px' }}>
+                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
                       {this.state.errors.password}
                     </h6>
                   }
                 </div>
               </form>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <button className="loginBtn" type="submit">
+                <button className="loginBtn" type="submit" onClick={this.submitForm}>
                   Sign Up
                 </button>
               </div>
