@@ -120,7 +120,7 @@ export default class Login extends Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.username ? "txtboxRed" : "txtbox"}
+                    className={this.state.errors.username ? " txtbox txtboxRed" : "txtbox"}
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
@@ -137,7 +137,7 @@ export default class Login extends Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.password ? "txtboxRed" : "txtbox"}
+                    className={this.state.errors.password ? " txtbox txtboxRed" : "txtbox"}
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
