@@ -26,6 +26,35 @@ export default class Login extends React.Component {
     this.setState({
       [stateName]: e.target.value.trim(),
     })
+    this.handleError(stateName)
+  }
+
+  handleError = (stateName) => {
+    const error = this.state.errors
+    if (stateName === "username") {
+      this.setState({
+        errors: {
+          ...error,
+          username: ''
+        }
+      })
+    }
+    else if (stateName === "email") {
+      this.setState({
+        errors: {
+          ...error,
+          email: ''
+        }
+      })
+    }
+    else {
+      this.setState({
+        errors: {
+          ...error,
+          password: ''
+        }
+      })
+    }
   }
 
   submitForm = async (event) => {
@@ -123,7 +152,7 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.username ? "txtboxRed" : "txtbox"}
+                    className={this.state.errors.username ? " txtbox txtboxRed" : "txtbox"}
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
@@ -139,7 +168,7 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.email ? "txtboxRed" : "txtbox"}
+                    className={this.state.errors.email ? " txtbox txtboxRed" : "txtbox"}
                     type="text"
                     placeholder="Enter email"
                     onChange={this.handleInput('email')}
@@ -157,7 +186,7 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.password ? "txtboxRed" : "txtbox"}
+                    className={this.state.errors.password ? " txtbox txtboxRed" : "txtbox"}
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
