@@ -18,7 +18,35 @@ export default class Login extends Component {
 
   handleInput = (stateName) => (e) => {
     e.preventDefault()
+    this.setState({
+      [stateName]: e.target.value.trim(),
+      errors: {
+        username: '',
+        password: '',
+      }
+    })
+    this.handleError(stateName)
     console.log(e.target.value)
+  }
+
+  handleError = (stateName) => {
+    const error = this.state.errors
+    if (stateName === "username") {
+      this.setState({
+        errors: {
+          ...error,
+          username: ''
+        }
+      })
+    }
+    else {
+      this.setState({
+        errors: {
+          ...error,
+          password: ''
+        }
+      })
+    }
   }
 
   submitForm = async (event) => {
