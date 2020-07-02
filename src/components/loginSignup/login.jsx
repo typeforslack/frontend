@@ -108,7 +108,6 @@ export default class Login extends Component {
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
-
                   <input
                     className={
                       this.state.errors.username
@@ -119,18 +118,13 @@ export default class Login extends Component {
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
                   />
-                  {
-                    <h6
-                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
-                      {this.state.errors.username}
-                    </h6>
-                  }
+                  <h6 style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
+                    {this.state.errors.username}
+                  </h6>
                 </div>
                 <div className="detailsdiv" style={{ marginTop: '8%' }}>
                   <label className="label">Password</label>
-
                   <br></br>
-
                   <input
                     className={
                       this.state.errors.password
@@ -141,20 +135,14 @@ export default class Login extends Component {
                     placeholder="Password"
                     onChange={this.handleInput('password')}
                   />
-                  {
-                    <h6
-                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
-                      {this.state.errors.password}
-                    </h6>
-                  }
+                  <h6 style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
+                    {this.state.errors.password}
+                  </h6>
                 </div>
               </form>
-              <div className="forgotpwd">Forgot Password ?</div>
-              {
-                <h6 style={{ color: 'red', fontSize: '16px' }}>
-                  {this.state.errors.credentials}
-                </h6>
-              }
+              <h6 style={{ color: 'red', fontSize: '16px' }}>
+                {this.state.errors.credentials}
+              </h6>
               <button
                 className="loginBtn"
                 type="submit"
