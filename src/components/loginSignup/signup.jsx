@@ -31,30 +31,12 @@ export default class Login extends React.Component {
 
   handleError = (stateName) => {
     const error = this.state.errors
-    if (stateName === "username") {
-      this.setState({
-        errors: {
-          ...error,
-          username: ''
-        }
-      })
-    }
-    else if (stateName === "email") {
-      this.setState({
-        errors: {
-          ...error,
-          email: ''
-        }
-      })
-    }
-    else {
-      this.setState({
-        errors: {
-          ...error,
-          password: ''
-        }
-      })
-    }
+    this.setState({
+      errors: {
+        ...error,
+        [stateName]: '',
+      },
+    })
   }
 
   submitForm = async (event) => {
@@ -146,19 +128,24 @@ export default class Login extends React.Component {
           <div className="formBox">
             <div className="signin">Sign Up </div>
             <div className="form">
-              <form >
+              <form>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
 
                   <input
-                    className={this.state.errors.username ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.username
+                        ? ' txtbox txtboxRed'
+                        : 'txtbox'
+                    }
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
+                    <h6
+                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
                       {this.state.errors.username}
                     </h6>
                   }
@@ -168,13 +155,16 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.email ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.email ? ' txtbox txtboxRed' : 'txtbox'
+                    }
                     type="text"
                     placeholder="Enter email"
                     onChange={this.handleInput('email')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
+                    <h6
+                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
                       {this.state.errors.email}
                     </h6>
                   }
@@ -186,20 +176,28 @@ export default class Login extends React.Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.password ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.password
+                        ? ' txtbox txtboxRed'
+                        : 'txtbox'
+                    }
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
+                    <h6
+                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
                       {this.state.errors.password}
                     </h6>
                   }
                 </div>
               </form>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <button className="loginBtn" type="submit" onClick={this.submitForm}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  className="loginBtn"
+                  type="submit"
+                  onClick={this.submitForm}>
                   Sign Up
                 </button>
               </div>

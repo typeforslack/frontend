@@ -23,7 +23,7 @@ export default class Login extends Component {
       errors: {
         username: '',
         password: '',
-      }
+      },
     })
     this.handleError(stateName)
     console.log(e.target.value)
@@ -31,22 +31,12 @@ export default class Login extends Component {
 
   handleError = (stateName) => {
     const error = this.state.errors
-    if (stateName === "username") {
-      this.setState({
-        errors: {
-          ...error,
-          username: ''
-        }
-      })
-    }
-    else {
-      this.setState({
-        errors: {
-          ...error,
-          password: ''
-        }
-      })
-    }
+    this.setState({
+      errors: {
+        ...error,
+        [stateName]: '',
+      },
+    })
   }
 
   submitForm = async (event) => {
@@ -114,19 +104,24 @@ export default class Login extends Component {
           <div className="formBox">
             <div className="signin">Sign In </div>
             <div className="form">
-              <form >
+              <form>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
 
                   <input
-                    className={this.state.errors.username ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.username
+                        ? ' txtbox txtboxRed'
+                        : 'txtbox'
+                    }
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
+                    <h6
+                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
                       {this.state.errors.username}
                     </h6>
                   }
@@ -137,13 +132,18 @@ export default class Login extends Component {
                   <br></br>
 
                   <input
-                    className={this.state.errors.password ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.password
+                        ? ' txtbox txtboxRed'
+                        : 'txtbox'
+                    }
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
                   />
                   {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
+                    <h6
+                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
                       {this.state.errors.password}
                     </h6>
                   }
@@ -155,7 +155,10 @@ export default class Login extends Component {
                   {this.state.errors.credentials}
                 </h6>
               }
-              <button className="loginBtn" type="submit" onClick={this.submitForm}>
+              <button
+                className="loginBtn"
+                type="submit"
+                onClick={this.submitForm}>
                 Login
               </button>
             </div>
@@ -165,7 +168,6 @@ export default class Login extends Component {
                 Signup
               </span>
             </div>
-
           </div>
         </div>
       </div>
