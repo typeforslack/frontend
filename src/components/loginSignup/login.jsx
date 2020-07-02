@@ -3,11 +3,13 @@ import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
 import Para from './bgpara'
-import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
+import ButtonWithLoader from '../common/ui/button-with-loader'
+import './loginsignup.css'
 
 export default class Login extends Component {
   state = {
+    isLoading: false,
     username: '',
     password: '',
     errors: {
@@ -34,6 +36,7 @@ export default class Login extends Component {
     this.setState({
       errors: {
         ...error,
+        credentials: '',
         [stateName]: '',
       },
     })
@@ -41,7 +44,6 @@ export default class Login extends Component {
 
   submitForm = async (event) => {
     event.preventDefault()
-    this.setState({})
     var name = this.state.username
     var pwd = this.state.password
 
@@ -70,15 +72,22 @@ export default class Login extends Component {
         password: pwd,
       }
 
+      this.setState({
+        isLoading: true,
+      })
+
       try {
         const response = await login(postData)
         const token = response.data.token
         setAuthToken(token)
-        this.setState({})
+        this.setState({
+          isLoading: false,
+        })
         navigate('/', { replace: true })
       } catch (e) {
         const { non_field_errors } = e.response.data
         this.setState({
+          isLoading: false,
           errors: {
             credentials: non_field_errors[0],
           },
@@ -110,9 +119,7 @@ export default class Login extends Component {
                   <br></br>
                   <input
                     className={
-                      this.state.errors.username
-                        ? ' txtbox txtboxRed'
-                        : 'txtbox'
+                      this.state.errors.username ? 'txtbox txtboxRed' : 'txtbox'
                     }
                     type="text"
                     placeholder="Enter username"
@@ -143,12 +150,12 @@ export default class Login extends Component {
               <h6 style={{ color: 'red', fontSize: '16px' }}>
                 {this.state.errors.credentials}
               </h6>
-              <button
-                className="loginBtn"
-                type="submit"
+              <br />
+              <ButtonWithLoader
+                isLoading={this.state.isLoading}
                 onClick={this.submitForm}>
                 Login
-              </button>
+              </ButtonWithLoader>
             </div>
             <div className="signupdiv">
               New Here? &nbsp;
