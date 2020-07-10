@@ -91,7 +91,7 @@
   word-break: break-all;
 }
 
-.txtbox{
+.txtbox {
   width: 57%;
   height: 4rem;
   border-radius: 11.4px;
@@ -129,8 +129,8 @@
 }
 
 .loginBtn {
-  width: 60%;
-  height: 5rem;
+  width: 25%;
+  height: 4rem;
   border-radius: 12.2px;
   background-color: #f0a500;
   color: #ffffff;
