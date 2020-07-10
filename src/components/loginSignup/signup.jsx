@@ -193,7 +193,7 @@ export default class Login extends React.Component {
                   }
                 </div>
               </form>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div>
                 <button
                   className="loginBtn"
                   type="submit"
