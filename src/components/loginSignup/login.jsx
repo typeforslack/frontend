@@ -3,11 +3,13 @@ import { login } from '../../helpers/api'
 import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
 import Para from './bgpara'
-import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
+import ButtonWithLoader from '../common/ui/button-with-loader'
+import './loginsignup.css'
 
 export default class Login extends Component {
   state = {
+    isLoading: false,
     username: '',
     password: '',
     errors: {
@@ -23,7 +25,7 @@ export default class Login extends Component {
       errors: {
         username: '',
         password: '',
-      }
+      },
     })
     this.handleError(stateName)
     console.log(e.target.value)
@@ -31,27 +33,17 @@ export default class Login extends Component {
 
   handleError = (stateName) => {
     const error = this.state.errors
-    if (stateName === "username") {
-      this.setState({
-        errors: {
-          ...error,
-          username: ''
-        }
-      })
-    }
-    else {
-      this.setState({
-        errors: {
-          ...error,
-          password: ''
-        }
-      })
-    }
+    this.setState({
+      errors: {
+        ...error,
+        credentials: '',
+        [stateName]: '',
+      },
+    })
   }
 
   submitForm = async (event) => {
     event.preventDefault()
-    this.setState({})
     var name = this.state.username
     var pwd = this.state.password
 
@@ -80,15 +72,22 @@ export default class Login extends Component {
         password: pwd,
       }
 
+      this.setState({
+        isLoading: true,
+      })
+
       try {
         const response = await login(postData)
         const token = response.data.token
         setAuthToken(token)
-        this.setState({})
+        this.setState({
+          isLoading: false,
+        })
         navigate('/', { replace: true })
       } catch (e) {
         const { non_field_errors } = e.response.data
         this.setState({
+          isLoading: false,
           errors: {
             credentials: non_field_errors[0],
           },
@@ -114,50 +113,49 @@ export default class Login extends Component {
           <div className="formBox">
             <div className="signin">Sign In </div>
             <div className="form">
-              <form >
+              <form>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
-
                   <input
-                    className={this.state.errors.username ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.username ? 'txtbox txtboxRed' : 'txtbox'
+                    }
                     type="text"
                     placeholder="Enter username"
                     onChange={this.handleInput('username')}
                   />
-                  {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
-                      {this.state.errors.username}
-                    </h6>
-                  }
+                  <h6 style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
+                    {this.state.errors.username}
+                  </h6>
                 </div>
                 <div className="detailsdiv" style={{ marginTop: '8%' }}>
                   <label className="label">Password</label>
-
                   <br></br>
-
                   <input
-                    className={this.state.errors.password ? " txtbox txtboxRed" : "txtbox"}
+                    className={
+                      this.state.errors.password
+                        ? ' txtbox txtboxRed'
+                        : 'txtbox'
+                    }
                     type="password"
                     placeholder="Password"
                     onChange={this.handleInput('password')}
                   />
-                  {
-                    <h6 style={{ color: 'red', fontSize: '16px', margin: "5px" }}>
-                      {this.state.errors.password}
-                    </h6>
-                  }
+                  <h6 style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
+                    {this.state.errors.password}
+                  </h6>
                 </div>
               </form>
-              <div className="forgotpwd">Forgot Password ?</div>
-              {
-                <h6 style={{ color: 'red', fontSize: '16px' }}>
-                  {this.state.errors.credentials}
-                </h6>
-              }
-              <button className="loginBtn" type="submit" onClick={this.submitForm}>
+              <h6 style={{ color: 'red', fontSize: '16px' }}>
+                {this.state.errors.credentials}
+              </h6>
+              <br />
+              <ButtonWithLoader
+                isLoading={this.state.isLoading}
+                onClick={this.submitForm}>
                 Login
-              </button>
+              </ButtonWithLoader>
             </div>
             <div className="signupdiv">
               New Here? &nbsp;
@@ -165,7 +163,6 @@ export default class Login extends Component {
                 Signup
               </span>
             </div>
-
           </div>
         </div>
       </div>

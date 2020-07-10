@@ -96,13 +96,15 @@
   height: 4rem;
   border-radius: 11.4px;
   background-color: rgba(217, 217, 217, 0.4);
+  color: rgba(0, 0, 0, 0.7);
   border-style: none;
   outline: none;
   padding: 0 10px;
   margin-left: -5px;
   margin-top: 3%;
+  font-size: 18px;
 }
-.txtboxRed { 
+.txtboxRed {
   border-color: red;
   border-style: dashed;
 }
@@ -118,7 +120,6 @@
   display: block;
   word-break: break-all;
   left: 20%;
-  
   max-width: 32%;
   font-family: 'DM Sans', sans-serif !important;
 }
@@ -141,7 +142,7 @@
 }
 
 .signupdiv {
-  position: relative; 
+  position: relative;
   top: 20%;
   font-family: 'DM Sans', sans-serif !important;
   font-style: normal;
