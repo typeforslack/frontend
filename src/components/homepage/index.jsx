@@ -2,12 +2,17 @@ import React from 'react'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { navigate, Link } from '@reach/router'
 import { getAuthToken, removeAuthToken } from '../../helpers/storage'
+import { gapi } from 'gapi-script'
 
 export default class HomePage extends React.Component {
   logout = (event) => {
     event.preventDefault()
     removeAuthToken()
     navigate('/login')
+    var auth2 = gapi.auth2.getAuthInstance()
+    auth2.signOut().then(function () {
+      console.log('User signed out.')
+    })
   }
 
   componentDidMount() {

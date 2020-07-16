@@ -6,6 +6,10 @@ export async function login(obj) {
   return await axios.post(`${baseUrl}/api-token-auth/ `, obj)
 }
 
+export function id_token(id) {
+  return axios.post(`${baseUrl}/userId/ `, id)
+}
+
 export function signup(obj) {
   return axios.post(`${baseUrl}/register `, obj)
 }
