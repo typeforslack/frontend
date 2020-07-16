@@ -6,6 +6,8 @@ import Para from './bgpara'
 import Logo from '../../images/Keyboard.png'
 import ButtonWithLoader from '../common/ui/button-with-loader'
 import './loginsignup.css'
+import { gapi } from 'gapi-script'
+// import authenticate from './gapi'
 
 export default class Login extends Component {
   state = {
@@ -16,6 +18,7 @@ export default class Login extends Component {
       username: '',
       password: '',
     },
+    userId: '',
   }
 
   handleInput = (stateName) => (e) => {
@@ -100,6 +103,57 @@ export default class Login extends Component {
     return navigate('/signup')
   }
 
+  onSignIn = () => {
+    // Useful data for your client-side scripts:
+
+    gapi.load('auth2', () => {
+      var auth2 = gapi.auth2.getAuthInstance({
+        client_id:
+          '580794985194-gjre1am52q072bhig904440e5fsd7r5b.apps.googleusercontent.com',
+        fetch_basic_profile: false,
+        scope: 'profile',
+      })
+
+      // Sign the user in, and then retrieve their ID.
+      auth2.signIn().then((googleUser) => {
+        console.log('chcek')
+        console.log(googleUser)
+        this.displayGoogelUser(googleUser)
+      })
+    })
+  }
+
+  displayGoogelUser = async (googleUser) => {
+    if (googleUser) {
+      var profile = googleUser.getBasicProfile()
+      console.log('ID: ' + profile.getId()) // Don't send this directly to your server!
+      console.log('Full Name: ' + profile.getName())
+      console.log('Given Name: ' + profile.getGivenName())
+      console.log('Family Name: ' + profile.getFamilyName())
+      console.log('Image URL: ' + profile.getImageUrl())
+      console.log('Email: ' + profile.getEmail())
+      var id_token = googleUser.getAuthResponse().id_token
+      console.log(id_token)
+      // try {
+      //   const response = await id_token(id_token)
+      //   const token = response.data.token
+      //   setAuthToken(token)
+      //   this.setState({
+      //     isLoading: false,
+      //   })
+      //   navigate('/', { replace: true })
+      // } catch (e) {
+      //   const { non_field_errors } = e.response.data
+      //   this.setState({
+      //     isLoading: false,
+      //     errors: {
+      //       credentials: non_field_errors[0],
+      //     },
+      //   })
+      // }
+    }
+  }
+
   render() {
     return (
       <div className="login">
@@ -156,6 +210,10 @@ export default class Login extends Component {
                 onClick={this.submitForm}>
                 Login
               </ButtonWithLoader>
+              <div
+                className="g-signin2"
+                onClick={this.onSignIn}
+                data-theme="dark"></div>
             </div>
             <div className="signupdiv">
               New Here? &nbsp;
