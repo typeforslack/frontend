@@ -107,11 +107,9 @@ export default class Login extends Component {
     // Useful data for your client-side scripts:
 
     gapi.load('auth2', () => {
-      var auth2 = gapi.auth2.getAuthInstance({
+      var auth2 = gapi.auth2.init({
         client_id:
           '580794985194-gjre1am52q072bhig904440e5fsd7r5b.apps.googleusercontent.com',
-        fetch_basic_profile: false,
-        scope: 'profile',
       })
 
       // Sign the user in, and then retrieve their ID.

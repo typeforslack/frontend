@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>27) Icon/chevron-down</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M12,15.5 C11.744,15.5 11.488,15.402 11.293,15.207 L7.293,11.207 C6.902,10.816 6.902,10.184 7.293,9.793 C7.684,9.402 8.316,9.402 8.707,9.793 L12.012,13.098 L15.305,9.918 C15.704,9.535 16.335,9.546 16.719,9.943 C17.103,10.34 17.092,10.974 16.695,11.357 L12.695,15.219 C12.5,15.407 12.25,15.5 12,15.5" id="path-1"></path>
+    </defs>
+    <g id="27)-Icon/chevron-down" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="🎨-Icon-Сolor" fill="#222B45" xlink:href="#path-1"></use>
+    </g>
+</svg>

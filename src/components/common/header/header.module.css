@@ -3,24 +3,31 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 3%;
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+  height: 75px;
 }
 
 .logo {
   cursor: pointer;
-  color: #83818c;
   font-size: 32px;
+  text-decoration: none;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #83818c !important;
 }
 
 nav li {
   display: inline-block;
+  padding: 14px 16px;
 }
 
 nav li a {
   display: block;
   color: #83818c;
-  text-align: center;
-  padding: 14px 16px;
   text-decoration: none;
+  text-align: center;
   font-size: 1rem;
   border-bottom: 3px solid transparent;
 }
@@ -35,3 +42,35 @@ nav a:hover {
 nav a.active {
   border-bottom: 3px rgb(230, 174, 70);
 }
+
+.profileDetails {
+  cursor: pointer;
+}
+
+.profileModal {
+  min-width: 6%;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+  position: absolute;
+  z-index: 1;
+  right: 25px;
+}
+
+.profileModal ul {
+  padding-inline-start: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileModal li a {
+  text-align: unset;
+  color: black;
+}
+
+/* .profileModal li:hover {
+  border-bottom: 3px solid rgb(230, 174, 70);
+  transition: all 0.4s ease 0s;
+  text-decoration: none;
+  color: rgb(228, 148, 74);
+} */
