@@ -1,13 +1,16 @@
 import { removeAuthToken } from '../../helpers/storage'
 // import { gapi } from 'gapi-script'
+import { logout } from '../../helpers/api'
 
 import { navigate } from '@reach/router'
 
-export default function Logout() {
-  removeAuthToken()
+export default async function Logout() {
   navigate('/login')
-  // var auth2 = gapi.auth2.getAuthInstance()
-  // auth2.signOut().then(function () {
-  //     console.log('User signed out.')
-  // })
+  try {
+    const response = await logout()
+    console.log(response)
+    removeAuthToken()
+  } catch (e) {
+    console.log('error')
+  }
 }

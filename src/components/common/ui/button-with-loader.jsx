@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './ui.module.css'
 
 const loader = (
-  <div class={styles.loaderEllipse}>
+  <div className={styles.loaderEllipse}>
     <div></div>
     <div></div>
     <div></div>

@@ -3,7 +3,11 @@ import { getAuthToken } from './storage'
 const baseUrl = 'https://typeforslack.herokuapp.com'
 
 export async function login(obj) {
-  return await axios.post(`${baseUrl}/api-token-auth/ `, obj)
+  return await axios.post(`${baseUrl}/auth/api-token-auth/ `, obj)
+}
+
+export async function googleLoginSignup(obj) {
+  return await axios.post(`${baseUrl}/auth/google/login`, obj)
 }
 
 export function id_token(id) {
@@ -23,7 +27,8 @@ export function fetchPara() {
 }
 
 export function logout() {
-  return axios.get(`${baseUrl}/logout `, {
+  console.log(getAuthToken())
+  return axios.get(`${baseUrl}/auth/logout `, {
     headers: {
       Authorization: `token ${getAuthToken()}`,
     },

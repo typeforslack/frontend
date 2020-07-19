@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { login } from '../../helpers/api'
+import { login, googleLoginSignup } from '../../helpers/api'
 import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
 import Para from './bgpara'
@@ -88,7 +88,9 @@ export default class Login extends Component {
         })
         navigate('/', { replace: true })
       } catch (e) {
+        console.log(e.response.data)
         const { non_field_errors } = e.response.data
+
         this.setState({
           isLoading: false,
           errors: {
@@ -108,8 +110,7 @@ export default class Login extends Component {
 
     gapi.load('auth2', () => {
       var auth2 = gapi.auth2.init({
-        client_id:
-          '580794985194-gjre1am52q072bhig904440e5fsd7r5b.apps.googleusercontent.com',
+        client_id: process.env.REACT_CLIENT_ID,
       })
 
       // Sign the user in, and then retrieve their ID.
@@ -132,23 +133,17 @@ export default class Login extends Component {
       console.log('Email: ' + profile.getEmail())
       var id_token = googleUser.getAuthResponse().id_token
       console.log(id_token)
-      // try {
-      //   const response = await id_token(id_token)
-      //   const token = response.data.token
-      //   setAuthToken(token)
-      //   this.setState({
-      //     isLoading: false,
-      //   })
-      //   navigate('/', { replace: true })
-      // } catch (e) {
-      //   const { non_field_errors } = e.response.data
-      //   this.setState({
-      //     isLoading: false,
-      //     errors: {
-      //       credentials: non_field_errors[0],
-      //     },
-      //   })
-      // }
+      let obj = {
+        token: id_token,
+      }
+
+      try {
+        const response = await googleLoginSignup(obj)
+        setAuthToken(response.data.token)
+        navigate('/')
+      } catch (e) {
+        console.log(e.response.data.error)
+      }
     }
   }
 
