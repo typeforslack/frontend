@@ -1,10 +1,11 @@
 import React from 'react'
 import { navigate } from '@reach/router'
-import { signup } from '../../helpers/api'
+import { signup, googleLoginSignup } from '../../helpers/api'
 import { setAuthToken } from '../../helpers/storage'
 import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
 import Para from './bgpara'
+import { gapi } from 'gapi-script'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ export default class Login extends React.Component {
         password: '',
         email: '',
       },
+      manualSignup: true,
     }
+    this.user_id = null
   }
 
   handleInput = (stateName) => (e) => {
@@ -41,7 +44,6 @@ export default class Login extends React.Component {
 
   submitForm = async (event) => {
     event.preventDefault()
-
     const { username: name, password: pwd, email } = this.state
 
     if (!pwd && !name) {
@@ -115,6 +117,70 @@ export default class Login extends React.Component {
     }
   }
 
+  onSignIn = () => {
+    // Useful data for your client-side scripts:
+
+    gapi.load('auth2', () => {
+      var auth2 = gapi.auth2.init({
+        client_id: process.env.REACT_CLIENT_ID,
+      })
+
+      // Sign the user in, and then retrieve their ID.
+      auth2.signIn().then((googleUser) => {
+        console.log('chcek')
+        console.log(googleUser)
+        this.displayGoogelUser(googleUser)
+      })
+    })
+  }
+
+  displayGoogelUser = async (googleUser) => {
+    if (googleUser) {
+      var profile = googleUser.getBasicProfile()
+      console.log('ID: ' + profile.getId()) // Don't send this directly to your server!
+      console.log('Full Name: ' + profile.getName())
+      console.log('Given Name: ' + profile.getGivenName())
+      console.log('Family Name: ' + profile.getFamilyName())
+      console.log('Image URL: ' + profile.getImageUrl())
+      console.log('Email: ' + profile.getEmail())
+      var id_token = googleUser.getAuthResponse().id_token
+      if (id_token) {
+        this.setState({
+          manualSignup: false,
+          email: profile.getEmail(),
+          errors: {
+            username: 'Please fill unique username',
+          },
+        })
+        this.user_id = id_token
+      }
+    }
+  }
+
+  submitUsername = async (event) => {
+    event.preventDefault()
+    const { username: name } = this.state
+    if (!name) {
+      this.setState({
+        errors: {
+          username: 'Please fill the empty field',
+        },
+      })
+    } else {
+      let obj = {
+        username: name,
+        token: this.user_id,
+      }
+      try {
+        const response = await googleLoginSignup(obj)
+        setAuthToken(response.data.token)
+        navigate('/')
+      } catch (e) {
+        console.log(e.response.data.error)
+      }
+    }
+  }
+
   render() {
     return (
       <div className="login">
@@ -150,6 +216,7 @@ export default class Login extends React.Component {
                     </h6>
                   }
                 </div>
+
                 <div className="detailsdiv" style={{ marginTop: '7%' }}>
                   <label className="label">Email</label>
                   <br></br>
@@ -161,6 +228,7 @@ export default class Login extends React.Component {
                     type="text"
                     placeholder="Enter email"
                     onChange={this.handleInput('email')}
+                    value={this.state.email}
                   />
                   {
                     <h6
@@ -169,34 +237,50 @@ export default class Login extends React.Component {
                     </h6>
                   }
                 </div>
+                {this.state.manualSignup && (
+                  <div className="detailsdiv" style={{ marginTop: '7%' }}>
+                    <label className="label">Password</label>
 
-                <div className="detailsdiv" style={{ marginTop: '7%' }}>
-                  <label className="label">Password</label>
+                    <br></br>
 
-                  <br></br>
-
-                  <input
-                    className={
-                      this.state.errors.password
-                        ? ' txtbox txtboxRed'
-                        : 'txtbox'
+                    <input
+                      className={
+                        this.state.errors.password
+                          ? ' txtbox txtboxRed'
+                          : 'txtbox'
+                      }
+                      type="password"
+                      placeholder="Password"
+                      onChange={this.handleInput('password')}
+                    />
+                    {
+                      <h6
+                        style={{
+                          color: 'red',
+                          fontSize: '16px',
+                          margin: '5px',
+                        }}>
+                        {this.state.errors.password}
+                      </h6>
                     }
-                    type="password"
-                    placeholder="Password"
-                    onChange={this.handleInput('password')}
-                  />
-                  {
-                    <h6
-                      style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
-                      {this.state.errors.password}
-                    </h6>
-                  }
-                </div>
+                  </div>
+                )}
               </form>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <button className="loginBtn" type="submit" onClick={this.submitForm}>
+              <div>
+                <button
+                  className="loginBtn"
+                  type="submit"
+                  onClick={
+                    Boolean(this.state.manualSignup)
+                      ? this.submitForm
+                      : this.submitUsername
+                  }>
                   Sign Up
                 </button>
+                <div
+                  className="g-signin2"
+                  onClick={this.onSignIn}
+                  data-theme="dark"></div>
               </div>
             </div>
           </div>
