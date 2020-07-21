@@ -1,6 +1,8 @@
 .card {
+  margin-left: 15%;
+  width: 30%;
   background-color: #ffffff;
-  width: 253px;
+
   height: 135px;
   border-radius: 10px;
   margin-left: 40px;

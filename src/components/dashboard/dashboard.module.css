@@ -1,24 +1,40 @@
 .dashboard {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  /* align-items: center; */
   background-color: rgb(246, 248, 250);
-  padding: 45px;
+  padding: 2%;
 }
 
 .title {
   color: #656565;
   font-weight: normal;
-  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .cards {
   display: flex;
-  max-width: 927px;
+  width: 45%;
+  flex-direction: column;
 }
 
 .cardHolder {
   display: flex;
   flex-wrap: wrap;
-  margin: 5px;
+  flex-direction: row;
+  flex-grow: 2;
+  justify-content: space-evenly;
+}
+
+.dashboardMain {
+  display: flex;
+  flex-direction: column;
+  background: rgb(246, 248, 250);
+}
+
+.graphndAverage {
+  display: flex;
+  flex-direction: column;
+  max-width: 55%;
+  width: 55%;
 }
