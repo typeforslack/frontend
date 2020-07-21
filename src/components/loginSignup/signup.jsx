@@ -194,7 +194,7 @@ export default class Login extends React.Component {
           <div className="formBox">
             <div className="signin">Sign Up </div>
             <div className="form">
-              <form >
+              <form>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>

@@ -219,7 +219,6 @@ export default class Login extends Component {
                 Signup
               </span>
             </div>
-
           </div>
         </div>
       </div>

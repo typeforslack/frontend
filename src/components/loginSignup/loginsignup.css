@@ -108,7 +108,7 @@
   border-color: red;
   border-style: dashed;
 }
-.txtboxRed { 
+.txtboxRed {
   border-color: red;
   border-style: dashed;
 }
@@ -226,69 +226,6 @@
   height: 80%;
   position: absolute;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-.signupBox {
-  width: 50%;
-  background-color: rgb(181, 181, 181, 0.1);
-  position: relative;
-  left: 25%;
-  top: 10%;
-  height: 80%;
-  position: absolute;
-}
-
-.signupbtn {
-  margin-top: 9%;
-  width: 60%;
-  height: 5rem;
-  border-radius: 12.2px;
-  background-color: #f0a500;
-  color: #ffffff;
-  font-family: 'DM Sans', sans-serif !important;
-  font-size: 29.3px;
-  font-weight: 500;
-  border: none;
-  outline: none !important;
-  max-width: 100%;
-  position: absolute;
-  left: 20%;
-} */
-
-/* 
-
-
-.label {
-  width: 96px;
-  height: 26.1px;
-  font-family: Roboto;
-  font-size: 22px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #000000;
-}
-
-
-
-
-
-
-
-
-
 
 .signupbtn {
   margin-top: 9%;
