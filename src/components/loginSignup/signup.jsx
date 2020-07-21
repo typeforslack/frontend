@@ -8,21 +8,22 @@ import Para from './bgpara'
 import { gapi } from 'gapi-script'
 
 export default class Login extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
+  state = {
+    username: '',
+    email: '',
+    password: '',
+    errors: {
       username: '',
-      email: '',
       password: '',
-      errors: {
-        username: '',
-        password: '',
-        email: '',
-      },
-      manualSignup: true,
-    }
-    this.user_id = null
+      email: '',
+    },
+    manualSignup: true,
   }
+  user_id = null
+
+  // componentDidMount() {
+  //   this.onSignIn()
+  // }
 
   handleInput = (stateName) => (e) => {
     e.preventDefault()
@@ -119,7 +120,6 @@ export default class Login extends React.Component {
 
   onSignIn = () => {
     // Useful data for your client-side scripts:
-
     gapi.load('auth2', () => {
       var auth2 = gapi.auth2.init({
         client_id: process.env.REACT_CLIENT_ID,
@@ -277,10 +277,11 @@ export default class Login extends React.Component {
                   }>
                   Sign Up
                 </button>
-                <div
-                  className="g-signin2"
-                  onClick={this.onSignIn}
-                  data-theme="dark"></div>
+                <div className="googlebtn">
+                  <button onClick={this.onSignIn} data-theme="dark">
+                    Sign in with google
+                  </button>
+                </div>
               </div>
             </div>
           </div>
