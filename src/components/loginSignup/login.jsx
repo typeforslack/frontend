@@ -21,6 +21,10 @@ export default class Login extends Component {
     userId: '',
   }
 
+  // componentDidMount() {
+  //   this.onSignIn()
+  // }
+
   handleInput = (stateName) => (e) => {
     e.preventDefault()
     this.setState({
@@ -203,10 +207,11 @@ export default class Login extends Component {
                 onClick={this.submitForm}>
                 Login
               </ButtonWithLoader>
-              <div
-                className="g-signin2"
-                onClick={this.onSignIn}
-                data-theme="dark"></div>
+              <div className="googleBtn">
+                <button onClick={this.onSignIn} data-theme="dark">
+                  Sign in with google
+                </button>
+              </div>
             </div>
             <div className="signupdiv">
               New Here? &nbsp;
