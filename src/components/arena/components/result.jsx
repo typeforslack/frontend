@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { navigate } from '@reach/router'
-import { Button } from 'react-bootstrap'
 
 export default function Result(props) {
   return (
@@ -15,8 +14,8 @@ export default function Result(props) {
       <p>Wrong Words: {props.wrongCount}</p>
       <p>Accuracy: {props.accuracy}%</p>
 
-      <Button onClick={props.retry}>Retry</Button>
-      <Button onClick={() => navigate('/')}>Home</Button>
+      <button onClick={props.retry}>Retry</button>
+      <button onClick={() => navigate('/')}>Home</button>
     </div>
   )
 }

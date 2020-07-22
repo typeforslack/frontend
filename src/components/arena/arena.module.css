@@ -1,11 +1,11 @@
-.arena-container {
+.arenaContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 90vh;
 }
 
-.arena-action {
+.arenaAction {
   padding: 30px;
   border: 2px dashed #cacaca;
   width: 60%;
@@ -14,7 +14,7 @@
   justify-content: space-between;
 }
 
-.arena-para {
+.arenaPara {
   background-color: #fafafa;
   overflow-y: auto;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
@@ -25,7 +25,7 @@
   padding: 10px;
 }
 
-.arena-time-remaining {
+.arenaTimeRemaining {
   margin-top: 20px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
@@ -33,7 +33,7 @@
   text-align: center;
 }
 
-.arena-input {
+.arenaInput {
   margin-top: 20px;
   width: 100%;
   outline: none;
@@ -41,6 +41,10 @@
   border-radius: 5px;
   border: 3px solid whitesmoke;
   padding: 10px;
+}
+
+.arenaInput.incorrect {
+  background-color: rgba(255, 7, 58, 0.6);
 }
 
 .correct {
