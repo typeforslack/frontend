@@ -1,0 +1,340 @@
+.login {
+  min-height: 750px;
+  min-width: 400px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-shadow: 0px 4.89691px 20.4038px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(180deg, #f0a500 0%, #cf7500 100%);
+}
+
+.logoDetail {
+  position: absolute;
+  width: 52%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background: linear-gradient(180deg, #f0a500 0%, #cf7500 80%);
+  opacity: 0.8;
+  overflow-y: hidden;
+  box-shadow: 0px 4.89691px 20.4038px rgba(0, 0, 0, 0.25);
+}
+
+.bgText {
+  color: #a65e00;
+  text-align: justify;
+  font-size: 22.5px;
+  cursor: default;
+  user-select: none;
+  opacity: 0.3;
+}
+
+.logoImg {
+  position: absolute;
+  width: 17%;
+  height: 13%;
+  left: 17.5%;
+  top: 42%;
+  background: #d6d6d6;
+  box-shadow: 0px 22.4801px 22.4801px rgba(0, 0, 0, 0.25);
+}
+
+.formDetails {
+  position: absolute;
+  width: 48%;
+  height: 100%;
+  left: 52%;
+  top: 0px;
+  background: #ffffff;
+  box-shadow: 0px 4.89691px 20.4038px rgba(0, 0, 0, 0.25);
+}
+.formBox {
+  text-align: center;
+  width: 81%;
+  background-color: rgb(181, 181, 181, 0.1);
+  left: 10%;
+  top: 5%;
+  height: 90%;
+  position: absolute;
+}
+
+.signin {
+  position: relative;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: rgb(0, 0, 0);
+  top: 8%;
+}
+
+.form {
+  position: relative;
+  top: 15%;
+}
+
+.label {
+  max-width: 100%;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+  position: absolute;
+  left: 20%;
+  word-break: break-all;
+}
+
+.txtbox {
+  width: 57%;
+  height: 4rem;
+  border-radius: 11.4px;
+  background-color: rgba(217, 217, 217, 0.4);
+  color: rgba(0, 0, 0, 0.7);
+  border-style: none;
+  outline: none;
+  padding: 0 10px;
+  margin-left: -5px;
+  margin-top: 3%;
+  font-size: 18px;
+}
+.txtboxRed {
+  border-color: red;
+  border-style: dashed;
+}
+.txtboxRed { 
+  border-color: red;
+  border-style: dashed;
+}
+.forgotpwd {
+  text-align: left;
+  font-size: 17.1px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  color: #ecb22e;
+  position: relative;
+  display: block;
+  word-break: break-all;
+  left: 20%;
+  max-width: 32%;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.loginBtn {
+  width: 25%;
+  height: 4rem;
+  border-radius: 12.2px;
+  background-color: #f0a500;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 29.3px;
+  font-weight: 500;
+  border: none;
+  outline: none !important;
+  max-width: 100%;
+  position: relative;
+  cursor: pointer;
+  margin-top: 4%;
+}
+
+.signupdiv {
+  position: relative;
+  top: 20%;
+  font-family: 'DM Sans', sans-serif !important;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  font-stretch: normal;
+  letter-spacing: normal;
+  border: none;
+  justify-content: center;
+  word-break: break-all;
+}
+.signup:hover {
+  text-decoration: underline;
+  text-decoration-color: '#f0a500';
+}
+
+/* .signupBtn {
+  font-family: 'DM Sans', sans-serif !important;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  font-stretch: normal;
+  letter-spacing: normal;
+  border: none;
+  position: absolute;
+  left: 30%;
+  word-break: break-all;
+} */
+
+.signup {
+  cursor: pointer;
+  color: #f0a500;
+}
+
+/* .login {
+  /* width: 20%;
+  position: absolute;
+  top: 30%;
+  left: 43%;
+  /* border: 1px solid; */
+/* } 
+
+
+
+.backgroundImg {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.signupBox {
+  width: 50%;
+  background-color: rgb(181, 181, 181, 0.1);
+  position: relative;
+  left: 25%;
+  top: 10%;
+  height: 80%;
+  position: absolute;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.signupBox {
+  width: 50%;
+  background-color: rgb(181, 181, 181, 0.1);
+  position: relative;
+  left: 25%;
+  top: 10%;
+  height: 80%;
+  position: absolute;
+}
+
+.signupbtn {
+  margin-top: 9%;
+  width: 60%;
+  height: 5rem;
+  border-radius: 12.2px;
+  background-color: #f0a500;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 29.3px;
+  font-weight: 500;
+  border: none;
+  outline: none !important;
+  max-width: 100%;
+  position: absolute;
+  left: 20%;
+} */
+
+/* 
+
+
+.label {
+  width: 96px;
+  height: 26.1px;
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+
+
+
+
+
+
+
+
+
+.signupbtn {
+  margin-top: 9%;
+  width: 60%;
+  height: 5rem;
+  border-radius: 12.2px;
+  background-color: #f0a500;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 29.3px;
+  font-weight: 500;
+  border: none;
+  outline: none !important;
+  max-width: 100%;
+  position: absolute;
+  left: 20%;
+} */
+
+/* 
+
+
+.label {
+  width: 96px;
+  height: 26.1px;
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+
+
+
+
+
+
+
+
+
+.userText {
+  left: 35%;
+  position: absolute;
+  top: 50%;
+  width: 30%;
+} */

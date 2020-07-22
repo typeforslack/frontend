@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   height: 7rem;
-  width: 927px;
+  max-width: 80%;
   background-color: var(--component-bg);
   text-align: center;
   border-radius: 10px;
