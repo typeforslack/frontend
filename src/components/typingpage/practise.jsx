@@ -1,17 +1,22 @@
 import React from 'react'
-import { fetchPara } from '../../helpers/api'
-import { PracticeArena } from '../arena'
+import { fetchPara, postUserlog } from '../../helpers/api'
+import { LetterArena, WordArena } from '../arena'
+import Result from '../arena/components/result'
+import { evaluateArcade, evaluateTyping } from '../../helpers/calculations'
 import { Button } from 'react-bootstrap'
 import './practise.css'
 
+const DEFAULT_STATE = {
+  isReady: false,
+  isParaLoading: false,
+  paragraph: '',
+  paraID: null,
+  strictMode: 'true',
+  result: false,
+}
+
 export default class Practise extends React.Component {
-  state = {
-    isReady: false,
-    isParaLoading: false,
-    paragraph: '',
-    paraID: null,
-    strictMode: 'true',
-  }
+  state = DEFAULT_STATE
 
   parafetch = async (event) => {
     event.preventDefault()
@@ -37,14 +42,49 @@ export default class Practise extends React.Component {
     })
   }
 
+  evaluate = async (typed, secondsSinceStart) => {
+    const result =
+      this.state.strictMode === 'true'
+        ? evaluateTyping(this.state.paragraph, typed, secondsSinceStart)
+        : evaluateArcade(typed, secondsSinceStart)
+
+    this.setState({
+      result,
+    })
+
+    try {
+      await postUserlog({
+        para: this.state.paraID,
+        wpm: result.correctWpm,
+        taken_at: new Date().toISOString(),
+        correct_words: result.correctWpm,
+        wrong_words: result.wrongCount,
+        total_words: result.totalWords,
+        accuracy: result.accuracy,
+      })
+    } catch (e) {
+      console.log(e.response)
+    }
+  }
+
   handleOptionChange = (e) => {
     this.setState({
       strictMode: e.target.value,
     })
   }
 
+  retry = () => this.setState(DEFAULT_STATE)
+
   render() {
-    const { isReady, isParaLoading, paragraph, paraID, strictMode } = this.state
+    const {
+      isReady,
+      isParaLoading,
+      paragraph,
+      paraID,
+      strictMode,
+      result,
+    } = this.state
+
     return (
       <div>
         {!isReady && (
@@ -107,13 +147,24 @@ export default class Practise extends React.Component {
           </>
         )}
 
-        {paragraph && (
-          <PracticeArena
+        {paragraph && strictMode === 'true' && !result && (
+          <LetterArena
             paragraph={paragraph}
             paraID={paraID}
-            strictMode={strictMode === 'true'}
+            evaluateResult={this.evaluate}
           />
         )}
+
+        {paragraph && strictMode === 'false' && !result && (
+          <WordArena
+            paragraph={paragraph}
+            paraID={paraID}
+            letterComparison={true}
+            evaluateResult={this.evaluate}
+          />
+        )}
+
+        {result && <Result retry={this.retry} {...result} />}
       </div>
     )
   }
