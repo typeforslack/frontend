@@ -21,9 +21,9 @@ export default class NestedDonutChart extends Component {
           fill="none"
           strokeWidth="10"
           transform="translate(36, 178) rotate(-90)"
-          strokeDasharray="440"
+          strokeDasharray="700"
           strokeLinecap="round"
-          strokeDashoffset={440 - (440 * 100) / 100}
+          strokeDashoffset={300}
           stroke="#F0A500"
         />
         <circle

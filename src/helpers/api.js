@@ -50,3 +50,11 @@ export function postUserlog(data) {
     },
   })
 }
+
+export function getUserScoreWeekly() {
+  return axios.get(`${baseUrl}/getuserlog/last=7`, {
+    headers: {
+      Authorization: `token ${getAuthToken()}`,
+    },
+  })
+}
