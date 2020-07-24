@@ -4,10 +4,10 @@ import { navigate } from '@reach/router'
 import { setAuthToken } from '../../helpers/storage'
 import Para from './bgpara'
 import Logo from '../../images/Keyboard.png'
+import GoogleButton from '../common/ui/googeButton'
 import ButtonWithLoader from '../common/ui/button-with-loader'
 import './loginsignup.css'
 import { gapi } from 'gapi-script'
-// import authenticate from './gapi'
 
 export default class Login extends Component {
   state = {
@@ -20,10 +20,6 @@ export default class Login extends Component {
     },
     userId: '',
   }
-
-  // componentDidMount() {
-  //   this.onSignIn()
-  // }
 
   handleInput = (stateName) => (e) => {
     e.preventDefault()
@@ -119,8 +115,6 @@ export default class Login extends Component {
 
       // Sign the user in, and then retrieve their ID.
       auth2.signIn().then((googleUser) => {
-        console.log('chcek')
-        console.log(googleUser)
         this.displayGoogelUser(googleUser)
       })
     })
@@ -128,15 +122,16 @@ export default class Login extends Component {
 
   displayGoogelUser = async (googleUser) => {
     if (googleUser) {
-      var profile = googleUser.getBasicProfile()
-      console.log('ID: ' + profile.getId()) // Don't send this directly to your server!
-      console.log('Full Name: ' + profile.getName())
-      console.log('Given Name: ' + profile.getGivenName())
-      console.log('Family Name: ' + profile.getFamilyName())
-      console.log('Image URL: ' + profile.getImageUrl())
-      console.log('Email: ' + profile.getEmail())
+      // var profile = googleUser.getBasicProfile()
+      //do not remove this comment will use it for ref
+      // console.log('ID: ' + profile.getId()) // Don't send this directly to your server!
+      // console.log('Full Name: ' + profile.getName())
+      // console.log('Given Name: ' + profile.getGivenName())
+      // console.log('Family Name: ' + profile.getFamilyName())
+      // console.log('Image URL: ' + profile.getImageUrl())
+      // console.log('Email: ' + profile.getEmail())
       var id_token = googleUser.getAuthResponse().id_token
-      console.log(id_token)
+
       let obj = {
         token: id_token,
       }
@@ -207,11 +202,11 @@ export default class Login extends Component {
                 onClick={this.submitForm}>
                 Login
               </ButtonWithLoader>
-              <div className="googleBtn">
-                <button onClick={this.onSignIn} data-theme="dark">
-                  Sign in with google
-                </button>
-              </div>
+
+              <div style={{ margin: '10px auto' }}>Or </div>
+              <GoogleButton
+                onClick={this.onSignIn}
+                textLabel="Sign In With Google"></GoogleButton>
             </div>
             <div className="signupdiv">
               New Here? &nbsp;
@@ -219,7 +214,6 @@ export default class Login extends Component {
                 Signup
               </span>
             </div>
-
           </div>
         </div>
       </div>
