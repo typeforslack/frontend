@@ -5,18 +5,17 @@ import Button from './button'
 import Dropdown from './dropdown'
 import Labels from './labels'
 
-const labelOrientation = 'horizontal',
-  dropdownOptions = ['All', 'Practise', 'Arena'],
-  labelData = [
-    {
-      title: 'WPM',
-      color: '#F0A500',
-    },
-    {
-      title: 'Accuracy',
-      color: '#EC486F',
-    },
-  ]
+const dropdownOptions = ['All', 'Practise', 'Arena']
+// labelData = [
+//   {
+//     title: 'WPM',
+//     color: '#F0A500',
+//   },
+//   {
+//     title: 'Accuracy',
+//     color: '#EC486F',
+//   },
+// ]
 
 export default class ProgressCard extends Component {
   state = {
@@ -61,7 +60,7 @@ export default class ProgressCard extends Component {
       <div className={styles.card}>
         <div className={styles.header}>
           <Dropdown data={dropdownOptions} size="medium" />
-          <Labels data={labelData} orientation={labelOrientation} />
+          <Labels />
         </div>
         <div className={styles.chartContainer}>
           <LineChart width={870} height={300} />

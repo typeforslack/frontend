@@ -6,9 +6,12 @@ import './loginsignup.css'
 import Logo from '../../images/Keyboard.png'
 import Para from './bgpara'
 import { gapi } from 'gapi-script'
+import ButtonWithLoader from '../common/ui/button-with-loader'
+import GoogleButton from '../common/ui/googeButton'
 
 export default class Login extends React.Component {
   state = {
+    isLoading: false,
     username: '',
     email: '',
     password: '',
@@ -18,6 +21,8 @@ export default class Login extends React.Component {
       email: '',
     },
     manualSignup: true,
+    errorResponse: '',
+    showGoogleButton: true,
   }
   user_id = null
 
@@ -79,10 +84,16 @@ export default class Login extends React.Component {
         email: email,
         password: pwd,
       }
+      this.setState({
+        isLoading: true,
+      })
 
       try {
         const response = await signup(postData)
         setAuthToken(response.data.token)
+        this.setState({
+          isLoading: false,
+        })
         navigate('/')
       } catch (error) {
         console.log(error.response)
@@ -127,8 +138,6 @@ export default class Login extends React.Component {
 
       // Sign the user in, and then retrieve their ID.
       auth2.signIn().then((googleUser) => {
-        console.log('chcek')
-        console.log(googleUser)
         this.displayGoogelUser(googleUser)
       })
     })
@@ -137,12 +146,7 @@ export default class Login extends React.Component {
   displayGoogelUser = async (googleUser) => {
     if (googleUser) {
       var profile = googleUser.getBasicProfile()
-      console.log('ID: ' + profile.getId()) // Don't send this directly to your server!
-      console.log('Full Name: ' + profile.getName())
-      console.log('Given Name: ' + profile.getGivenName())
-      console.log('Family Name: ' + profile.getFamilyName())
-      console.log('Image URL: ' + profile.getImageUrl())
-      console.log('Email: ' + profile.getEmail())
+
       var id_token = googleUser.getAuthResponse().id_token
       if (id_token) {
         this.setState({
@@ -151,6 +155,7 @@ export default class Login extends React.Component {
           errors: {
             username: 'Please fill unique username',
           },
+          showGoogleButton: false,
         })
         this.user_id = id_token
       }
@@ -171,12 +176,23 @@ export default class Login extends React.Component {
         username: name,
         token: this.user_id,
       }
+      this.setState({
+        isLoading: true,
+      })
       try {
         const response = await googleLoginSignup(obj)
         setAuthToken(response.data.token)
+        this.setState({
+          isLoading: false,
+        })
         navigate('/')
       } catch (e) {
-        console.log(e.response.data.error)
+        const errorMsg = e.response.data.error
+        this.setState({
+          errorResponse: errorMsg,
+          isLoading: false,
+          showGoogleButton: true,
+        })
       }
     }
   }
@@ -194,7 +210,7 @@ export default class Login extends React.Component {
           <div className="formBox">
             <div className="signin">Sign Up </div>
             <div className="form">
-              <form >
+              <form>
                 <div className="detailsdiv">
                   <label className="label">Username</label>
                   <br></br>
@@ -267,21 +283,32 @@ export default class Login extends React.Component {
                 )}
               </form>
               <div>
-                <button
-                  className="loginBtn"
-                  type="submit"
+                <h6 style={{ color: 'red', fontSize: '16px', margin: '5px' }}>
+                  {this.state.errorResponse}
+                </h6>
+                <ButtonWithLoader
+                  isLoading={this.state.isLoading}
+                  // className="loginBtn"
+                  // type="submit"
                   onClick={
                     Boolean(this.state.manualSignup)
                       ? this.submitForm
                       : this.submitUsername
                   }>
                   Sign Up
-                </button>
-                <div className="googlebtn">
-                  <button onClick={this.onSignIn} data-theme="dark">
-                    Sign in with google
-                  </button>
-                </div>
+                </ButtonWithLoader>
+                {this.state.showGoogleButton && (
+                  <>
+                    <div style={{ margin: '10px auto' }}>Or </div>
+                    <GoogleButton
+                      onClick={this.onSignIn}
+                      textLabel="Sign Up With Google"></GoogleButton>
+                    {/* <div id="customBtn" className="customGPlusSignIn" onClick={this.onSignIn}>
+                      <span className="icon"><img className="googleLogo" src={GoogleLogo} alt="glogo"></img></span>
+                      <span className="buttonText">Sign Up With Google</span>
+                    </div> */}
+                  </>
+                )}
               </div>
             </div>
           </div>

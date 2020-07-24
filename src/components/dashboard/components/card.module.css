@@ -20,14 +20,18 @@
 }
 
 .card h2 {
-  margin-left: 40px;
-  padding-top: 25px;
+  padding-top: 5px;
+  margin: 20px auto 10px 40px;
   font-weight: lighter;
+  /* color: #8c8c8c; */
+  font-size: 1.4vw;
+  word-break: break-all;
 }
 
 .card p {
-  margin-left: 40px;
+  margin: 0 auto 0 30px;
   font-weight: lighter;
   color: #8c8c8c;
-  font-size: 24px;
+  font-size: 1.4vw;
+  word-break: break-all;
 }
