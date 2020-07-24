@@ -28,7 +28,6 @@ export default class TypingArena extends React.Component {
       letter,
       state: 'untyped',
     }))
-
     // When userInput string is empty this is skipped resulting in default values
     userInput.split('').forEach((letter, idx) => {
       if (idx >= letters.length) {
